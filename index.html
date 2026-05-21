@@ -191,20 +191,6 @@ transition:transform .15s,opacity .15s}
 background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A97A8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
 background-repeat:no-repeat;background-position:right 12px center;
 padding-right:32px;cursor:pointer}
-/* colores dept */
-.ca-sac{background:#FFF3E0}.ct-sac{color:#E65100}
-.ca-car{background:#FCE4EC}.ct-car{color:#AD1457}
-.ca-frv{background:#E8F5E9}.ct-frv{color:#1B5E20}
-.ca-com{background:#E3F2FD}.ct-com{color:#0D47A1}
-.ca-fid{background:#FFF8E1}.ct-fid{color:#F57F17}
-.ca-cnt{background:#E8EAF6}.ct-cnt{color:#283593}
-.ca-log{background:#F3E5F5}.ct-log{color:#6A1B9A}
-.ca-inv{background:#E0F7FA}.ct-inv{color:#006064}
-.ca-mnt{background:#EFEBE9}.ct-mnt{color:#4E342E}
-.ca-atl{background:#E0F0FF}.ct-atl{color:#1D4ED8}
-.ca-bol{background:#F0E8FF}.ct-bol{color:#6D28D9}
-.ca-mag{background:#FFEEE0}.ct-mag{color:#C2410C}
-.ca-sup{background:#E8F5E9}.ct-sup{color:#047857}
 </style>
 </head>
 <body>
@@ -274,614 +260,59 @@ padding-right:32px;cursor:pointer}
   </div>
 </div>
 <script>
-// ── DATA ─────────────────────────────────────────────────
-const D=[
- // OPERACIONES
- {id:'ops-atl',tab:'ops',n:'Regional Atlántico – Operaciones',e:'🌊',ca:'ca-atl',ct:'ct-atl',ds:'Jefe de Operaciones + 8 Tiendas',s:[
-  {t:'Jefatura Regional',c:[{n:'Donaldo Tijera B.',r:'Jefe de Operaciones',p:'3188402905'}]},
-  {t:'Villa Campestre',c:[{n:'Rosa Payares',r:'Admin. Principal',p:'3108423212',ti:'Villa Campestre',tp:'P'},{n:'José Medellín',r:'Admin. Comercial',p:'3102377861',ti:'Villa Campestre',tp:'C'}]},
-  {t:'Calle 30',c:[{n:'Rosny Maury',r:'Admin. Principal',p:'3005472183',ti:'Calle 30',tp:'P'},{n:'Ronald Montaño',r:'Admin. Comercial',p:'3011208880',ti:'Calle 30',tp:'C'}]},
-  {t:'Único',c:[{n:'Zeudy Otero',r:'Admin. Principal',p:'3013503220',ti:'Único',tp:'P'},{n:'Manuel Cortina',r:'Admin. Comercial',p:'3014110857',ti:'Único',tp:'C'}]},
-  {t:'Soledad',c:[{n:'Dorlies Marchenas',r:'Admin. Principal',p:'3016714287',ti:'Soledad',tp:'P'},{n:'Alexander Briceño',r:'Admin. Comercial',p:'3044988768',ti:'Soledad',tp:'C'}]},
-  {t:'Boston',c:[{n:'Juliana Charrys',r:'Admin. Principal',p:'3046735115',ti:'Boston',tp:'P'},{n:'Julio César Martínez',r:'Admin. Comercial',p:'3103390484',ti:'Boston',tp:'C'}]},
-  {t:'Nuestro Atlántico',c:[{n:'Mauricio Escorcia',r:'Admin. Principal',p:'3015555814',ti:'Nuestro',tp:'P'},{n:'Miller Orozco',r:'Admin. Comercial',p:'3144467131',ti:'Nuestro',tp:'C'}]},
-  {t:'Santo Tomás',c:[{n:'Sandra Salgado',r:'Admin. Principal',p:'3017253767',ti:'Santo Tomás',tp:'P'},{n:'Robin Mercado',r:'Admin. Comercial',p:'3023536010',ti:'Santo Tomás',tp:'C'}]},
-  {t:'Alkarawi',c:[{n:'Leonor Rodríguez',r:'Admin. Principal',p:'3014339137',ti:'Alkarawi',tp:'P'},{n:'Genny Hoyos',r:'Admin. Comercial',p:'3102889515',ti:'Alkarawi',tp:'C'}]},
- ]},
- {id:'ops-bol',tab:'ops',n:'Regional Bolívar – Operaciones',e:'⚓',ca:'ca-bol',ct:'ct-bol',ds:'Jefe de Operaciones + 16 Tiendas',s:[
-  {t:'Jefatura Regional',c:[{n:'Vicenta Castelar',r:'Jefe de Operaciones',p:'3135469250'}]},
-  {t:'Prado',c:[{n:'Carlos Salcedo',r:'Admin. Principal',p:'3012433090',ti:'Prado',tp:'P'},{n:'Nilson Polo',r:'Admin. Comercial',p:'3008761427',ti:'Prado',tp:'C'}]},
-  {t:'Bazurto',c:[{n:'Mauricio Lemus',r:'Admin. Principal',p:'3127094094',ti:'Bazurto',tp:'P'},{n:'Stefany Fernández',r:'Admin. Comercial',p:'3215503353',ti:'Bazurto',tp:'C'}]},
-  {t:'San Fernando',c:[{n:'Marlon Quintana',r:'Admin. Principal',p:'3145701321',ti:'San Fernando',tp:'P'},{n:'Ángel Moreno',r:'Admin. Comercial',p:'3232930820',ti:'San Fernando',tp:'C'}]},
-  {t:'Olaya',c:[{n:'Luis Banderas',r:'Admin. Principal',p:'3157395692',ti:'Olaya',tp:'P'},{n:'Yaselis Mercado',r:'Admin. Comercial',p:'3023482828',ti:'Olaya',tp:'C'}]},
-  {t:'Turbaco 1',c:[{n:'Karolain Moscote',r:'Admin. Principal',p:'3017409088',ti:'Turbaco 1',tp:'P'},{n:'Paola Méndez',r:'Admin. Comercial',p:'3175370059',ti:'Turbaco 1',tp:'C'}]},
-  {t:'Turbaco 2',c:[{n:'Heyver Puello',r:'Admin. Principal',p:'3234331248',ti:'Turbaco 2',tp:'P'},{n:'Adalberto Jennings',r:'Admin. Comercial',p:'3026031723',ti:'Turbaco 2',tp:'C'}]},
-  {t:'La María',c:[{n:'Mario De Los Reyes',r:'Admin. Principal',p:'3006675526',ti:'La María',tp:'P'},{n:'Daniela Guerrero',r:'Admin. Comercial',p:'3044146467',ti:'La María',tp:'C'}]},
-  {t:'Arjona',c:[{n:'Gertrudis González',r:'Admin. Principal',p:'3008314891',ti:'Arjona',tp:'P'},{n:'Luis Castaño',r:'Admin. Comercial',p:'3103915763',ti:'Arjona',tp:'C'}]},
-  {t:'Socorro',c:[{n:'Sor Serpa',r:'Admin. Principal',p:'3046494351',ti:'Socorro',tp:'P'},{n:'Luis Montaño',r:'Admin. Comercial',p:'3114002885',ti:'Socorro',tp:'C'}]},
-  {t:'Cabrero',c:[{n:'Pedro Hernández',r:'Admin. Principal',p:'3116417393',ti:'Cabrero',tp:'P'},{n:'Víctor Guerra',r:'Admin. Comercial',p:'3222181618',ti:'Cabrero',tp:'C'}]},
-  {t:'Terminal',c:[{n:'Kerwin Buen Día',r:'Admin. Principal',p:'3017182201',ti:'Terminal',tp:'P'},{n:'Luis Cervantes',r:'Admin. Comercial',p:'3012982745',ti:'Terminal',tp:'C'}]},
-  {t:'Bocagrande',c:[{n:'Eloísa González',r:'Admin. Principal',p:'3105982961',ti:'Bocagrande',tp:'P'},{n:'Rubén Alemán',r:'Admin. Comercial',p:'3106532728',ti:'Bocagrande',tp:'C'},{n:'Alfredo Campo',r:'Admin. Comercial',p:'3332395741',ti:'Bocagrande',tp:'C'}]},
-  {t:'Crespo',c:[{n:'Dairon Márquez',r:'Admin. Principal',p:'3145395304',ti:'Crespo',tp:'P'},{n:'Liz Chávez',r:'Admin. Comercial',p:'3012775095',ti:'Crespo',tp:'C'}]},
-  {t:'Avenida',c:[{n:'Jasir Ramos',r:'Admin. Principal',p:'3243166731',ti:'Avenida',tp:'P'},{n:'Sandra Vargas',r:'Admin. Comercial',p:'3142253062',ti:'Avenida',tp:'C'}]},
-  {t:'Campestre',c:[{n:'Marien Villalba',r:'Admin. Principal',p:'3104174471',ti:'Campestre',tp:'P'},{n:'Karen Fandiño',r:'Admin. Comercial',p:'3052577066',ti:'Campestre',tp:'C'}]},
-  {t:'San José',c:[{n:'Julieht Robles',r:'Admin. Principal',p:'3134728830',ti:'San José',tp:'P'},{n:'Elver Suárez',r:'Admin. Comercial',p:'3011585178',ti:'San José',tp:'C'}]},
- ]},
- {id:'ops-mag',tab:'ops',n:'Regional Magdalena – Operaciones',e:'🏖️',ca:'ca-mag',ct:'ct-mag',ds:'Jefe de Operaciones + 7 Tiendas',s:[
-  {t:'Jefatura Regional',c:[{n:'Janer Jiménez',r:'Jefe de Operaciones',p:'3046679594'}]},
-  {t:'Mercado',c:[{n:'Carlos Abreu',r:'Admin. Principal',p:'3205003087',ti:'Mercado',tp:'P'},{n:'Jesús Beleño',r:'Admin. Comercial',p:'3028291522',ti:'Mercado',tp:'C'}]},
-  {t:'Rodadero',c:[{n:'Eugenia Sánchez',r:'Admin. Principal',p:'3184025360',ti:'Rodadero',tp:'P'},{n:'Deiver Corro',r:'Admin. Comercial',p:'3004420560',ti:'Rodadero',tp:'C'}]},
-  {t:'Transporte',c:[{n:'Duvis Escalante',r:'Admin. Principal',p:'3105376052',ti:'Transporte',tp:'P'},{n:'Yossaina Castro',r:'Admin. Comercial',p:'3215093887',ti:'Transporte',tp:'C'}]},
-  {t:'Santa Cruz',c:[{n:'Julieth Ferrer',r:'Admin. Principal',p:'3145512482',ti:'Santa Cruz',tp:'P'},{n:'Claudia Grisales',r:'Admin. Comercial',p:'3133454153',ti:'Santa Cruz',tp:'C'}]},
-  {t:'Bavaria',c:[{n:'Ginna Márquez',r:'Admin. Comercial',p:'3104804224',ti:'Bavaria',tp:'C'}]},
-  {t:'Ciénaga',c:[{n:'Andrés García',r:'Admin. Principal',p:'3002950596',ti:'Ciénaga',tp:'P'},{n:'Linda Cabana',r:'Admin. Comercial',p:'3011928124',ti:'Ciénaga',tp:'C'}]},
- ]},
- {id:'ops-sup',tab:'ops',n:'Supermayorista',e:'🏭',ca:'ca-sup',ct:'ct-sup',ds:'Tiendas 119 y 120',s:[
-  {t:'Tienda 119',c:[{n:'Maricela Céspedes',r:'Admin. Principal',p:'',ti:'T-119',tp:'P'},{n:'Josse Barrios',r:'Admin. Comercial',p:'',ti:'T-119',tp:'C'}]},
-  {t:'Tienda 120',c:[{n:'Betty Sampayo',r:'Admin. Principal',p:'',ti:'T-120',tp:'P'},{n:'Yolanda Escorcia',r:'Admin. Comercial',p:'',ti:'T-120',tp:'C'}]},
- ]},
- // ÁREAS
- {id:'sac',tab:'areas',n:'SAC – Panadería & Cafetería',e:'🥐',ca:'ca-sac',ct:'ct-sac',ds:'Panadería · Deli · Abastecimiento',c:[
-  {n:'Victor Salinas',r:'Coordinador Regional SAC',p:'3013092989'},
-  {n:'Fare Álvarez',r:'Jefe Panadería',p:'3244241257'},
-  {n:'María Mejía',r:'Coordinadora Abastecimiento SAC',p:'3205958138'},
-  {n:'Aylin Barrios',r:'Analista Abastecimiento SAC',p:'3135578909'},
- ]},
- {id:'car',tab:'areas',n:'Carnes',e:'🥩',ca:'ca-car',ct:'ct-car',ds:'Director · Negociadores · Coordinadores',c:[
-  {n:'Ciro Muñoz',r:'Director Carnes',p:'3126229507'},
-  {n:'José Mercado',r:'Negociador',p:'3102127839'},
-  {n:'Michael Gutiérrez',r:'Auditor',p:'3206190926'},
-  {n:'Omar Muñoz',r:'Coordinador Regional',p:'3043279407'},
-  {n:'Pedro Ruiz',r:'Coordinador Regional Atlántico',p:'3006771366'},
-  {n:'Ángel Pineda',r:'Coordinador Abastecimiento',p:'3012636652'},
-  {n:'Nazly Jiménez',r:'Líder Abastecimiento Carnes',p:'3013841798'},
-  {n:'Ingrid Vargas',r:'Analista Abast. 1',p:'3008384558'},
-  {n:'Yina Lambis',r:'Analista Abast. 2',p:'3017988727'},
- ]},
- {id:'frv',tab:'areas',n:'Fruver',e:'🥦',ca:'ca-frv',ct:'ct-frv',ds:'Directora · Compras · Operación Regional',c:[
-  {n:'Sandra Novoa',r:'Directora Fruver',p:'3138511362'},
-  {n:'Erwin Urbina',r:'Regional Atlántico – Operación',p:'3144131678'},
-  {n:'Jorge Anaya',r:'Regional Bolívar – Operación',p:'3147481592'},
-  {n:'Ricardo Arenas',r:'Regional Magdalena – Operación',p:'3023337166'},
-  {n:'Rocío Caraballo',r:'Compras',p:'3106120898'},
-  {n:'Mónica Maldonado',r:'Compras',p:'3107337060'},
-  {n:'Luis Niño',r:'Compras',p:'3132317650'},
-  {n:'Michel Barbosa',r:'Compras',p:'3137722556'},
-  {n:'Deimer Contreras',r:'Compras',p:'3214568402'},
-  {n:'Roger Montes',r:'Abastecimiento',p:'3015876279'},
-  {n:'Carlos Puello',r:'Abastecimiento',p:'3145809489'},
-  {n:'Ingrid Uribe',r:'Abastecimiento',p:'3246499737'},
-  {n:'Kevin Álvarez',r:'Abastecimiento',p:'3012240280'},
- ]},
- {id:'com',tab:'areas',n:'Comercial & Abastecimiento',e:'📦',ca:'ca-com',ct:'ct-com',ds:'Dirección · Negociadores · Analistas PGC',c:[
-  {n:'Manuel A. Mendoza',r:'Dir. Comercial Abarrotes & Abast.',p:'3222366647'},
-  {n:'Lorena Vallejo',r:'Directora Marcas Propias',p:'3146802607'},
-  {n:'William Salas García',r:'Líder Abastecimiento Abarrotes',p:'3014372319'},
-  {n:'Sergio Z. Fuentes',r:'Negociador Bebidas/Cigarrillos',p:'3002964355'},
-  {n:'Wilmar H. Patiño',r:'Negociador Aseo/Mascotas/Bricol.',p:'3144369531'},
-  {n:'Diego A. Ospina',r:'Negociador Básicos',p:'3104248774'},
-  {n:'Johana Vásquez Beltrán',r:'Negociador PLS',p:'3017706155'},
-  {n:'Diana Quiroga Rodríguez',r:'Negociador Rancho',p:'3219561645'},
-  {n:'Bercelis Yepes',r:'Analista Abast. Básicos',p:'3007273543'},
-  {n:'Rosa M. Martínez',r:'Analista Abast. PGC Aseo',p:'3008205254'},
-  {n:'Madelegne Vergara',r:'Analista Abast. PGC PLS',p:'3206058949'},
-  {n:'Melany Florez',r:'Analista Abast. PGC Rancho',p:'3246085623'},
-  {n:'Elvira M. Balseiro',r:'Soporte Logyca / Aux. Abast.',p:'3128485879'},
-  {n:'Mayra Simancas',r:'Analista Comercial Aseo/Mascotas',p:'3177141846'},
-  {n:'Katia Anaya Hernández',r:'Analista Comercial Básicos',p:'3007970241'},
-  {n:'Héctor Rentería',r:'Analista Comercial Bebidas',p:'3106411643'},
-  {n:'Liliana Borja',r:'Analista Comercial PLS',p:'3053370776'},
-  {n:'Eduardo Jiménez Bossio',r:'Analista Comercial Rancho',p:'3122522768'},
- ]},
- {id:'fid',tab:'areas',n:'Fidelización & Mercadeo',e:'📣',ca:'ca-fid',ct:'ct-fid',ds:'Comunicaciones · Diseño · Mercadeo',c:[
-  {n:'Paula Andrea Córdoba',r:'Jefe Fidelización y S/C',p:'3218031092'},
-  {n:'Jeiner Altamiranda',r:'Jefe Comunicaciones y Marca',p:'3014663191'},
-  {n:'Katerine Contreras',r:'Analista Comercial',p:'3024295353'},
-  {n:'Keiner Casseres',r:'Analista Mercadeo y Fidelización',p:'3135515160'},
-  {n:'Kerly Hernández',r:'Aux. Regional Comunicaciones',p:'3053176349'},
-  {n:'Yarlett Figueroa',r:'Diseñador Gráfico',p:'3023567833'},
-  {n:'Rafael Cárdenas',r:'Diseñador Gráfico',p:'3217768233'},
-  {n:'Martín Devoz',r:'Diseñador Multimedia',p:'3023067951'},
-  {n:'Estrellita Serna',r:'Auxiliar Administrativa',p:'3044547923'},
-  {n:'Natalia Baena',r:'Asistente Administrativa',p:'3012581930'},
- ]},
- {id:'cnt',tab:'areas',n:'Contabilidad',e:'📊',ca:'ca-cnt',ct:'ct-cnt',ds:'Jefe · Coordinadores · Cartera',c:[
-  {n:'Alejandro Polo Torres',r:'Jefe de Contabilidad',p:'3005435283'},
-  {n:'Nel Bravo Mendoza',r:'Coordinador Contable',p:'3004220028'},
-  {n:'Héctor Pinedo',r:'Coordinador de Impuestos',p:'3003478235'},
-  {n:'Grey Romero Castillo',r:'Coordinador Cartera',p:'3103633245'},
-  {n:'Liliana Tovar González',r:'Coordinadora Junior Contable',p:'3126498665'},
- ]},
- {id:'log',tab:'areas',n:'Logística & CDAs',e:'🚛',ca:'ca-log',ct:'ct-log',ds:'Director · 7 Centros de Distribución',s:[
-  {t:'Dirección Logística',c:[{n:'Ricardo Molano',r:'Director Logístico',p:'3175170370'},{n:'Farid Echeverría',r:'Control Logístico',p:'3186997722'}]},
-  {t:'CDA 390 – Corabastos',c:[{n:'Cristian Castro',r:'Coordinador CDA Fruver',p:'3214850958'},{n:'Luis Padilla',r:'Auxiliar Líder Recibo',p:'3138459645'}]},
-  {t:'CDA 400 – Bucaramanga',c:[{n:'Jorge Piñares',r:'Coordinador CDA Fruver',p:'3185054000'}]},
-  {t:'CDA 501 – Galapark',c:[{n:'Katherine Tobar',r:'Coordinador Logístico',p:'3015893861'},{n:'Farid Echeverría',r:'Control Logístico',p:'3186997722'}]},
-  {t:'CDA 600 – Granabastos',c:[{n:'Gisell Pico',r:'Coordinador CDA',p:'3043941355'},{n:'Pedro Florez',r:'Coordinador CDA Fruver',p:'3128734685'},{n:'Adriana Barcasnegras',r:'Auxiliar Costo CDA',p:'3003731663'},{n:'Alfredo Miranda',r:'Auxiliar Fruver CDA',p:'3232914668'}]},
-  {t:'CDA 700 – Metropolitano',c:[{n:'Oscar Malaver',r:'Coordinador CDA Fruver',p:'3004893495'},{n:'Sergio Cruz',r:'Auxiliar Fruver CDA',p:'3145495163'}]},
-  {t:'CDA 703 – Santa Marta',c:[{n:'Alexis Manaure',r:'Coordinador CDA Fruver',p:'3155872097'},{n:'Adrián Reyes',r:'Coordinador CDA',p:'3332288595'},{n:'Omar Lapeira',r:'Auxiliar Líder Recibo',p:'3016535571'}]},
-  {t:'CDA 800 – Bloc Port BQ',c:[{n:'Alexander Morales',r:'Coord. Logística y Transporte',p:'3163294866'},{n:'Luis Herrera',r:'Coordinador CDA Fruver',p:'3195713316'},{n:'Sergio Estupiñán',r:'Auxiliar Facturación CDA',p:'3022411904'},{n:'Cristian Palacio',r:'Analista Inventario',p:'3128431616'},{n:'Guiller Alvarado',r:'Auxiliar Fruver CDA',p:'3225263706'},{n:'Dilan Escobar',r:'Supervisor Transporte',p:'3008559897'},{n:'Jairo Dávila',r:'Auxiliar Fruver CDA',p:'3232880775'},{n:'Dines Díaz',r:'Auxiliar Fruver CDA',p:'3206761966'}]},
- ]},
- {id:'inv',tab:'areas',n:'Inventarios & Control',e:'📋',ca:'ca-inv',ct:'ct-inv',ds:'Jefatura · Líderes · Analistas ACI',s:[
-  {t:'Jefatura & Auditores',c:[{n:'Karen Santana',r:'Jefe de Inventarios',p:'3134904723'},{n:'Robinson Molina',r:'Auditor Sénior',p:'3134904723'},{n:'Fabio Ortiz',r:'Auditor Sénior',p:'3011522332'},{n:'Francisco Recuero',r:'Líder Inventarios Barranquilla',p:'3156034651'},{n:'Edly Padilla',r:'Líder Inventarios Cartagena',p:'3147999674'},{n:'Iván Manjarres',r:'Líder Inventarios Santa Marta',p:'3003673199'}]},
-  {t:'ACI – Atlántico',c:[{n:'Evelio Carrillo Ojeda',r:'Analista Control Inventario',p:'3126270492'},{n:'Daniel Mendoza Caro',r:'Analista Control Inventario',p:'3162326505'},{n:'Gladys Cárdenas Andrade',r:'Analista Control Inventario',p:'3023947276'},{n:'Joel Chiquillo Carrillo',r:'Analista Control Inventario',p:'3245624845'},{n:'Ernesto Tapias Ramírez',r:'Analista Control Inventario',p:'3184189536'},{n:'Carlos Julio Jiménez',r:'Analista Control Inventario',p:'3116856708'}]},
-  {t:'ACI – Bolívar',c:[{n:'Edly T. Padilla Payares',r:'Analista Control Inventario',p:'3147999674'},{n:'Willian Molina Simanca',r:'Analista Control Inventario',p:'3044192088'},{n:'Yulieth González Alcalá',r:'Analista Control Inventario',p:'3012369727'},{n:'Angelo Cavarcas Cuadrado',r:'Analista Control Inventario',p:'3023936767'},{n:'Sixto Baloco',r:'Analista Control Inventario',p:'3017578259'},{n:'Andrés Simancas García',r:'Analista Control Inventario',p:'3013538761'},{n:'Luis Simarra',r:'Analista Control Inventario',p:'3024221042'},{n:'Josse Barrios Díaz',r:'Analista Control Inventario',p:'315155301'},{n:'Andrés Ríos Molano',r:'Analista Control Inventario',p:'3014330214'},{n:'Teddy Hernández',r:'Analista Control Inventario',p:'3135476595'},{n:'José Pión Hernández',r:'Analista de Conteo',p:'3053405323'},{n:'Jonatan Muñoz Rodríguez',r:'Analista de Conteo',p:'3023657805'},{n:'Patricia Emiliani Pacheco',r:'Analista de Conteo',p:'3156944294'},{n:'Jerson Cervantes Berrio',r:'Analista de Conteo',p:'3234658938'},{n:'Galiz Daza Muñiz',r:'Analista de Conteo',p:'3225874448'}]},
-  {t:'ACI – Magdalena',c:[{n:'Angélica González',r:'Analista de Conteo',p:'3024077878'},{n:'Marta Morellis',r:'Analista de Conteo',p:'3027540637'},{n:'Christian Alvarado',r:'Analista de Conteo',p:'3157171817'},{n:'Isaac Perlaza',r:'Analista de Conteo',p:'3005493435'},{n:'Julio Rodríguez',r:'Analista de Conteo',p:'3016987217'},{n:'Jair García',r:'Analista de Conteo',p:'3013129059'}]},
- ]},
- {id:'mnt',tab:'areas',n:'Mantenimiento',e:'🔧',ca:'ca-mnt',ct:'ct-mnt',ds:'Bolívar · Atlántico · Santa Marta',s:[
-  {t:'Regional Bolívar',c:[{n:'Diego Molina',r:'Jefe de Mantenimiento',p:'3117657177'},{n:'Fernando Fong',r:'Coordinador de Mtto.',p:'3217493638'},{n:'Edwin Bossio',r:'Auxiliar Admin. Mtto.',p:'3006311939'},{n:'Juan Villarreal',r:'Planificador',p:'3226725340'},{n:'Catalino Vega',r:'Líder Obra Civil',p:'3114314227'},{n:'Carlos Herazo',r:'Auxiliar Obra Civil',p:'3246104640'},{n:'Camilo Torres',r:'Auxiliar Obra Civil',p:'3234594015'},{n:'Marcos Beleño',r:'Auxiliar Obra Civil',p:'3005109365'},{n:'Carlos Morales',r:'Auxiliar Obra Civil',p:'3023373309'},{n:'Jorge Fernández',r:'Auxiliar Obra Civil',p:'3236888353'},{n:'Felipe Herrera',r:'Técnico Refrigeración',p:'3004134769'},{n:'Nadilso Ospino',r:'Auxiliar Refrigeración',p:'3006524328'},{n:'Federico Vidal',r:'Auxiliar Refrigeración',p:'3108446773'},{n:'Ricardo Guerrero',r:'Técnico Refrigeración',p:'3226593599'},{n:'Elkin Caicedo',r:'Auxiliar Refrigeración',p:'3225091667'},{n:'José Olivero',r:'Técnico Electromecánico',p:'3155097499'},{n:'Alejandro Pérez',r:'Técnico Electromecánico',p:'3043113958'},{n:'Jhon Payares',r:'Técnico Electricista',p:'3004349246'},{n:'Yeison Quintana',r:'Soldador',p:'3215708283'}]},
-  {t:'Regional Atlántico',c:[{n:'Álvaro Manotas',r:'Jefe de Mantenimiento',p:'3163056450'},{n:'Álvaro Arroyo',r:'Líder Locativo',p:'3145613509'},{n:'Juan Gutiérrez',r:'Electromecánico',p:'3103585603'},{n:'José Camargo',r:'Soldador',p:'3116610974'},{n:'Larcen Padilla',r:'Auxiliar Locativo',p:'3028467399'},{n:'Willian Ariza',r:'Auxiliar Locativo',p:'3122705827'},{n:'Gabriel Portillo',r:'Auxiliar Locativo',p:'3017904769'},{n:'Diego Domínguez',r:'Auxiliar',p:'3023366601'},{n:'Samuel Castro',r:'Auxiliar',p:'3052885217'},{n:'José Roca',r:'Auxiliar',p:'3044928501'},{n:'Edinson Fierro',r:'Auxiliar',p:'3003602892'},{n:'Andrés Vásquez',r:'Técnico',p:'3012232383'}]},
-  {t:'Regional Santa Marta',c:[{n:'Juan Riatiga',r:'Jefe de Mantenimiento',p:'3008776224'},{n:'Leonardo Acosta',r:'Líder Refrigeración',p:'3006054044'},{n:'Leonardo Mendoza',r:'Auxiliar Refrigeración',p:'3009466447'},{n:'José Gamarra',r:'Líder Electromecánico',p:'3008756335'},{n:'Armando Mercado',r:'Obra Civil',p:'3177465485'}]},
- ]},
-];
+const D=[]; 
+const API = 'https://script.google.com/macros/s/AKfycbyuvNHwk_4NpDpXfjwdfS2192BGGkTy5sunvDG7ESUpOtuhgsCqs0wsaqwVYjRe4Rw1aQ/exec';
 
-// ── HELPERS ───────────────────────────────────────────────
-const PAL=['#1D6FA6','#6B38B0','#0D7A45','#B05A1D','#AD1457','#1B5E20','#0D47A1','#E65100','#283593','#006064','#4E342E','#880E4F','#33691E','#01579B'];
-function abg(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))&0xffffffff;return PAL[Math.abs(h)%PAL.length];}
+function abg(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))&0xffffffff;return '#1D6FA6';}
 function ini(n){return n.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();}
 function fmt(p){const d=p.replace(/\D/g,'');if(d.length===10)return d.replace(/(\d{3})(\d{3})(\d{4})/,'$1 $2 $3');return d;}
 function hl(s,q){if(!q||!s)return s||'';return s.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>');}
-function aC(d){if(d.c)return d.c;return(d.s||[]).flatMap(x=>x.c);}
+function aC(d){return d.c||(d.s||[]).flatMap(x=>x.c);}
 
-// ── STATE ─────────────────────────────────────────────────
-let DEPTS=[],tab='all',q='',tmr=null,ed=null;
+let DEPTS=[],q='',tmr=null;
 
-// ── LOAD ediciones locales ────────────────────────────────
-function load(applyEdits=true){
-  DEPTS=JSON.parse(JSON.stringify(D));
-  if(applyEdits){
-    const edits=JSON.parse(localStorage.getItem('mgEd')||'{}');
-    Object.entries(edits).forEach(([id,e])=>{
-      if(e.meta){
-        if(!DEPTS.find(x=>x.id===id)){
-          DEPTS.push({id,tab:'areas',n:e.meta.n,e:e.meta.e,
-            ca:e.meta.ca,ct:e.meta.ct,ds:'Departamento personalizado',
-            c:e.c||[],s:null});
-        }
-        return;
-      }
-      const d=DEPTS.find(x=>x.id===id);if(!d)return;
-      if(e.c)d.c=e.c;if(e.s)d.s=e.s;
-    });
-  }
-  const tot=DEPTS.reduce((a,d)=>a+aC(d).length,0);
-  document.getElementById('sn').textContent=tot+' contactos';
+function load(){
+  DEPTS=JSON.parse(localStorage.getItem('mgData')||'[]');
   render();
 }
-function saveEd(id){
-  const d=DEPTS.find(x=>x.id===id);if(!d)return;
-  const e=JSON.parse(localStorage.getItem('mgEd')||'{}');
-  e[id]={c:d.c||null,s:d.s||null};
-  localStorage.setItem('mgEd',JSON.stringify(e));
-}
 
-// ── ICONS ─────────────────────────────────────────────────
-const IPH=`<svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>`;
-const IWA=`<svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9 3 3 9 3 16c0 2.3.6 4.5 1.8 6.4L3 29l6.8-1.8A13 13 0 0016 29c7 0 13-6 13-13S23 3 16 3zm0 23.8c-2 0-4-.6-5.7-1.6l-.4-.2-4 1 1-3.9-.3-.4A10.8 10.8 0 0116 5.2c5.9 0 10.8 4.8 10.8 10.8S21.9 26.8 16 26.8zm5.9-8.1c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2s-.8 1-1 1.2c-.2.2-.4.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.7.1-.2 0-.4-.1-.5l-1-2.2c-.3-.7-.5-.6-.7-.6h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6 0 1.6 1.2 3.1 1.3 3.3.2.2 2.4 3.6 5.7 5 .8.4 1.4.6 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>`;
-const IED=`<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
-const IPL=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
-
-// ── RENDER ────────────────────────────────────────────────
 function render(){
   const main=document.getElementById('main');
-  const emp=document.getElementById('emp');
   main.innerHTML='';
   const Q=q.toLowerCase();
-  let tot=0;
-
   DEPTS.forEach((dept,di)=>{
-    if(dept.c)dept.c.forEach((x,i)=>{x._si='';x._ci=i;});
-    else(dept.s||[]).forEach((s,si)=>s.c.forEach((x,ci)=>{x._si=si;x._ci=ci;}));
-
     const all=aC(dept);
-    const vis=Q?all.filter(x=>(x.n||'').toLowerCase().includes(Q)||(x.r||'').toLowerCase().includes(Q)||(x.ti||'').toLowerCase().includes(Q)||dept.n.toLowerCase().includes(Q)):all;
+    const vis=Q?all.filter(x=>(x.n||'').toLowerCase().includes(Q)):all;
     if(!vis.length)return;
-    tot+=vis.length;
-
     const card=document.createElement('div');
-    card.className='dept';card.dataset.id=dept.id;card.dataset.di=di;
-
-    const isOps=dept.tab==='ops';
-    let body='';
-
-    if(dept.s){
-      dept.s.forEach((sec,si)=>{
-        const sc=sec.c.filter(x=>!Q||(x.n||'').toLowerCase().includes(Q)||(x.r||'').toLowerCase().includes(Q)||(x.ti||'').toLowerCase().includes(Q)||dept.n.toLowerCase().includes(Q));
-        if(!sc.length)return;
-        const isJef=/jefatura|jefe de op/i.test(sec.t);
-        if(isOps&&!isJef){
-          const sid=dept.id+'-s'+si;
-          body+=`<div class="sti" id="${sid}">
-            <button class="sth" data-sto="${sid}" type="button">
-              <div class="sd"></div><div class="sn">${sec.t}</div>
-              <span class="sc">${sc.length}</span>
-              <svg class="sv" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="sb">${sc.map(x=>row(x,dept,Q)).join('')}
-              <button class="badd" type="button" data-adi="${di}" data-asi="${si}">${IPL} Agregar</button>
-            </div>
-          </div>`;
-        }else{
-          body+=`<div class="sh"><span class="br"></span>${sec.t}</div>`;
-          body+=sc.map(x=>row(x,dept,Q)).join('');
-          body+=`<button class="badd" type="button" data-adi="${di}" data-asi="${si}">${IPL} Agregar</button>`;
-        }
-      });
-      if(Q&&isOps)setTimeout(()=>card.querySelectorAll('.sti').forEach(e=>e.classList.add('op')),0);
-    }else{
-      body=vis.map(x=>row(x,dept,Q)).join('');
-      body+=`<button class="badd" type="button" data-adi="${di}" data-asi="">${IPL} Agregar</button>`;
-    }
-
-    card.innerHTML=`
-      <button class="dh" data-tog="${dept.id}" type="button">
-        <div class="di ${dept.ca}">${dept.e}</div>
-        <div class="dn"><div class="dnm">${dept.n}</div><div class="dsb">${dept.ds||''}</div></div>
-        <div class="dr">
-          <span class="dc ${dept.ca} ${dept.ct}">${Q?vis.length:all.length}</span>
-          <svg class="chv" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-      </button>
-      <div class="db"><div class="dbi">${body}</div></div>`;
-
+    card.className='dept op';
+    card.innerHTML=`<button class="dh"><div class="di ca-atl">${dept.e}</div><div class="dn"><div class="dnm">${dept.n}</div></div></button>
+    <div class="db"><div class="dbi">${vis.map(x=>row(x)).join('')}</div></div>`;
     main.appendChild(card);
-    if(Q)card.classList.add('op');
   });
-
-  emp.className='emp'+(tot===0?' on':'');
-  document.getElementById('sn').textContent=tot+' contacto'+(tot!==1?'s':'');
 }
 
-function row(x,dept,Q){
+function row(x){
   const tel=(x.p||'').replace(/\D/g,'');
-  const bg=abg(x.n||'?');
-  const telTxt=fmt(x.p||'');
-  let bdg='';
-  if(x.ti)bdg+=`<span class="bdg bst">${hl(x.ti,Q)}</span>`;
-  if(x.tp==='P')bdg+=`<span class="bdg bp">Principal</span>`;
-  if(x.tp==='C')bdg+=`<span class="bdg bc2">Comercial</span>`;
-  const telRow=telTxt
-    ?`<div class="ctel"><svg width="10" height="10" fill="currentColor" viewBox="0 0 24 24" style="opacity:.5"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>${telTxt}</div>`
-    :`<div class="ctel" style="color:#CBD5E0;font-size:10px">Sin número</div>`;
-  // ── Usar <a href="tel:"> y <a href="wa.me"> para máxima compatibilidad móvil
-  const ph=tel
-    ?`<a class="bph" href="tel:+57${tel}" title="Llamar">${IPH}</a>`
-    :`<span class="bph bno">${IPH}</span>`;
-  const wa=tel
-    ?`<a class="bwa" href="whatsapp://send?phone=57${tel}" title="WhatsApp">${IWA}</a>`
-    :`<span class="bwa bno">${IWA}</span>`;
-  const be=`<button class="bed" type="button" data-eid="${dept.id}" data-esi="${x._si}" data-eci="${x._ci}">${IED}</button>`;
-  return`<div class="ct">
-    <div class="av" style="background:${bg}">${ini(x.n||'?')}</div>
-    <div class="ci">
-      <div class="cnm">${hl(x.n||'',Q)}</div>
-      <div class="crl">${hl(x.r||'',Q)}</div>
-      ${telRow}${bdg?`<div class="cbdg">${bdg}</div>`:''}
-    </div>
-    <div class="ca">${be}${wa}${ph}</div>
-  </div>`;
+  return `<div class="ct"><div class="av">${ini(x.n)}</div><div class="ci"><div class="cnm">${x.n}</div><div class="ctel">${fmt(x.p)}</div></div><div class="ca"><a class="bwa" href="whatsapp://send?phone=57${tel}">💬</a><a class="bph" href="tel:+57${tel}">📞</a></div></div>`;
 }
 
-// ── EVENTS ────────────────────────────────────────────────
-function onTap(e){
-  const tog=e.target.closest('[data-tog]');if(tog){document.querySelector('.dept[data-id="'+tog.dataset.tog+'"]')?.classList.toggle('op');return;}
-  const sto=e.target.closest('[data-sto]');if(sto){document.getElementById(sto.dataset.sto)?.classList.toggle('op');return;}
-  const eid=e.target.closest('[data-eid]');if(eid){oEd(eid.dataset.eid,eid.dataset.esi,eid.dataset.eci);return;}
-  const adi=e.target.closest('[data-adi]');if(adi){oAdd(parseInt(adi.dataset.adi),adi.dataset.asi);return;}
-}
-document.addEventListener('touchend',e=>{
-  if(e.target.closest('[data-tog],[data-sto],[data-eid],[data-adi]')){e.preventDefault();onTap(e);}
-},{passive:false});
-document.addEventListener('click',e=>onTap(e));
-
-document.getElementById('q').addEventListener('input',function(){
-  document.getElementById('bClr').classList.toggle('on',!!this.value);
-  clearTimeout(tmr);tmr=setTimeout(()=>{q=this.value;render();},160);
-});
-document.getElementById('bClr').addEventListener('click',()=>{
-  document.getElementById('q').value='';
-  document.getElementById('bClr').classList.remove('on');q='';render();
-});
-document.getElementById('bEdit').addEventListener('click',function(){
-  document.body.classList.toggle('em');this.classList.toggle('on');
-});
-
-// ── APPS SCRIPT API ──────────────────────────────────────
-const API = 'https://script.google.com/macros/s/AKfycbyuvNHwk_4NpDpXfjwdfS2192BGGkTy5sunvDG7ESUpOtuhgsCqs0wsaqwVYjRe4Rw1aQ/exec';
-
-// Mapeo area → id de dept local
-function areaToId(area){
-  const a=(area||'').trim().toUpperCase();
-  const map={
-    'SAC':'sac','CARNES':'car','FRUVER':'frv',
-    'COMERCIAL':'com','FIDELIZACION /MERCADEO':'fid',
-    'CONTABILIDAD':'cnt','INVENTARIOS':'inv',
-  };
-  if(map[a]) return map[a];
-  const d=DEPTS.find(x=>x.n.toUpperCase().includes(a)||a.includes(x.n.toUpperCase()));
-  return d?d.id:null;
-}
-
-const COLORS =['ca-inv','ca-com','ca-fid','ca-log','ca-sac','ca-car','ca-cnt','ca-mnt'];
-const COLORST=['ct-inv','ct-com','ct-fid','ct-log','ct-sac','ct-car','ct-cnt','ct-mnt'];
-const EMOJIS =['📋','📦','📣','🚛','🥐','🔧','📊','👥','🏪','⭐','🎯','🗂️'];
-
-// Obtener o crear dept por nombre de área
-function getOrCreateDept(areaNm, tab){
-  let did=areaToId(areaNm);
-  let dept=did?DEPTS.find(x=>x.id===did):null;
-  if(!dept){
-    const newId=(tab==='ops'?'ops-api-':'api-')+areaNm.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
-    dept=DEPTS.find(x=>x.id===newId);
-    if(!dept){
-      const ci=DEPTS.length%COLORS.length;
-      dept={id:newId,tab:tab||'areas',
-        n:areaNm.trim().charAt(0).toUpperCase()+areaNm.trim().slice(1).toLowerCase(),
-        e:EMOJIS[DEPTS.length%EMOJIS.length],
-        ca:COLORS[ci],ct:COLORST[ci],
-        ds:'Desde Google Sheets',c:[],s:null};
-      DEPTS.push(dept);
-    }
-  }
-  return dept;
-}
-
-// Merge contactos de Áreas
-function mergeAreas(areas){
-  if(!areas||!areas.length) return;
-  areas.forEach(row=>{
-    const {area,nombre,cargo,telefono}=row;
-    if(!nombre||!area) return;
-    const dept=getOrCreateDept(area,'areas');
-    const list=dept.c||(dept.s?dept.s[dept.s.length-1]?.c:null);
-    if(!list) return;
-    const dup=list.find(x=>
-      (telefono&&x.p&&x.p.replace(/\D/g,'')===(telefono+'').replace(/\D/g,''))||
-      (x.n||'').toLowerCase()===(nombre||'').toLowerCase()
-    );
-    if(!dup) list.push({n:nombre,r:cargo,p:String(telefono||'').replace(/\D/g,'')});
-  });
-}
-
-// Merge contactos de Operaciones
-function mergeOps(ops){
-  if(!ops||!ops.length) return;
-  // Agrupar por regional
-  ops.forEach(row=>{
-    const {regional,tienda,nombre,cargo,telefono}=row;
-    if(!nombre) return;
-    // Buscar dept de operaciones por regional
-    const regKey=(regional||'').toUpperCase();
-    const regMap={
-      'REGIONAL ATLANTICO':'ops-atl','REGIONAL BOLIVAR':'ops-bol',
-      'REGIONAL MAGDALENA':'ops-mag','SUPERMAYORISTA':'ops-sup'
-    };
-    const did=Object.keys(regMap).find(k=>regKey.includes(k.replace('REGIONAL ','')));
-    let dept=did?DEPTS.find(x=>x.id===regMap[did]):null;
-
-    if(!dept){
-      dept=getOrCreateDept(regional||'Operaciones','ops');
-    }
-
-    // Buscar sección (tienda) dentro del dept
-    if(!dept.s) dept.s=[];
-    let sec=dept.s.find(s=>s.t&&s.t.toUpperCase()===(tienda||'').toUpperCase());
-    if(!sec){
-      sec={t:tienda||'General',c:[]};
-      dept.s.push(sec);
-      dept.c=null; // asegura que usa sections
-    }
-
-    const dup=sec.c.find(x=>
-      (telefono&&x.p&&x.p.replace(/\D/g,'')===(telefono+'').replace(/\D/g,''))||
-      (x.n||'').toLowerCase()===(nombre||'').toLowerCase()
-    );
-    if(!dup) sec.c.push({
-      n:nombre,r:cargo,p:String(telefono||'').replace(/\D/g,''),
-      ti:tienda,tp:cargo.toUpperCase().includes('PRINCIPAL')?'P':cargo.toUpperCase().includes('COMERCIAL')?'C':''
-    });
-  });
-}
-
-// Actualizar — lee ambas hojas del Apps Script
 async function lS(){
-  const btn=document.getElementById('bRef');
   const upd=document.getElementById('ui');
-  btn.classList.add('ld');
-  upd.textContent='Sincronizando…';
-  const ctrl=new AbortController();
-  const t=setTimeout(()=>ctrl.abort(),8000);
   try{
-    const r=await fetch(API,{cache:'no-store',signal:ctrl.signal});
-    clearTimeout(t);
+    const r=await fetch(API);
     const json=await r.json();
     if(json.ok){
-      load(true); // base fresca + edits locales
-      // Fusionar las dos hojas
-      if(json.areas) mergeAreas(json.areas);
-      else if(json.data) mergeAreas(json.data); // compatibilidad versión anterior
-      if(json.ops)   mergeOps(json.ops);
-      const now=new Date();
-      upd.textContent='✓ '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-      localStorage.setItem('mgTs',now.toISOString());
-      localStorage.setItem('mgRemote',JSON.stringify(json));
+      DEPTS = json.areas || [];
+      localStorage.setItem('mgData', JSON.stringify(DEPTS));
       render();
-      updCount();
-    } else {
-      upd.textContent='Sin datos';
+      upd.textContent='✓ Actualizado';
     }
-  }catch(e){
-    clearTimeout(t);
-    upd.textContent=e.name==='AbortError'?'⏱ Timeout':'📵 Sin conexión';
-  }finally{btn.classList.remove('ld');}
+  }catch(e){ upd.textContent='📵 Sin conexión'; }
 }
 
-// Enviar al Sheet via GET params
-async function postToSheet(area,nombre,cargo,telefono,sheet){
-  try{
-    const url=new URL(API);
-    url.searchParams.set('action','add');
-    url.searchParams.set('sheet', sheet||'areas');
-    url.searchParams.set('area',  area);
-    url.searchParams.set('nombre',nombre);
-    url.searchParams.set('cargo', cargo);
-    url.searchParams.set('tel',   telefono);
-    await fetch(url.toString(),{cache:'no-store'});
-  }catch(e){/* silencioso */}
-}
+document.getElementById('q').addEventListener('input',function(){ q=this.value; render(); });
+document.getElementById('bEdit').addEventListener('click',()=>document.body.classList.toggle('em'));
 
-// ── MODAL ─────────────────────────────────────────────────
-function fillDeptSelect(selectedId){
-  const sel=document.getElementById('fDept');
-  sel.innerHTML='';
-  DEPTS.forEach(d=>{
-    const opt=document.createElement('option');
-    opt.value=d.id; opt.textContent=d.e+' '+d.n;
-    if(d.id===selectedId) opt.selected=true;
-    sel.appendChild(opt);
-  });
-  const newOpt=document.createElement('option');
-  newOpt.value='__new__'; newOpt.textContent='➕ Crear nuevo departamento…';
-  sel.appendChild(newOpt);
-}
-
-function onDeptChange(){
-  const isNew=document.getElementById('fDept').value==='__new__';
-  document.getElementById('fNewDeptWrap').style.display=isNew?'block':'none';
-}
-
-// Abrir modal para NUEVO contacto (botón FAB)
-function oNew(){
-  ed={did:null,si:'',ci:-1,isNew:true};
-  document.getElementById('mTl').textContent='Agregar contacto';
-  document.getElementById('fNm').value='';
-  document.getElementById('fCg').value='';
-  document.getElementById('fTl').value='';
-  document.getElementById('fDeptWrap').style.display='block';
-  document.getElementById('fNewDeptWrap').style.display='none';
-  fillDeptSelect(DEPTS[0]?.id);
-  document.getElementById('bDl').style.display='none';
-  document.getElementById('ov').classList.add('on');
-  setTimeout(()=>document.getElementById('fNm').focus(),350);
-}
-
-// Abrir modal para EDITAR
-function oEd(did,siR,ciR){
-  const d=DEPTS.find(x=>x.id===did);if(!d)return;
-  const si=siR===''||siR===undefined?'':parseInt(siR);
-  const ci=parseInt(ciR);
-  const c=si===''?d.c[ci]:d.s[si].c[ci];if(!c)return;
-  ed={did,si,ci,isNew:false};
-  document.getElementById('mTl').textContent='Editar contacto';
-  document.getElementById('fNm').value=c.n||'';
-  document.getElementById('fCg').value=c.r||'';
-  document.getElementById('fTl').value=(c.p||'').replace(/\D/g,'');
-  document.getElementById('fDeptWrap').style.display='none';
-  document.getElementById('fNewDeptWrap').style.display='none';
-  document.getElementById('bDl').style.display='block';
-  document.getElementById('ov').classList.add('on');
-  setTimeout(()=>document.getElementById('fNm').focus(),350);
-}
-
-// Agregar dentro de sección específica (botón +)
-function oAdd(di,siR){
-  const si=siR===''||siR===undefined?'':parseInt(siR);
-  ed={did:DEPTS[di].id,si,ci:-1,isNew:true};
-  document.getElementById('mTl').textContent='Agregar contacto';
-  document.getElementById('fNm').value='';
-  document.getElementById('fCg').value='';
-  document.getElementById('fTl').value='';
-  document.getElementById('fDeptWrap').style.display='none';
-  document.getElementById('fNewDeptWrap').style.display='none';
-  document.getElementById('bDl').style.display='none';
-  document.getElementById('ov').classList.add('on');
-  setTimeout(()=>document.getElementById('fNm').focus(),350);
-}
-
-function cM(){document.getElementById('ov').classList.remove('on');}
-document.getElementById('ov').addEventListener('click',e=>{if(e.target===e.currentTarget)cM();});
-
-async function sC(){
-  const nm=document.getElementById('fNm').value.trim();
-  const rg=document.getElementById('fCg').value.trim();
-  const tl=document.getElementById('fTl').value.replace(/\D/g,'');
-  if(!nm){alert('El nombre es obligatorio.');return;}
-
-  // ── Determinar área para el Sheet
-  let areaNombre='';
-
-  if(ed.isNew && ed.did===null){
-    const selVal=document.getElementById('fDept').value;
-
-    if(selVal==='__new__'){
-      const dNm=document.getElementById('fNewDeptNm').value.trim();
-      const dEm=document.getElementById('fNewDeptEm').value.trim()||'📋';
-      if(!dNm){alert('Escribe el nombre del nuevo departamento.');return;}
-      areaNombre=dNm.toUpperCase();
-      const newId='custom-'+Date.now();
-      const colors=['ca-inv','ca-com','ca-fid','ca-log','ca-sac','ca-car'];
-      const colorsT=['ct-inv','ct-com','ct-fid','ct-log','ct-sac','ct-car'];
-      const ci=DEPTS.length%colors.length;
-      const newDept={id:newId,tab:'areas',n:dNm,e:dEm,
-        ca:colors[ci],ct:colorsT[ci],ds:'Departamento personalizado',
-        c:[{n:nm,r:rg,p:tl}],s:null};
-      DEPTS.push(newDept);
-      const edits=JSON.parse(localStorage.getItem('mgEd')||'{}');
-      edits[newId]={c:[{n:nm,r:rg,p:tl}],s:null,meta:{n:dNm,e:dEm,ca:colors[ci],ct:colorsT[ci]}};
-      localStorage.setItem('mgEd',JSON.stringify(edits));
-    } else {
-      const d=DEPTS.find(x=>x.id===selVal);if(!d)return;
-      areaNombre=d.n.toUpperCase();
-      if(d.c){ d.c.push({n:nm,r:rg,p:tl}); }
-      else { if(!d.s)d.s=[]; const last=d.s[d.s.length-1]; if(last)last.c.push({n:nm,r:rg,p:tl}); else d.s.push({t:'General',c:[{n:nm,r:rg,p:tl}]}); }
-      saveEd(selVal);
-    }
-  } else if(ed.isNew){
-    const d=DEPTS.find(x=>x.id===ed.did);if(!d)return;
-    areaNombre=d.n.toUpperCase();
-    const nc={n:nm,r:rg,p:tl,
-      ...(d.tab==='ops'?{ti:(ed.si!==''&&d.s?.[ed.si]?.t)||undefined,
-        tp:rg.toUpperCase().includes('PRINCIPAL')?'P':rg.toUpperCase().includes('COMERCIAL')?'C':''}:{})};
-    if(ed.si===''){ if(!d.c)d.c=[];d.c.push(nc); }
-    else d.s[ed.si].c.push(nc);
-    saveEd(ed.did);
-  } else {
-    // Editar existente — solo local
-    const d=DEPTS.find(x=>x.id===ed.did);if(!d)return;
-    const nc={n:nm,r:rg,p:tl};
-    if(ed.si==='')d.c[ed.ci]={...d.c[ed.ci],...nc};
-    else d.s[ed.si].c[ed.ci]={...d.s[ed.si].c[ed.ci],...nc};
-    saveEd(ed.did);
-    updCount();cM();render();
-    return;
-  }
-
-  updCount();cM();render();
-
-  // Enviar al Sheet en background usando GET params (sin CORS preflight)
-  if(areaNombre && ed.isNew){
-    postToSheet(areaNombre, nm, rg, tl);
-  }
-}
-
-function dC(){
-  if(!confirm('¿Eliminar este contacto?'))return;
-  const d=DEPTS.find(x=>x.id===ed.did);if(!d)return;
-  if(ed.si==='')d.c.splice(ed.ci,1);
-  else d.s[ed.si].c.splice(ed.ci,1);
-  saveEd(ed.did);updCount();cM();render();
-}
-
-function updCount(){
-  document.getElementById('sn').textContent=DEPTS.reduce((a,d)=>a+aC(d).length,0)+' contactos';
-}
-
-// ── INIT ──────────────────────────────────────────────────
-load();
-// Al iniciar, también sincroniza desde el Sheet en background
-setTimeout(()=>{
-  const remote=localStorage.getItem('mgRemote');
-  if(remote){try{mergeFromAPI(JSON.parse(remote));render();updCount();}catch(e){}}
-  lS();
-},800);
+lS();
 </script></body></html>

@@ -232,6 +232,8 @@ padding-right:32px;cursor:pointer}
 .qr-btn:active{opacity:.75}
 .qr-copy{background:var(--grnl);color:var(--grn);border:1.5px solid var(--grn)}
 .qr-wa{background:#25D366;color:#fff}
+.qr-sheet{background:#1a73e8;color:#fff;margin-top:8px;text-decoration:none;
+  width:100%;justify-content:center}
 .qr-close{margin-top:12px;background:none;border:none;
   font-size:12px;color:var(--t3);cursor:pointer;font-family:var(--f)}
 </style>
@@ -334,6 +336,10 @@ padding-right:32px;cursor:pointer}
         WhatsApp
       </a>
     </div>
+    <a class="qr-btn qr-sheet" href="https://docs.google.com/spreadsheets/d/121LaIarbnNCvPTttRnd4y9egaqhLxNfDEtrzUP_2b5g/edit?gid=279192145#gid=279192145" target="_blank" rel="noopener">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Editar en Google Sheets
+    </a>
     <button class="qr-close" onclick="hideQR()">✕ Cerrar</button>
   </div>
 </div>
@@ -342,8 +348,7 @@ padding-right:32px;cursor:pointer}
 const APP_URL='https://dtijerab-afk.github.io/directorio-megatiendas';
 function showQR(){
   const img=document.getElementById('qrImg');
-  if(!img.src||img.src==='')
-    img.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&color=1A3A6B&bgcolor=ffffff&data='+encodeURIComponent(APP_URL);
+  img.src='https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chl='+encodeURIComponent(APP_URL);
   document.getElementById('qrOv').classList.add('on');
 }
 function hideQR(){document.getElementById('qrOv').classList.remove('on');}

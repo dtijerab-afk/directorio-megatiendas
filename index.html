@@ -63,7 +63,7 @@ overflow:hidden;border:1px solid var(--bdr)}
 .dh{display:flex;align-items:center;gap:12px;padding:13px 14px;width:100%;
 min-height:64px;text-align:left;background:none;border:none;border-radius:0;
 -webkit-appearance:none;appearance:none;font-family:var(--f);cursor:pointer;
-user-select:none;-webkit-user-select:none}
+user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .dh:active{background:var(--sur2)}
 .di{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;
 justify-content:center;font-size:22px;flex-shrink:0}
@@ -88,7 +88,7 @@ border-bottom:1px solid var(--redb);border-top:1px solid var(--redb)}
 .sth{display:flex;align-items:center;gap:10px;padding:11px 14px;width:100%;
 background:#fff;border:none;border-radius:0;-webkit-appearance:none;
 appearance:none;font-family:var(--f);text-align:left;cursor:pointer;
-user-select:none;-webkit-user-select:none}
+user-select:none;-webkit-user-select:none;touch-action:manipulation}
 .sth:active{background:var(--sur2)}
 .sd{width:9px;height:9px;border-radius:50%;background:var(--red);flex-shrink:0}
 .sn{flex:1;font-size:13px;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.3px}
@@ -566,30 +566,14 @@ function row(x,dept,Q){
 }
 
 // ── EVENTS ────────────────────────────────────────────────
-function onTap(e){
+// Solo click — touch-action:manipulation en CSS elimina el delay
+// y evita activación accidental al hacer scroll
+document.addEventListener('click',e=>{
   const tog=e.target.closest('[data-tog]');if(tog){document.querySelector('.dept[data-id="'+tog.dataset.tog+'"]')?.classList.toggle('op');return;}
   const sto=e.target.closest('[data-sto]');if(sto){document.getElementById(sto.dataset.sto)?.classList.toggle('op');return;}
   const eid=e.target.closest('[data-eid]');if(eid){oEd(eid.dataset.eid,eid.dataset.esi,eid.dataset.eci);return;}
   const adi=e.target.closest('[data-adi]');if(adi){oAdd(parseInt(adi.dataset.adi),adi.dataset.asi);return;}
-}
-
-// Guardar posición inicial del toque para distinguir tap vs scroll
-let _tx=0,_ty=0;
-document.addEventListener('touchstart',e=>{
-  _tx=e.touches[0].clientX;
-  _ty=e.touches[0].clientY;
-},{passive:true});
-
-document.addEventListener('touchend',e=>{
-  // Si el dedo se movió más de 8px = scroll, ignorar
-  const dx=Math.abs(e.changedTouches[0].clientX-_tx);
-  const dy=Math.abs(e.changedTouches[0].clientY-_ty);
-  if(dx>8||dy>8) return;
-  if(e.target.closest('[data-tog],[data-sto],[data-eid],[data-adi]')){
-    e.preventDefault();onTap(e);
-  }
-},{passive:false});
-document.addEventListener('click',e=>onTap(e));
+});
 
 document.getElementById('q').addEventListener('input',function(){
   document.getElementById('bClr').classList.toggle('on',!!this.value);

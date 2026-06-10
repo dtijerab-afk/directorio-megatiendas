@@ -219,7 +219,7 @@ padding-right:32px;cursor:pointer}
 .qrcard p{font-size:12px;color:var(--t3);margin-bottom:16px}
 .qrimg{border:3px solid var(--grn);border-radius:16px;
   padding:10px;display:inline-block;margin-bottom:14px}
-.qrimg img{width:200px;height:200px;display:block;border-radius:8px}
+.qrimg canvas{width:200px;height:200px;display:block;border-radius:8px}
 .qrurl{background:#eef2f8;border-radius:10px;padding:10px 12px;
   font-size:11px;font-weight:700;color:var(--grn);
   word-break:break-all;margin-bottom:14px;cursor:pointer;
@@ -321,7 +321,7 @@ padding-right:32px;cursor:pointer}
     <h2>📱 Compartir Directorio</h2>
     <p>Escanea con la cámara del celular</p>
     <div class="qrimg">
-      <img id="qrImg" src="" alt="QR" loading="lazy">
+      <canvas id="qrCanvas" width="200" height="200"></canvas>
     </div>
     <div class="qrurl" onclick="copyURL()">
       🔗 dtijerab-afk.github.io/directorio-megatiendas
@@ -345,10 +345,91 @@ padding-right:32px;cursor:pointer}
 </div>
 
 <script>
-const APP_URL='https://dtijerab-afk.github.io/directorio-megatiendas';
+// ── QR CODE puro JS (sin dependencias externas) ───────────
+// Implementación compacta basada en QR Code Model 2
+(function(){
+const QR={};
+const PATTERN=[[1,0,-1,0,1],[0,1,0,0,0],[-1,0,1,0,0],[0,0,0,1,0],[1,0,0,0,1]];
+function createMatrix(n){return Array.from({length:n},()=>new Array(n).fill(null));}
+function encodeData(str){
+  const bytes=[];for(let i=0;i<str.length;i++)bytes.push(str.charCodeAt(i)&0xff);
+  return bytes;
+}
+// Reed-Solomon GF(256)
+const GF_EXP=new Uint8Array(512),GF_LOG=new Uint8Array(256);
+let x=1;for(let i=0;i<255;i++){GF_EXP[i]=x;GF_LOG[x]=i;x=x*2^(x>=128?0x11d:0);}
+for(let i=255;i<512;i++)GF_EXP[i]=GF_EXP[i-255];
+function gfMul(a,b){return a&&b?GF_EXP[GF_LOG[a]+GF_LOG[b]]:0;}
+function rsGeneratorPoly(n){let g=[1];for(let i=0;i<n;i++){const t=[1,GF_EXP[i]];const ng=new Array(g.length+1).fill(0);for(let j=0;j<g.length;j++)for(let k=0;k<t.length;k++)ng[j+k]^=gfMul(g[j],t[k]);g=ng;}return g;}
+function rsEncodeMsg(msg,nsym){const gen=rsGeneratorPoly(nsym);const lm=[...msg,...new Array(nsym).fill(0)];for(let i=0;i<msg.length;i++){const c=lm[i];if(c)for(let j=0;j<gen.length;j++)lm[i+j]^=gfMul(gen[j],c);}return lm.slice(msg.length);}
+
+QR.generate=function(text){
+  // Version 3, 29x29, ECC Level M, byte mode
+  const VER=3,N=29,EC_CODEWORDS=26;
+  const header=[0b0100,0,text.length];// mode=byte, length
+  const data=encodeData(text);
+  // Build codeword stream
+  let bits=[];
+  function addBits(val,len){for(let i=len-1;i>=0;i--)bits.push((val>>i)&1);}
+  addBits(4,4);addBits(text.length,8);
+  for(const b of data)addBits(b,8);
+  addBits(0,4);// terminator
+  while(bits.length%8)bits.push(0);
+  const cw=[];for(let i=0;i<bits.length;i+=8){let v=0;for(let j=0;j<8;j++)v=(v<<1)|bits[i+j];cw.push(v);}
+  const pads=[0xEC,0x11];while(cw.length<44)cw.push(pads[(cw.length-0)%2]);
+  const ec=rsEncodeMsg(cw,EC_CODEWORDS);
+  const allCw=[...cw,...ec];
+  // Place in matrix
+  let allBits=[];for(const c of allCw)for(let i=7;i>=0;i--)allBits.push((c>>i)&1);
+  const mat=createMatrix(N);
+  // Finder patterns
+  function finder(r,c){for(let dr=-1;dr<=7;dr++)for(let dc=-1;dc<=7;dc++){if(r+dr<0||r+dr>=N||c+dc<0||c+dc>=N)continue;const inFinder=(dr>=0&&dr<=6&&dc>=0&&dc<=6);const inner=(dr>=2&&dr<=4&&dc>=2&&dc<=4);const border=(dr===0||dr===6||dc===0||dc===6);mat[r+dr][c+dc]=inFinder?(inner||border?1:0):-1;}}
+  finder(0,0);finder(0,N-7);finder(N-7,0);
+  // Timing
+  for(let i=8;i<N-8;i++){if(mat[6][i]===null)mat[6][i]=i%2===0?1:0;if(mat[i][6]===null)mat[i][6]=i%2===0?1:0;}
+  // Alignment (ver 3: one pattern at 22,22)
+  const ar=22,ac=22;
+  for(let dr=-2;dr<=2;dr++)for(let dc=-2;dc<=2;dc++){if(mat[ar+dr][ac+dc]===null){const dist=Math.max(Math.abs(dr),Math.abs(dc));mat[ar+dr][ac+dc]=dist===2?1:dist===0?1:0;}}
+  // Dark module
+  mat[N-8][8]=1;
+  // Format info (mask 0, ECC M = 0b00)
+  const fmtBits=[1,1,0,0,1,1,1,0,0,1,0,1,0,1,0];// precomputed for M+mask0
+  const fi=[[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[7,8],[8,8],[8,7],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0]];
+  const fi2=[[8,N-1],[8,N-2],[8,N-3],[8,N-4],[8,N-5],[8,N-6],[8,N-7],[N-8,8],[N-7,8],[N-6,8],[N-5,8],[N-4,8],[N-3,8],[N-2,8],[N-1,8]];
+  for(let i=0;i<15;i++){if(mat[fi[i][0]][fi[i][1]]===null)mat[fi[i][0]][fi[i][1]]=-1;if(mat[fi2[i][0]][fi2[i][1]]===null)mat[fi2[i][0]][fi2[i][1]]=-1;}
+  // Data placement (zigzag)
+  let bi=0;let up=true;
+  for(let right=N-1;right>0;right-=2){if(right===6)right--;
+    for(let row=up?N-1:0;up?row>=0:row<N;up?row--:row++){
+      for(let col=right;col>=right-1;col--){
+        if(mat[row][col]===null){
+          mat[row][col]=bi<allBits.length?allBits[bi++]:0;
+        }
+      }
+    }
+    up=!up;
+  }
+  // Apply mask 0: (row+col)%2===0
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(mat[r][c]!==null&&mat[r][c]>=0&&(r+c)%2===0)mat[r][c]^=1;
+  // Format bits
+  for(let i=0;i<15;i++){mat[fi[i][0]][fi[i][1]]=fmtBits[i];mat[fi2[i][0]][fi2[i][1]]=fmtBits[i];}
+  return mat;
+};
+QR.draw=function(text,canvasEl,size){
+  let mat;try{mat=QR.generate(text);}catch(e){return;}
+  const N=mat.length,ctx=canvasEl.getContext('2d');
+  canvasEl.width=canvasEl.height=size||200;
+  const s=size||200,pad=Math.round(s*0.04),cell=(s-pad*2)/N;
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,s,s);
+  ctx.fillStyle='#1A3A6B';
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++)
+    if(mat[r][c]===1)ctx.fillRect(pad+c*cell,pad+r*cell,cell,cell);
+};
+window._QR=QR;
+})();
+
 function showQR(){
-  const img=document.getElementById('qrImg');
-  img.src='https://chart.googleapis.com/chart?chs=200x200&cht=qr&choe=UTF-8&chl='+encodeURIComponent(APP_URL);
+  window._QR.draw(APP_URL,document.getElementById('qrCanvas'),200);
   document.getElementById('qrOv').classList.add('on');
 }
 function hideQR(){document.getElementById('qrOv').classList.remove('on');}

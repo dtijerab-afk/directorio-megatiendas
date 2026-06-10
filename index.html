@@ -629,7 +629,7 @@ function getOrCreateDept(areaNm, tab){
   return dept;
 }
 
-// Merge contactos de Áreas
+// Merge contactos de Áreas — actualiza si ya existe, agrega si es nuevo
 function mergeAreas(areas){
   if(!areas||!areas.length) return;
   areas.forEach(row=>{
@@ -638,22 +638,23 @@ function mergeAreas(areas){
     const dept=getOrCreateDept(area,'areas');
     const list=dept.c||(dept.s?dept.s[dept.s.length-1]?.c:null);
     if(!list) return;
-    const dup=list.find(x=>
-      (telefono&&x.p&&x.p.replace(/\D/g,'')===(telefono+'').replace(/\D/g,''))||
-      (x.n||'').toLowerCase()===(nombre||'').toLowerCase()
-    );
-    if(!dup) list.push({n:nombre,r:cargo,p:String(telefono||'').replace(/\D/g,'')});
+    // Buscar por nombre → actualizar si existe, agregar si no
+    const idx=list.findIndex(x=>(x.n||'').toLowerCase().trim()===(nombre||'').toLowerCase().trim());
+    const newC={n:nombre,r:cargo,p:String(telefono||'').replace(/\D/g,'')};
+    if(idx>=0){
+      list[idx]={...list[idx],...newC}; // actualiza teléfono y cargo
+    } else {
+      list.push(newC);
+    }
   });
 }
 
-// Merge contactos de Operaciones
+// Merge contactos de Operaciones — actualiza si ya existe
 function mergeOps(ops){
   if(!ops||!ops.length) return;
-  // Agrupar por regional
   ops.forEach(row=>{
     const {regional,tienda,nombre,cargo,telefono}=row;
     if(!nombre) return;
-    // Buscar dept de operaciones por regional
     const regKey=(regional||'').toUpperCase();
     const regMap={
       'REGIONAL ATLANTICO':'ops-atl','REGIONAL BOLIVAR':'ops-bol',
@@ -661,28 +662,18 @@ function mergeOps(ops){
     };
     const did=Object.keys(regMap).find(k=>regKey.includes(k.replace('REGIONAL ','')));
     let dept=did?DEPTS.find(x=>x.id===regMap[did]):null;
-
-    if(!dept){
-      dept=getOrCreateDept(regional||'Operaciones','ops');
-    }
-
-    // Buscar sección (tienda) dentro del dept
+    if(!dept) dept=getOrCreateDept(regional||'Operaciones','ops');
     if(!dept.s) dept.s=[];
     let sec=dept.s.find(s=>s.t&&s.t.toUpperCase()===(tienda||'').toUpperCase());
-    if(!sec){
-      sec={t:tienda||'General',c:[]};
-      dept.s.push(sec);
-      dept.c=null; // asegura que usa sections
-    }
-
-    const dup=sec.c.find(x=>
-      (telefono&&x.p&&x.p.replace(/\D/g,'')===(telefono+'').replace(/\D/g,''))||
-      (x.n||'').toLowerCase()===(nombre||'').toLowerCase()
-    );
-    if(!dup) sec.c.push({
+    if(!sec){ sec={t:tienda||'General',c:[]}; dept.s.push(sec); dept.c=null; }
+    const newC={
       n:nombre,r:cargo,p:String(telefono||'').replace(/\D/g,''),
       ti:tienda,tp:cargo.toUpperCase().includes('PRINCIPAL')?'P':cargo.toUpperCase().includes('COMERCIAL')?'C':''
-    });
+    };
+    // Actualizar si existe por nombre, agregar si no
+    const idx=sec.c.findIndex(x=>(x.n||'').toLowerCase().trim()===(nombre||'').toLowerCase().trim());
+    if(idx>=0){ sec.c[idx]={...sec.c[idx],...newC}; }
+    else { sec.c.push(newC); }
   });
 }
 

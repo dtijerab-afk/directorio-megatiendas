@@ -205,6 +205,35 @@ padding-right:32px;cursor:pointer}
 .ca-bol{background:#F0E8FF}.ct-bol{color:#6D28D9}
 .ca-mag{background:#FFEEE0}.ct-mag{color:#C2410C}
 .ca-sup{background:#E8F5E9}.ct-sup{color:#047857}
+/* QR MODAL */
+.qrov{position:fixed;inset:0;z-index:998;background:rgba(0,0,0,.6);
+  display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;pointer-events:none;transition:opacity .25s}
+.qrov.on{opacity:1;pointer-events:all}
+.qrcard{background:#fff;border-radius:24px;padding:28px 24px;
+  max-width:320px;width:100%;text-align:center;
+  transform:scale(.92);transition:transform .25s;
+  box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.qrov.on .qrcard{transform:scale(1)}
+.qrcard h2{font-size:16px;font-weight:800;color:var(--grn);margin-bottom:4px}
+.qrcard p{font-size:12px;color:var(--t3);margin-bottom:16px}
+.qrimg{border:3px solid var(--grn);border-radius:16px;
+  padding:10px;display:inline-block;margin-bottom:14px}
+.qrimg img{width:200px;height:200px;display:block;border-radius:8px}
+.qrurl{background:#eef2f8;border-radius:10px;padding:10px 12px;
+  font-size:11px;font-weight:700;color:var(--grn);
+  word-break:break-all;margin-bottom:14px;cursor:pointer;
+  border:1px solid #c3d0e8}
+.qr-btns{display:flex;gap:8px}
+.qr-btn{flex:1;height:42px;border-radius:12px;border:none;
+  font-size:13px;font-weight:700;font-family:var(--f);
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  cursor:pointer;text-decoration:none;transition:opacity .15s}
+.qr-btn:active{opacity:.75}
+.qr-copy{background:var(--grnl);color:var(--grn);border:1.5px solid var(--grn)}
+.qr-wa{background:#25D366;color:#fff}
+.qr-close{margin-top:12px;background:none;border:none;
+  font-size:12px;color:var(--t3);cursor:pointer;font-family:var(--f)}
 </style>
 </head>
 <body>
@@ -212,6 +241,13 @@ padding-right:32px;cursor:pointer}
   <div class="hdr-t">
     <div class="logo">🏪</div>
     <div class="hdr-i"><h1>Directorio Megatiendas</h1><p>Corporativo · Uso Interno</p></div>
+    <button class="bico" id="bQR" type="button" title="Compartir link" onclick="showQR()">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <path d="M14 14h2v2h-2zM18 14h2M14 18v2M18 18h3v3h-3z"/>
+      </svg>
+    </button>
     <button class="bico" id="bEdit" type="button">
       <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
         <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
@@ -276,7 +312,53 @@ padding-right:32px;cursor:pointer}
     </div>
   </div>
 </div>
+
+<!-- QR / COMPARTIR MODAL -->
+<div class="qrov" id="qrOv" onclick="if(event.target===this)hideQR()">
+  <div class="qrcard">
+    <h2>📱 Compartir Directorio</h2>
+    <p>Escanea con la cámara del celular</p>
+    <div class="qrimg">
+      <img id="qrImg" src="" alt="QR" loading="lazy">
+    </div>
+    <div class="qrurl" onclick="copyURL()">
+      🔗 dtijerab-afk.github.io/directorio-megatiendas
+    </div>
+    <div class="qr-btns">
+      <button class="qr-btn qr-copy" onclick="copyURL()">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        Copiar link
+      </button>
+      <a class="qr-btn qr-wa" href="whatsapp://send?text=📱 *Directorio Megatiendas*%0AContactos corporativos:%0Ahttps://dtijerab-afk.github.io/directorio-megatiendas">
+        <svg width="15" height="15" viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9 3 3 9 3 16c0 2.3.6 4.5 1.8 6.4L3 29l6.8-1.8A13 13 0 0016 29c7 0 13-6 13-13S23 3 16 3zm5.9 18.1c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2s-.8 1-1 1.2c-.2.2-.4.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.7.1-.2 0-.4-.1-.5l-1-2.2c-.3-.7-.5-.6-.7-.6h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6 0 1.6 1.2 3.1 1.3 3.3.2.2 2.4 3.6 5.7 5 .8.4 1.4.6 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>
+        WhatsApp
+      </a>
+    </div>
+    <button class="qr-close" onclick="hideQR()">✕ Cerrar</button>
+  </div>
+</div>
+
 <script>
+const APP_URL='https://dtijerab-afk.github.io/directorio-megatiendas';
+function showQR(){
+  const img=document.getElementById('qrImg');
+  if(!img.src||img.src==='')
+    img.src='https://api.qrserver.com/v1/create-qr-code/?size=200x200&margin=0&color=1A3A6B&bgcolor=ffffff&data='+encodeURIComponent(APP_URL);
+  document.getElementById('qrOv').classList.add('on');
+}
+function hideQR(){document.getElementById('qrOv').classList.remove('on');}
+function copyURL(){
+  const copy=()=>{
+    const el=document.createElement('input');
+    el.value=APP_URL;document.body.appendChild(el);
+    el.select();el.setSelectionRange(0,999);
+    document.execCommand('copy');document.body.removeChild(el);
+    alert('✅ Link copiado');
+  };
+  if(navigator.clipboard){
+    navigator.clipboard.writeText(APP_URL).then(()=>alert('✅ Link copiado')).catch(copy);
+  } else copy();
+}
 // ── DATA ─────────────────────────────────────────────────
 const D=[
  // OPERACIONES

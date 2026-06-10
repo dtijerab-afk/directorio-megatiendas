@@ -572,8 +572,22 @@ function onTap(e){
   const eid=e.target.closest('[data-eid]');if(eid){oEd(eid.dataset.eid,eid.dataset.esi,eid.dataset.eci);return;}
   const adi=e.target.closest('[data-adi]');if(adi){oAdd(parseInt(adi.dataset.adi),adi.dataset.asi);return;}
 }
+
+// Guardar posición inicial del toque para distinguir tap vs scroll
+let _tx=0,_ty=0;
+document.addEventListener('touchstart',e=>{
+  _tx=e.touches[0].clientX;
+  _ty=e.touches[0].clientY;
+},{passive:true});
+
 document.addEventListener('touchend',e=>{
-  if(e.target.closest('[data-tog],[data-sto],[data-eid],[data-adi]')){e.preventDefault();onTap(e);}
+  // Si el dedo se movió más de 8px = scroll, ignorar
+  const dx=Math.abs(e.changedTouches[0].clientX-_tx);
+  const dy=Math.abs(e.changedTouches[0].clientY-_ty);
+  if(dx>8||dy>8) return;
+  if(e.target.closest('[data-tog],[data-sto],[data-eid],[data-adi]')){
+    e.preventDefault();onTap(e);
+  }
 },{passive:false});
 document.addEventListener('click',e=>onTap(e));
 

@@ -839,31 +839,51 @@ function mergeAreas(areas){
   });
 }
 
-// Merge contactos de Operaciones — actualiza si ya existe
+// Operaciones: Sheet es fuente de verdad → reemplaza secciones completamente
 function mergeOps(ops){
   if(!ops||!ops.length) return;
+
+  // Agrupar por regional → tienda
+  const byReg={};
   ops.forEach(row=>{
-    const {regional,tienda,nombre,cargo,telefono}=row;
+    const {regional,tienda,cargo,nombre,telefono}=row;
     if(!nombre) return;
-    const regKey=(regional||'').toUpperCase();
-    const regMap={
-      'REGIONAL ATLANTICO':'ops-atl','REGIONAL BOLIVAR':'ops-bol',
-      'REGIONAL MAGDALENA':'ops-mag','SUPERMAYORISTA':'ops-sup'
-    };
-    const did=Object.keys(regMap).find(k=>regKey.includes(k.replace('REGIONAL ','')));
-    let dept=did?DEPTS.find(x=>x.id===regMap[did]):null;
-    if(!dept) dept=getOrCreateDept(regional||'Operaciones','ops');
-    if(!dept.s) dept.s=[];
-    let sec=dept.s.find(s=>s.t&&s.t.toUpperCase()===(tienda||'').toUpperCase());
-    if(!sec){ sec={t:tienda||'General',c:[]}; dept.s.push(sec); dept.c=null; }
-    const newC={
-      n:nombre,r:cargo,p:String(telefono||'').replace(/\D/g,''),
-      ti:tienda,tp:cargo.toUpperCase().includes('PRINCIPAL')?'P':cargo.toUpperCase().includes('COMERCIAL')?'C':''
-    };
-    // Actualizar si existe por nombre, agregar si no
-    const idx=sec.c.findIndex(x=>(x.n||'').toLowerCase().trim()===(nombre||'').toLowerCase().trim());
-    if(idx>=0){ sec.c[idx]={...sec.c[idx],...newC}; }
-    else { sec.c.push(newC); }
+    const rk=(regional||'').trim().toUpperCase();
+    const tk=(tienda||'').trim().toUpperCase()||'__JEF__';
+    if(!byReg[rk]) byReg[rk]={};
+    if(!byReg[rk][tk]) byReg[rk][tk]=[];
+    byReg[rk][tk].push({
+      n:nombre, r:cargo,
+      p:String(telefono||'').replace(/\D/g,''),
+      ti:tienda||'',
+      tp:cargo.toUpperCase().includes('PRINCIPAL')?'P':cargo.toUpperCase().includes('COMERCIAL')?'C':''
+    });
+  });
+
+  const regMap={
+    'OPERACIONES ATLANTICO':'ops-atl',
+    'OPERACIONES BOLIVAR':'ops-bol',
+    'OPERACIONES MAGDALENA':'ops-mag',
+    'SUPERMAYORISTA':'ops-sup'
+  };
+
+  Object.entries(byReg).forEach(([rk, tiendas])=>{
+    // Mapeo exacto o parcial
+    let deptId=regMap[rk];
+    if(!deptId){
+      const mk=Object.keys(regMap).find(k=>rk.includes(k.replace('OPERACIONES ','')));
+      deptId=mk?regMap[mk]:null;
+    }
+    let dept=deptId?DEPTS.find(x=>x.id===deptId):null;
+    if(!dept) dept=getOrCreateDept(rk,'ops');
+    if(!dept) return;
+
+    // Reemplazar secciones completamente con datos del Sheet
+    dept.c=null;
+    dept.s=Object.entries(tiendas).map(([tk,contacts])=>({
+      t: tk==='__JEF__'?'Jefatura Regional':(contacts[0]?.ti||tk),
+      c: contacts
+    }));
   });
 }
 

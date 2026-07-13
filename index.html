@@ -797,22 +797,44 @@ function getOrCreateDept(areaNm, tab){
   return dept;
 }
 
-// Merge contactos de Áreas — actualiza si ya existe, agrega si es nuevo
+// Áreas: el Sheet ES la fuente de verdad → reemplaza completamente
 function mergeAreas(areas){
   if(!areas||!areas.length) return;
+
+  // Agrupar por área
+  const byArea={};
   areas.forEach(row=>{
     const {area,nombre,cargo,telefono}=row;
     if(!nombre||!area) return;
-    const dept=getOrCreateDept(area,'areas');
-    const list=dept.c||(dept.s?dept.s[dept.s.length-1]?.c:null);
-    if(!list) return;
-    // Buscar por nombre → actualizar si existe, agregar si no
-    const idx=list.findIndex(x=>(x.n||'').toLowerCase().trim()===(nombre||'').toLowerCase().trim());
-    const newC={n:nombre,r:cargo,p:String(telefono||'').replace(/\D/g,'')};
-    if(idx>=0){
-      list[idx]={...list[idx],...newC}; // actualiza teléfono y cargo
-    } else {
-      list.push(newC);
+    const k=area.trim().toUpperCase();
+    if(!byArea[k]) byArea[k]=[];
+    byArea[k].push({n:nombre,r:cargo,p:String(telefono||'').replace(/\D/g,'')});
+  });
+
+  Object.entries(byArea).forEach(([areaKey, contacts])=>{
+    let dept=DEPTS.find(x=>x.id===areaToId(areaKey));
+
+    if(!dept){
+      // Crear dept nuevo
+      const newId='api-'+areaKey.toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+      dept=DEPTS.find(x=>x.id===newId);
+      if(!dept){
+        const ci=DEPTS.length%COLORS.length;
+        dept={id:newId,tab:'areas',
+          n:areaKey.charAt(0)+areaKey.slice(1).toLowerCase(),
+          e:EMOJIS[DEPTS.length%EMOJIS.length],
+          ca:COLORS[ci],ct:COLORST[ci],
+          ds:'Desde Google Sheets',c:[],s:null};
+        DEPTS.push(dept);
+      }
+    }
+
+    // REEMPLAZAR contactos con los del Sheet (fuente de verdad)
+    if(dept.c!==null){
+      dept.c=contacts;
+    } else if(dept.s&&dept.s.length){
+      // Si tiene secciones, reemplaza la última o la más general
+      dept.s[dept.s.length-1].c=contacts;
     }
   });
 }
@@ -858,10 +880,18 @@ async function lS(){
     clearTimeout(t);
     const json=await r.json();
     if(json.ok){
-      load(true); // base fresca + edits locales
-      // Fusionar las dos hojas
+      console.log('API response ops count:', json.ops?.length, 'areas count:', json.areas?.length);
+      console.log('Ops sample:', JSON.stringify(json.ops?.slice(-3)));
+      // Sheet es fuente de verdad → limpiar edits locales de áreas antes de aplicar
+      const edits=JSON.parse(localStorage.getItem('mgEd')||'{}');
+      Object.keys(edits).forEach(id=>{
+        if(!edits[id].meta) delete edits[id]; // borrar edits de áreas (no depts custom)
+      });
+      localStorage.setItem('mgEd',JSON.stringify(edits));
+
+      load(true); // base fresca + solo depts custom locales
       if(json.areas) mergeAreas(json.areas);
-      else if(json.data) mergeAreas(json.data); // compatibilidad versión anterior
+      else if(json.data) mergeAreas(json.data);
       if(json.ops)   mergeOps(json.ops);
       const now=new Date();
       upd.textContent='✓ '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');

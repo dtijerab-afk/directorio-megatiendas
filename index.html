@@ -346,10 +346,8 @@ padding-right:32px;cursor:pointer}
 </div>
 
 <script>
-// URL pública del directorio (GitHub Pages bajo la organización).
-// Formato: https://NOMBRE-ORG.github.io/NOMBRE-REPO
-// Si usas otro nombre de organización o repo, cambia SOLO esta línea.
-const APP_URL='https://megatiendas-ops.github.io/directorio';
+// URL pública del directorio (GitHub Pages bajo la organización megatiendas-ops).
+const APP_URL='https://megatiendas-ops.github.io/directorio-megatiendas';
 
 // ── FUENTE DE DATOS ───────────────────────────────────────
 // Sheet: "Directorio 110826". Debe tener las pestañas OPS y AREAS.
@@ -697,7 +695,9 @@ function mergeAreas(areas){
       r:(r.cargo||'').trim(),
       p:String(r.telefono||'').replace(/\D/g,''),
       m:(r.correo||'').trim(),
-      _sec:(r.seccion||'').trim()
+      _sec:(r.seccion||'').trim(),
+      _row:r._row,       // fila real en el Sheet: necesaria para editar/borrar
+      _area:area         // valor original (con mayúscula/tilde propia del Sheet)
     });
   });
 
@@ -710,13 +710,13 @@ function mergeAreas(areas){
       const porSec={};
       contacts.forEach(c=>{
         const k=c._sec||'General';
-        (porSec[k]=porSec[k]||[]).push({n:c.n,r:c.r,p:c.p,m:c.m});
+        (porSec[k]=porSec[k]||[]).push({n:c.n,r:c.r,p:c.p,m:c.m,_row:c._row,_area:c._area,_sec:c._sec});
       });
       dept.c=null;
       dept.s=Object.entries(porSec).map(([t,c])=>({t,c}));
     }else{
       dept.s=null;
-      dept.c=contacts.map(c=>({n:c.n,r:c.r,p:c.p,m:c.m}));
+      dept.c=contacts.map(c=>({n:c.n,r:c.r,p:c.p,m:c.m,_row:c._row,_area:c._area,_sec:c._sec}));
     }
   });
 }
@@ -740,7 +740,9 @@ function mergeOps(ops){
       p:String(r.telefono||'').replace(/\D/g,''),
       m:(r.correo||'').trim(),
       ti:tienda,
-      tp:cargo.toUpperCase().includes('PRINCIPAL')?'P':cargo.toUpperCase().includes('COMERCIAL')?'C':''
+      tp:cargo.toUpperCase().includes('PRINCIPAL')?'P':cargo.toUpperCase().includes('COMERCIAL')?'C':'',
+      _row:r._row,
+      _area:(r.regional||'').trim()
     });
   });
 
@@ -839,7 +841,23 @@ async function lS(){
 function postToSheet(area,nombre,cargo,telefono,correo,seccion,sheet){
   jsonp({action:'add', sheet:sheet||'areas', area:area||'', seccion:seccion||'',
          nombre:nombre||'', cargo:cargo||'', tel:telefono||'', correo:correo||''})
+    .then(function(){ lS(); })   // refresca para traer el _row del registro nuevo
     .catch(function(){});
+}
+
+async function postEditToSheet(sheet,row,area,seccion,nombre,cargo,telefono,correo){
+  try{
+    await jsonp({action:'edit', sheet:sheet||'areas', row:row, area:area||'', seccion:seccion||'',
+                 nombre:nombre||'', cargo:cargo||'', tel:telefono||'', correo:correo||''});
+  }catch(e){ console.error('No se pudo sincronizar la edición con el Sheet:', e); }
+  lS();  // refresca: si otro usuario editó filas de por medio, aquí se realinean los _row
+}
+
+async function postDeleteToSheet(sheet,row){
+  try{
+    await jsonp({action:'delete', sheet:sheet||'areas', row:row});
+  }catch(e){ console.error('No se pudo sincronizar la eliminación con el Sheet:', e); }
+  lS();
 }
 
 // ── MODAL ─────────────────────────────────────────────────
@@ -962,11 +980,22 @@ async function sC(){
     saveEd(ed.did);
   } else {
     const d=DEPTS.find(x=>x.id===ed.did);if(!d)return;
+    const old = ed.si==='' ? d.c[ed.ci] : d.s[ed.si].c[ed.ci];
     const nc={n:nm,r:rg,p:tl,m:ml};
     if(ed.si==='')d.c[ed.ci]={...d.c[ed.ci],...nc};
     else d.s[ed.si].c[ed.ci]={...d.s[ed.si].c[ed.ci],...nc};
     saveEd(ed.did);
     updCount();cM();render();
+
+    // Si el contacto viene del Sheet (tiene _row), la edición se sincroniza allá.
+    // Si es un contacto solo-local (agregado antes de la primera sincronización,
+    // o de un departamento personalizado), queda como edición local, igual que antes.
+    if(old && old._row){
+      const sheet=d.tab==='ops'?'ops':'areas';
+      const area=old._area||d.n.toUpperCase();
+      const seccionSync=d.tab==='ops'?(old.ti||''):(old._sec||'');
+      postEditToSheet(sheet, old._row, area, seccionSync, nm, rg, tl, ml);
+    }
     return;
   }
 
@@ -977,9 +1006,15 @@ async function sC(){
 function dC(){
   if(!confirm('¿Eliminar este contacto?'))return;
   const d=DEPTS.find(x=>x.id===ed.did);if(!d)return;
+  const old = ed.si==='' ? d.c[ed.ci] : d.s[ed.si].c[ed.ci];
   if(ed.si==='')d.c.splice(ed.ci,1);
   else d.s[ed.si].c.splice(ed.ci,1);
   saveEd(ed.did);updCount();cM();render();
+
+  if(old && old._row){
+    const sheet=d.tab==='ops'?'ops':'areas';
+    postDeleteToSheet(sheet, old._row);
+  }
 }
 
 function updCount(){

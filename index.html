@@ -1,1040 +1,441 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Directorio Megatiendas</title>
-<style>
-:root{--bg:#F4F6F9;--sur:#fff;--sur2:#F8F9FB;--bdr:#E8ECF1;--bdr2:#D1D9E2;
---t1:#0F1923;--t2:#4A5568;--t3:#8A97A8;--grn:#1A3A6B;--grnl:#E8EEF8;
---call:#1A3A6B;--calld:#142d54;--red:#B91C1C;--redl:#FEE2E2;--redb:#FECACA;
---wa:#25D366;--ml:#5B6B7F;--rp:999px;--rl:12px;--rx:18px;--rm:8px;
---sh:0 1px 3px rgba(0,0,0,.07),0 1px 2px rgba(0,0,0,.04);
---shm:0 4px 12px rgba(0,0,0,.08),0 1px 4px rgba(0,0,0,.05);
---f:-apple-system,'Segoe UI',system-ui,sans-serif}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--f);background:var(--bg);color:var(--t1);min-height:100dvh;
-overscroll-behavior:none;-webkit-tap-highlight-color:transparent}
-button{cursor:pointer;font-family:var(--f)}
-.hdr{position:sticky;top:0;z-index:200;background:var(--grn)}
-.hdr-t{display:flex;align-items:center;gap:10px;padding:13px 14px 9px}
-.logo{width:38px;height:38px;border-radius:10px;background:rgba(255,255,255,.15);
-border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;
-font-size:20px;flex-shrink:0}
-.hdr-i{flex:1;min-width:0}
-.hdr-i h1{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.3px}
-.hdr-i p{font-size:11px;color:rgba(255,255,255,.6);margin-top:2px}
-.bico{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.15);
-border:1px solid rgba(255,255,255,.2);color:#fff;display:flex;align-items:center;
-justify-content:center;flex-shrink:0;-webkit-appearance:none;appearance:none}
-.bico.on{background:#fff;color:var(--grn)}.bico:active{opacity:.7}
-.sw{margin:0 12px 11px;position:relative}
-.sico{position:absolute;left:12px;top:50%;transform:translateY(-50%);
-color:rgba(255,255,255,.5);pointer-events:none}
-#q{width:100%;height:42px;padding:0 36px;background:rgba(255,255,255,.15);
-border:1px solid rgba(255,255,255,.2);border-radius:var(--rp);color:#fff;
-font-size:15px;font-family:var(--f);outline:none}
-#q::placeholder{color:rgba(255,255,255,.5)}#q:focus{background:rgba(255,255,255,.22)}
-.bc{position:absolute;right:10px;top:50%;transform:translateY(-50%);
-background:rgba(255,255,255,.2);border:none;border-radius:50%;width:20px;height:20px;
-color:#fff;font-size:11px;font-weight:700;display:none;align-items:center;justify-content:center}
-.bc.on{display:flex}
-.bar{display:flex;align-items:center;gap:7px;padding:8px 12px;
-background:var(--sur);border-bottom:1px solid var(--bdr);
-position:sticky;top:100px;z-index:190}
-.sp{background:var(--grn);color:#fff;padding:0 10px;height:32px;border-radius:var(--rp);
-font-size:12px;font-weight:700;display:flex;align-items:center;gap:5px;flex-shrink:0}
-.ui{flex:1;font-size:11px;color:var(--t3);text-align:right}
-.bref{background:var(--grnl);border:1.5px solid var(--grn);border-radius:var(--rm);
-color:var(--grn);font-size:12px;font-weight:800;height:32px;padding:0 10px;
-display:flex;align-items:center;gap:4px;flex-shrink:0;
--webkit-appearance:none;appearance:none;transition:opacity .2s;text-decoration:none}
-.bref:active{opacity:.6}
-.bref.ld svg{animation:spin 1s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.eb{display:none;background:#FEF3C7;border-bottom:1px solid #FDE68A;
-padding:7px 16px;text-align:center;font-size:12px;font-weight:700;color:#92400E}
-body.em .eb{display:block}
-.main{padding:12px 10px 90px;display:flex;flex-direction:column;gap:8px}
-.dept{background:var(--sur);border-radius:var(--rx);box-shadow:var(--sh);
-overflow:hidden;border:1px solid var(--bdr)}
-.dept.op{box-shadow:var(--shm);border-color:var(--bdr2)}
-.dh{display:flex;align-items:center;gap:12px;padding:13px 14px;width:100%;
-min-height:64px;text-align:left;background:none;border:none;border-radius:0;
--webkit-appearance:none;appearance:none;font-family:var(--f);cursor:pointer;
-user-select:none;-webkit-user-select:none;touch-action:manipulation}
-.dh:active{background:var(--sur2)}
-.di{width:44px;height:44px;border-radius:13px;display:flex;align-items:center;
-justify-content:center;font-size:22px;flex-shrink:0}
-.dn{flex:1;min-width:0}
-.dnm{font-size:15px;font-weight:800;color:var(--t1);
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.dsb{font-size:12px;color:var(--t3);margin-top:2px}
-.dr{display:flex;align-items:center;gap:6px;flex-shrink:0}
-.dc{padding:3px 9px;border-radius:var(--rp);font-size:12px;font-weight:800}
-.chv{width:18px;height:18px;color:var(--t3);transition:transform .3s cubic-bezier(.4,0,.2,1);flex-shrink:0}
-.dept.op .chv{transform:rotate(180deg)}
-.db{max-height:0;overflow:hidden;transition:max-height .4s ease}
-.dept.op .db{max-height:9999px}
-.dbi{border-top:1px solid var(--bdr)}
-.sh{padding:7px 14px;background:#FEF2F2;font-size:11px;font-weight:800;
-text-transform:uppercase;letter-spacing:.7px;color:var(--red);
-display:flex;align-items:center;gap:8px;
-border-bottom:1px solid var(--redb);border-top:1px solid var(--redb)}
-.sh .br{width:3px;height:13px;border-radius:2px;flex-shrink:0;background:var(--red)}
-.sti{border-bottom:1px solid #F2F4F7}
-.sti:last-child{border-bottom:none}
-.sth{display:flex;align-items:center;gap:10px;padding:11px 14px;width:100%;
-background:#fff;border:none;border-radius:0;-webkit-appearance:none;
-appearance:none;font-family:var(--f);text-align:left;cursor:pointer;
-user-select:none;-webkit-user-select:none;touch-action:manipulation}
-.sth:active{background:var(--sur2)}
-.sd{width:9px;height:9px;border-radius:50%;background:var(--red);flex-shrink:0}
-.sn{flex:1;font-size:13px;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:.3px}
-.sc{font-size:11px;font-weight:700;background:var(--redl);color:var(--red);
-padding:2px 7px;border-radius:999px;margin-right:3px}
-.sv{width:15px;height:15px;color:var(--red);transition:transform .28s ease;flex-shrink:0}
-.sti.op .sv{transform:rotate(180deg)}
-.sb{max-height:0;overflow:hidden;transition:max-height .35s ease;background:#FFFAFA}
-.sti.op .sb{max-height:9999px}
-.ct{display:flex;align-items:center;gap:11px;padding:11px 14px;
-border-bottom:1px solid #F2F4F7}
-.ct:last-child{border-bottom:none}
-.ct:active{background:var(--sur2)}
-.av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;
-justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0}
-.ci{flex:1;min-width:0}
-.cnm{font-size:15px;font-weight:700;color:var(--t1);
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.crl{font-size:13px;font-weight:700;color:var(--grn);margin-top:3px;
-line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ctel{font-size:12px;font-weight:600;color:var(--t3);margin-top:3px;
-display:flex;align-items:center;gap:4px}
-.cml{font-size:11px;font-weight:600;color:var(--t3);margin-top:2px;
-display:flex;align-items:center;gap:4px;
-white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.cbdg{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
-.bdg{padding:3px 7px;border-radius:4px;font-size:11px;font-weight:700;white-space:nowrap}
-.bst{background:var(--redl);color:var(--red);border:1px solid var(--redb)}
-.bp{background:var(--grnl);color:var(--grn)}
-.bc2{background:#EFF6FF;color:#1D4ED8}
-.ca{display:flex;align-items:center;gap:5px;flex-shrink:0}
-.bph,.bwa,.bed,.bml{width:38px;height:38px;border-radius:50%;flex-shrink:0;border:none;
-display:flex;align-items:center;justify-content:center;
--webkit-appearance:none;appearance:none;outline:none;padding:0;
-text-decoration:none;-webkit-tap-highlight-color:transparent}
-.bph{background:var(--call);color:#fff;box-shadow:0 2px 8px rgba(26,58,107,.4)}
-.bph:active{background:var(--calld);transform:scale(.9)}
-.bwa{background:var(--wa);color:#fff;box-shadow:0 2px 8px rgba(37,211,102,.4)}
-.bwa:active{background:#1ebe5d;transform:scale(.9)}
-.bml{background:#EEF2F7;border:1px solid #D6DEE9;color:var(--ml);width:34px;height:34px}
-.bml:active{background:#DDE5EF;transform:scale(.9)}
-.bml.bno{display:none}
-.bed{background:#F1F5F9;border:1px solid #CBD5E1;color:#64748B;
-display:none;width:32px;height:32px}
-body.em .bed{display:flex}
-.bed:active{background:#E2E8F0}
-.bno{background:#E5E7EB!important;box-shadow:none!important;pointer-events:none;opacity:.45}
-.badd{display:none;width:100%;padding:9px 14px;background:none;border:none;
-border-top:1px dashed #CBD5E1;color:var(--grn);font-size:13px;font-weight:700;
-text-align:left;gap:7px;align-items:center;-webkit-appearance:none;
-appearance:none;font-family:var(--f)}
-body.em .badd{display:flex}
-.badd:active{background:var(--grnl)}
-.emp{text-align:center;padding:56px 24px;color:var(--t3);
-display:none;flex-direction:column;align-items:center;gap:10px}
-.emp.on{display:flex}
-.ov{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.5);
-display:flex;align-items:flex-end;justify-content:center;
-opacity:0;pointer-events:none;transition:opacity .25s}
-.ov.on{opacity:1;pointer-events:all}
-.mod{background:var(--sur);border-radius:20px 20px 0 0;width:100%;max-width:480px;
-padding-bottom:env(safe-area-inset-bottom,16px);
-transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
-max-height:92dvh;overflow-y:auto}
-.ov.on .mod{transform:translateY(0)}
-.mdg{width:38px;height:4px;background:#CBD5E1;border-radius:2px;margin:11px auto 0}
-.mhd{display:flex;align-items:center;justify-content:space-between;
-padding:14px 18px 10px;border-bottom:1px solid var(--bdr)}
-.mtl{font-size:16px;font-weight:800}
-.mcl{width:30px;height:30px;border-radius:50%;background:#F1F5F9;border:none;
-color:var(--t2);display:flex;align-items:center;justify-content:center;
-font-size:16px;font-weight:700;-webkit-appearance:none;appearance:none}
-.mcl:active{background:#E2E8F0}
-.mbd{padding:14px 18px;display:flex;flex-direction:column;gap:12px}
-.fg{display:flex;flex-direction:column;gap:5px}
-.fl{font-size:11px;font-weight:800;color:var(--t3);text-transform:uppercase;letter-spacing:.5px}
-.fi{width:100%;padding:12px 13px;border:1.5px solid var(--bdr);border-radius:var(--rl);
-font-size:16px;font-family:var(--f);color:var(--t1);background:var(--sur);outline:none;
--webkit-appearance:none;appearance:none}
-.fi:focus{border-color:var(--grn)}
-.mac{display:flex;flex-direction:column;gap:9px;padding:4px 18px 20px}
-.bsv{width:100%;height:50px;border-radius:var(--rl);background:var(--grn);border:none;
-color:#fff;font-size:16px;font-weight:800;font-family:var(--f);
--webkit-appearance:none;appearance:none}
-.bsv:active{opacity:.8}
-.bdl{width:100%;height:44px;border-radius:var(--rl);background:var(--redl);
-border:1px solid var(--redb);color:var(--red);font-size:14px;font-weight:700;
-font-family:var(--f);-webkit-appearance:none;appearance:none}
-.bdl:active{opacity:.7}
-mark{background:#FEF08A;color:var(--t1);border-radius:2px;padding:0 1px}
-.ft{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.93);
-backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
-border-top:1px solid var(--bdr);padding:7px 16px;text-align:center;
-font-size:11px;color:var(--t3)}
-.fab{position:fixed;bottom:58px;right:16px;z-index:300;
-width:52px;height:52px;border-radius:50%;
-background:var(--grn);color:#fff;border:none;
-display:flex;align-items:center;justify-content:center;
-box-shadow:0 4px 16px rgba(26,58,107,.45);
--webkit-appearance:none;appearance:none;
-transition:transform .25s ease,opacity .25s ease}
-.fab:active{transform:scale(.9);opacity:.85}
-.fab.hid{transform:translateY(110px);opacity:0;pointer-events:none}
-.fsel{-webkit-appearance:none;appearance:none;
-background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%238A97A8' stroke-width='2.5'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-background-repeat:no-repeat;background-position:right 12px center;
-padding-right:32px;cursor:pointer}
-.ca-sac{background:#FFF3E0}.ct-sac{color:#E65100}
-.ca-car{background:#FCE4EC}.ct-car{color:#AD1457}
-.ca-frv{background:#E8F5E9}.ct-frv{color:#1B5E20}
-.ca-com{background:#E3F2FD}.ct-com{color:#0D47A1}
-.ca-fid{background:#FFF8E1}.ct-fid{color:#F57F17}
-.ca-cnt{background:#E8EAF6}.ct-cnt{color:#283593}
-.ca-log{background:#F3E5F5}.ct-log{color:#6A1B9A}
-.ca-inv{background:#E0F7FA}.ct-inv{color:#006064}
-.ca-mnt{background:#EFEBE9}.ct-mnt{color:#4E342E}
-.ca-atl{background:#E0F0FF}.ct-atl{color:#1D4ED8}
-.ca-bol{background:#F0E8FF}.ct-bol{color:#6D28D9}
-.ca-mag{background:#FFEEE0}.ct-mag{color:#C2410C}
-.ca-sup{background:#E8F5E9}.ct-sup{color:#047857}
-.ca-dir{background:#FFF1F2}.ct-dir{color:#9F1239}
-.ca-pyp{background:#F1F5F9}.ct-pyp{color:#334155}
-.ca-sis{background:#ECFEFF}.ct-sis{color:#0E7490}
-.ca-adm{background:#F5F3FF}.ct-adm{color:#5B21B6}
-.qrov{position:fixed;inset:0;z-index:998;background:rgba(0,0,0,.6);
-  display:flex;align-items:center;justify-content:center;padding:24px;
-  opacity:0;pointer-events:none;transition:opacity .25s}
-.qrov.on{opacity:1;pointer-events:all}
-.qrcard{background:#fff;border-radius:24px;padding:28px 24px;
-  max-width:320px;width:100%;text-align:center;
-  transform:scale(.92);transition:transform .25s;
-  box-shadow:0 20px 60px rgba(0,0,0,.3)}
-.qrov.on .qrcard{transform:scale(1)}
-.qrcard h2{font-size:16px;font-weight:800;color:var(--grn);margin-bottom:4px}
-.qrcard p{font-size:12px;color:var(--t3);margin-bottom:16px}
-.qrimg{border:3px solid var(--grn);border-radius:16px;
-  padding:10px;display:inline-block;margin-bottom:14px}
-.qrimg canvas{width:200px;height:200px;display:block;border-radius:8px}
-.qrurl{background:#eef2f8;border-radius:10px;padding:10px 12px;
-  font-size:11px;font-weight:700;color:var(--grn);
-  word-break:break-all;margin-bottom:14px;cursor:pointer;
-  border:1px solid #c3d0e8}
-.qr-btns{display:flex;gap:8px}
-.qr-btn{flex:1;height:42px;border-radius:12px;border:none;
-  font-size:13px;font-weight:700;font-family:var(--f);
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  cursor:pointer;text-decoration:none;transition:opacity .15s}
-.qr-btn:active{opacity:.75}
-.qr-copy{background:var(--grnl);color:var(--grn);border:1.5px solid var(--grn)}
-.qr-wa{background:#25D366;color:#fff}
-.qr-close{margin-top:12px;background:none;border:none;
-  font-size:12px;color:var(--t3);cursor:pointer;font-family:var(--f)}
-</style>
-</head>
-<body>
-<header class="hdr">
-  <div class="hdr-t">
-    <div class="logo">🏪</div>
-    <div class="hdr-i"><h1>Directorio Megatiendas</h1><p>Corporativo · Uso Interno</p></div>
-    <button class="bico" id="bQR" type="button" title="Compartir" onclick="showQR()">
-      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
-        <line x1="8.6" y1="10.6" x2="15.4" y2="6.4"/><line x1="8.6" y1="13.4" x2="15.4" y2="17.6"/>
-      </svg>
-    </button>
-    <button class="bico" id="bEdit" type="button">
-      <svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24">
-        <path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/>
-        <path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/>
-      </svg>
-    </button>
-  </div>
-  <div class="sw">
-    <svg class="sico" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input id="q" type="search" placeholder="Buscar nombre, cargo, tienda…" autocomplete="off" spellcheck="false">
-    <button class="bc" id="bClr" type="button">✕</button>
-  </div>
-</header>
-<div class="eb">✏️ Modo edición — toca el lápiz para editar · + para agregar</div>
-<div class="bar">
-  <div class="sp"><svg width="12" height="12" fill="currentColor" viewBox="0 0 20 20"><path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/></svg><span id="sn">—</span></div>
-  <div class="ui" id="ui">Datos locales</div>
-  <button class="bref" id="bRef" type="button" onclick="lS()">
-    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
-    Actualizar
-  </button>
-</div>
-<main class="main" id="main"></main>
-<div class="emp" id="emp"><div style="font-size:44px;opacity:.4">🔍</div><p style="font-size:15px;font-weight:700;color:#4A5568">Sin resultados</p></div>
+/**
+ * Directorio Megatiendas — API + instalador
+ * Sheet: "Directorio 110826"
+ *
+ * PASO 1  Ejecuta instalar() una sola vez desde el editor.
+ *         Crea las pestañas OPS y AREAS con los 246 registros y las formatea.
+ *         Google pedirá autorizar la primera vez. Acepta.
+ *
+ * PASO 2  Ejecuta probar() y revisa el registro de ejecución.
+ *         Debe decir OPS: 67 filas / AREAS: 179 filas.
+ *
+ * PASO 3  Implementar > Nueva implementación > Aplicación web
+ *         Ejecutar como: Yo     Acceso: Cualquier usuario
+ *         Copia la URL /exec y pégala en la constante API del HTML.
+ *
+ * A partir de ahí editas el Sheet y el directorio se actualiza solo.
+ * Cada cambio de ESTE código exige crear una NUEVA VERSIÓN de la implementación.
+ */
 
-<button class="fab" type="button" onclick="oNew()" title="Agregar contacto">
-  <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24">
-    <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-  </svg>
-</button>
+const SHEET_ID = '1CHqausIvphY4JVYrlZnUuP8JUNXtDTY8p8qlnkMKsyk';
 
-<footer class="ft">Megatiendas · Directorio Corporativo · Confidencial</footer>
-<div class="ov" id="ov">
-  <div class="mod">
-    <div class="mdg"></div>
-    <div class="mhd"><span class="mtl" id="mTl">Nuevo contacto</span><button class="mcl" type="button" onclick="cM()">✕</button></div>
-    <div class="mbd">
-      <div class="fg"><label class="fl">Nombre completo</label><input class="fi" id="fNm" type="text" placeholder="Ej: Juan Pérez García" autocomplete="off"></div>
-      <div class="fg"><label class="fl">Cargo</label><input class="fi" id="fCg" type="text" placeholder="Ej: Admin. Principal" autocomplete="off"></div>
-      <div class="fg"><label class="fl">Teléfono (solo dígitos)</label><input class="fi" id="fTl" type="tel" maxlength="10" placeholder="Ej: 3001234567" autocomplete="off"></div>
-      <div class="fg"><label class="fl">Correo corporativo</label><input class="fi" id="fMl" type="email" placeholder="Ej: jperez@megatiendas.co" autocomplete="off" spellcheck="false"></div>
-      <div class="fg" id="fDeptWrap">
-        <label class="fl">Departamento / Área</label>
-        <select class="fi fsel" id="fDept" onchange="onDeptChange()"></select>
-      </div>
-      <div id="fNewDeptWrap" style="display:none">
-        <div class="fg" style="margin-bottom:8px">
-          <label class="fl">Nombre del nuevo departamento</label>
-          <input class="fi" id="fNewDeptNm" type="text" placeholder="Ej: RRHH" autocomplete="off">
-        </div>
-        <div class="fg">
-          <label class="fl">Emoji (opcional)</label>
-          <input class="fi" id="fNewDeptEm" type="text" placeholder="Ej: 👥" maxlength="4" autocomplete="off">
-        </div>
-      </div>
-    </div>
-    <div class="mac">
-      <button class="bsv" type="button" onclick="sC()">Guardar contacto</button>
-      <button class="bdl" type="button" id="bDl" onclick="dC()" style="display:none">Eliminar contacto</button>
-    </div>
-  </div>
-</div>
-
-<div class="qrov" id="qrOv" onclick="if(event.target===this)hideQR()">
-  <div class="qrcard">
-    <h2>📱 Compartir Directorio</h2>
-    <p>Escanea con la cámara del celular</p>
-    <div class="qrimg">
-      <canvas id="qrCanvas" width="200" height="200"></canvas>
-    </div>
-    <div class="qrurl" id="txtUrl" onclick="copyURL()"></div>
-    <div class="qr-btns">
-      <button class="qr-btn qr-copy" onclick="copyURL()">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
-        Copiar link
-      </button>
-      <a class="qr-btn qr-wa" id="lnkWa" href="#">
-        <svg width="15" height="15" viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9 3 3 9 3 16c0 2.3.6 4.5 1.8 6.4L3 29l6.8-1.8A13 13 0 0016 29c7 0 13-6 13-13S23 3 16 3zm5.9 18.1c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2s-.8 1-1 1.2c-.2.2-.4.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.7.1-.2 0-.4-.1-.5l-1-2.2c-.3-.7-.5-.6-.7-.6h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6 0 1.6 1.2 3.1 1.3 3.3.2.2 2.4 3.6 5.7 5 .8.4 1.4.6 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>
-        WhatsApp
-      </a>
-    </div>
-    <button class="qr-close" onclick="hideQR()">✕ Cerrar</button>
-  </div>
-</div>
-
-<script>
-// URL pública del directorio (GitHub Pages bajo la organización megatiendas-ops).
-const APP_URL='https://megatiendas-ops.github.io/directorio-megatiendas';
-
-// ── FUENTE DE DATOS ───────────────────────────────────────
-// Sheet: "Directorio 110826". Debe tener las pestañas OPS y AREAS.
-// Para cambiar de Sheet: edita SOLO esta linea (y el SHEET_ID del Apps Script).
-const SHEET_ID='1CHqausIvphY4JVYrlZnUuP8JUNXtDTY8p8qlnkMKsyk';
-
-// ── QR CODE puro JS ───────────────────────────────────────
-(function(){
-const QR={};
-function createMatrix(n){return Array.from({length:n},()=>new Array(n).fill(null));}
-function encodeData(str){const bytes=[];for(let i=0;i<str.length;i++)bytes.push(str.charCodeAt(i)&0xff);return bytes;}
-const GF_EXP=new Uint8Array(512),GF_LOG=new Uint8Array(256);
-let x=1;for(let i=0;i<255;i++){GF_EXP[i]=x;GF_LOG[x]=i;x=x*2^(x>=128?0x11d:0);}
-for(let i=255;i<512;i++)GF_EXP[i]=GF_EXP[i-255];
-function gfMul(a,b){return a&&b?GF_EXP[GF_LOG[a]+GF_LOG[b]]:0;}
-function rsGeneratorPoly(n){let g=[1];for(let i=0;i<n;i++){const t=[1,GF_EXP[i]];const ng=new Array(g.length+1).fill(0);for(let j=0;j<g.length;j++)for(let k=0;k<t.length;k++)ng[j+k]^=gfMul(g[j],t[k]);g=ng;}return g;}
-function rsEncodeMsg(msg,nsym){const gen=rsGeneratorPoly(nsym);const lm=[...msg,...new Array(nsym).fill(0)];for(let i=0;i<msg.length;i++){const c=lm[i];if(c)for(let j=0;j<gen.length;j++)lm[i+j]^=gfMul(gen[j],c);}return lm.slice(msg.length);}
-QR.generate=function(text){
-  const N=29,EC_CODEWORDS=26;
-  const data=encodeData(text);
-  let bits=[];
-  function addBits(val,len){for(let i=len-1;i>=0;i--)bits.push((val>>i)&1);}
-  addBits(4,4);addBits(text.length,8);
-  for(const b of data)addBits(b,8);
-  addBits(0,4);
-  while(bits.length%8)bits.push(0);
-  const cw=[];for(let i=0;i<bits.length;i+=8){let v=0;for(let j=0;j<8;j++)v=(v<<1)|bits[i+j];cw.push(v);}
-  const pads=[0xEC,0x11];while(cw.length<44)cw.push(pads[cw.length%2]);
-  const ec=rsEncodeMsg(cw,EC_CODEWORDS);
-  const allCw=[...cw,...ec];
-  let allBits=[];for(const c of allCw)for(let i=7;i>=0;i--)allBits.push((c>>i)&1);
-  const mat=createMatrix(N);
-  function finder(r,c){for(let dr=-1;dr<=7;dr++)for(let dc=-1;dc<=7;dc++){if(r+dr<0||r+dr>=N||c+dc<0||c+dc>=N)continue;const inFinder=(dr>=0&&dr<=6&&dc>=0&&dc<=6);const inner=(dr>=2&&dr<=4&&dc>=2&&dc<=4);const border=(dr===0||dr===6||dc===0||dc===6);mat[r+dr][c+dc]=inFinder?(inner||border?1:0):-1;}}
-  finder(0,0);finder(0,N-7);finder(N-7,0);
-  for(let i=8;i<N-8;i++){if(mat[6][i]===null)mat[6][i]=i%2===0?1:0;if(mat[i][6]===null)mat[i][6]=i%2===0?1:0;}
-  const ar=22,ac=22;
-  for(let dr=-2;dr<=2;dr++)for(let dc=-2;dc<=2;dc++){if(mat[ar+dr][ac+dc]===null){const dist=Math.max(Math.abs(dr),Math.abs(dc));mat[ar+dr][ac+dc]=dist===2?1:dist===0?1:0;}}
-  mat[N-8][8]=1;
-  const fmtBits=[1,1,0,0,1,1,1,0,0,1,0,1,0,1,0];
-  const fi=[[0,8],[1,8],[2,8],[3,8],[4,8],[5,8],[7,8],[8,8],[8,7],[8,5],[8,4],[8,3],[8,2],[8,1],[8,0]];
-  const fi2=[[8,N-1],[8,N-2],[8,N-3],[8,N-4],[8,N-5],[8,N-6],[8,N-7],[N-8,8],[N-7,8],[N-6,8],[N-5,8],[N-4,8],[N-3,8],[N-2,8],[N-1,8]];
-  for(let i=0;i<15;i++){if(mat[fi[i][0]][fi[i][1]]===null)mat[fi[i][0]][fi[i][1]]=-1;if(mat[fi2[i][0]][fi2[i][1]]===null)mat[fi2[i][0]][fi2[i][1]]=-1;}
-  let bi=0;let up=true;
-  for(let right=N-1;right>0;right-=2){if(right===6)right--;
-    for(let row=up?N-1:0;up?row>=0:row<N;up?row--:row++){
-      for(let col=right;col>=right-1;col--){
-        if(mat[row][col]===null)mat[row][col]=bi<allBits.length?allBits[bi++]:0;
-      }
-    }
-    up=!up;
+// ── API ───────────────────────────────────────────────────
+function doGet(e) {
+  const p = (e && e.parameter) || {};
+  // callback => responde en formato JSONP (evita CORS al abrir el HTML local)
+  const cb = /^[A-Za-z0-9_]{1,64}$/.test(p.callback || '') ? p.callback : '';
+  try {
+    if (p.action === 'add')    return addContact(p, cb);
+    if (p.action === 'edit')   return editContact(p, cb);
+    if (p.action === 'delete') return deleteContact(p, cb);
+    const ss = SpreadsheetApp.openById(SHEET_ID);
+    return json({
+      ok: true,
+      ops:   leer(ss, 'OPS'),
+      areas: leer(ss, 'AREAS'),
+      ts:    new Date().toISOString()
+    }, cb);
+  } catch (err) {
+    return json({ ok: false, error: String(err) }, cb);
   }
-  for(let r=0;r<N;r++)for(let c=0;c<N;c++)if(mat[r][c]!==null&&mat[r][c]>=0&&(r+c)%2===0)mat[r][c]^=1;
-  for(let i=0;i<15;i++){mat[fi[i][0]][fi[i][1]]=fmtBits[i];mat[fi2[i][0]][fi2[i][1]]=fmtBits[i];}
-  return mat;
-};
-QR.draw=function(text,canvasEl,size){
-  let mat;try{mat=QR.generate(text);}catch(e){return;}
-  const N=mat.length,ctx=canvasEl.getContext('2d');
-  canvasEl.width=canvasEl.height=size||200;
-  const s=size||200,pad=Math.round(s*0.04),cell=(s-pad*2)/N;
-  ctx.fillStyle='#fff';ctx.fillRect(0,0,s,s);
-  ctx.fillStyle='#1A3A6B';
-  for(let r=0;r<N;r++)for(let c=0;c<N;c++)
-    if(mat[r][c]===1)ctx.fillRect(pad+c*cell,pad+r*cell,cell,cell);
-};
-window._QR=QR;
-})();
-
-function showQR(){
-  window._QR.draw(APP_URL,document.getElementById('qrCanvas'),200);
-  document.getElementById('txtUrl').textContent='🔗 '+APP_URL.replace(/^https?:\/\//,'');
-  document.getElementById('lnkWa').href='whatsapp://send?text='+
-    encodeURIComponent('📱 *Directorio Megatiendas*\nContactos corporativos:\n'+APP_URL);
-  document.getElementById('qrOv').classList.add('on');
 }
-function hideQR(){document.getElementById('qrOv').classList.remove('on');}
-function copyURL(){
-  const copy=()=>{
-    const el=document.createElement('input');
-    el.value=APP_URL;document.body.appendChild(el);
-    el.select();el.setSelectionRange(0,999);
-    document.execCommand('copy');document.body.removeChild(el);
-    alert('✅ Link copiado');
+
+/** Convierte una pestaña en objetos usando la fila 1 como llaves.
+ *  Cada objeto incluye _row: el número de fila real en el Sheet,
+ *  necesario para poder editar o eliminar ese registro puntual después. */
+function leer(ss, nombreHoja) {
+  const sh = ss.getSheetByName(nombreHoja);
+  if (!sh) return [];
+  const v = sh.getDataRange().getValues();
+  if (v.length < 2) return [];
+  const head = v[0].map(function (h) { return String(h).trim().toLowerCase(); });
+  const out = [];
+  for (let i = 1; i < v.length; i++) {
+    const r = v[i];
+    if (!r.some(function (c) { return String(c).trim() !== ''; })) continue;
+    const o = { _row: i + 1 };  // fila 1 = encabezado, así que la fila i (0-based) es i+1
+    head.forEach(function (h, j) {
+      if (h) o[h] = String(r[j] == null ? '' : r[j]).trim();
+    });
+    out.push(o);
+  }
+  return out;
+}
+
+/** Traduce los parámetros de la app a los nombres de columna del Sheet. */
+function datosDesde(p) {
+  return {
+    regional: p.area    || '', tienda:   p.seccion || '',
+    area:     p.area    || '', seccion:  p.seccion || '',
+    nombre:   p.nombre  || '', cargo:    p.cargo   || '',
+    telefono: String(p.tel || '').replace(/\D/g, ''),
+    correo:   p.correo  || ''
   };
-  if(navigator.clipboard){
-    navigator.clipboard.writeText(APP_URL).then(()=>alert('✅ Link copiado')).catch(copy);
-  } else copy();
 }
 
-// ── DATA base (respaldo offline) ─────────────────────────
-const D=[
- {id:"ops-atl",tab:"ops",n:"Regional Atlántico – Operaciones",e:"🌊",ca:"ca-atl",ct:"ct-atl",ds:"Jefe de Operaciones + Tiendas",s:[{t:"Jefatura Regional",c:[{"n":"Donaldo Tijera B.","r":"Jefe de Operaciones","p":"3188402905"}]},{t:"Villa Campestre",c:[{"n":"Rosa Payares","r":"Admin. Principal","p":"3108423212","ti":"Villa Campestre","tp":"P"},{"n":"Damaris Anaya","r":"Admin. Comercial","p":"3043341225","ti":"Villa Campestre","tp":"C"}]},{t:"Calle 30",c:[{"n":"Rosny Maury","r":"Admin. Principal","p":"3016428438","ti":"Calle 30","tp":"P"},{"n":"Ronald Montaño","r":"Admin. Comercial","p":"3011208880","ti":"Calle 30","tp":"C"}]},{t:"Único",c:[{"n":"Zeudy Otero","r":"Admin. Principal","p":"3013503220","ti":"Único","tp":"P"},{"n":"Manuel Cortina","r":"Admin. Comercial","p":"3014110857","ti":"Único","tp":"C"}]},{t:"Soledad",c:[{"n":"Dorlies Marchenas","r":"Admin. Principal","p":"3016714287","ti":"Soledad","tp":"P"},{"n":"Alexander Briceño","r":"Admin. Comercial","p":"3044988768","ti":"Soledad","tp":"C"}]},{t:"Boston",c:[{"n":"Juliana Charrys","r":"Admin. Principal","p":"3046735115","ti":"Boston","tp":"P"},{"n":"Julio César Martínez","r":"Admin. Comercial","p":"3103390484","ti":"Boston","tp":"C"}]},{t:"Nuestro Atlántico",c:[{"n":"Mauricio Escorcia","r":"Admin. Principal","p":"3015555814","ti":"Nuestro Atlántico","tp":"P"},{"n":"Miller Orozco","r":"Admin. Comercial","p":"3144467131","ti":"Nuestro Atlántico","tp":"C"}]},{t:"Santo Tomas",c:[{"n":"Sandra Salgado","r":"Admin. Principal","p":"3017253767","ti":"Santo Tomas","tp":"P"},{"n":"Robin Mercado","r":"Admin. Comercial","p":"3023536010","ti":"Santo Tomas","tp":"C"}]},{t:"Alkarawi",c:[{"n":"Leonor Rodríguez","r":"Admin. Principal","p":"3014339137","ti":"Alkarawi","tp":"P"},{"n":"Genny Hoyos","r":"Admin. Comercial","p":"3102889515","ti":"Alkarawi","tp":"C"}]},{t:"Coorpotarivo",c:[{"n":"Elis Avila","r":"Admin. Comercial","p":"3008767051","ti":"Coorpotarivo","tp":"C"}]}]},
- {id:"ops-bol",tab:"ops",n:"Regional Bolívar – Operaciones",e:"⚓",ca:"ca-bol",ct:"ct-bol",ds:"Jefe de Operaciones + Tiendas",s:[{t:"Jefatura Regional",c:[{"n":"Vicenta Castelar","r":"Jefe de Operaciones","p":"3135469250"}]},{t:"Prado",c:[{"n":"Carlos Salcedo","r":"Admin. Principal","p":"3012433090","ti":"Prado","tp":"P"},{"n":"Stefany Fernández","r":"Admin. Comercial","p":"3215503353","ti":"Prado","tp":"C"}]},{t:"Bazurto",c:[{"n":"Mauricio Lemus","r":"Admin. Principal","p":"3127094094","ti":"Bazurto","tp":"P"},{"n":"Liz Chavez","r":"Admin. Comercial","p":"3012775095","ti":"Bazurto","tp":"C"}]},{t:"San Fernando",c:[{"n":"Marlon Quintana","r":"Admin. Principal","p":"3145701321","ti":"San Fernando","tp":"P"},{"n":"Angel Moreno","r":"Admin. Comercial","p":"3232930820","ti":"San Fernando","tp":"C"}]},{t:"Olaya",c:[{"n":"Luis Banderas","r":"Admin. Principal","p":"3157395692","ti":"Olaya","tp":"P"}]},{t:"Turbaco 1",c:[{"n":"Karolain Moscote","r":"Admin. Principal","p":"3017409088","ti":"Turbaco 1","tp":"P"},{"n":"Paola Méndez","r":"Admin. Comercial","p":"3175370059","ti":"Turbaco 1","tp":"C"}]},{t:"Turbaco 2",c:[{"n":"Heyver Puello","r":"Admin. Principal","p":"3234331248","ti":"Turbaco 2","tp":"P"},{"n":"Adalberto Jennings","r":"Admin. Comercial","p":"3026031723","ti":"Turbaco 2","tp":"C"}]},{t:"La Maria",c:[{"n":"Mario De Los Reyes","r":"Admin. Principal","p":"3006675526","ti":"La Maria","tp":"P"},{"n":"Daniela Guerrero","r":"Admin. Comercial","p":"3044146467","ti":"La Maria","tp":"C"}]},{t:"Torices",c:[{"n":"John Palacio","r":"Admin. Principal","p":"3014506480","ti":"Torices","tp":"P"},{"n":"Jaime Castellon","r":"Admin. Comercial","p":"3106156185","ti":"Torices","tp":"C"}]},{t:"Arjona",c:[{"n":"Gertrudis González","r":"Admin. Principal","p":"3008314891","ti":"Arjona","tp":"P"},{"n":"Luis Castaño","r":"Admin. Comercial","p":"3103915763","ti":"Arjona","tp":"C"}]},{t:"Socorro",c:[{"n":"Sor Serpa","r":"Admin. Principal","p":"3046494351","ti":"Socorro","tp":"P"},{"n":"Luis Montaño","r":"Admin. Comercial","p":"3114002885","ti":"Socorro","tp":"C"}]},{t:"Cabrero",c:[{"n":"Pedro Hernández","r":"Admin. Principal","p":"3116417393","ti":"Cabrero","tp":"P"},{"n":"Victor Guerra","r":"Admin. Comercial","p":"3222181618","ti":"Cabrero","tp":"C"}]},{t:"Terminal",c:[{"n":"Kerwin Buen Dia","r":"Admin. Principal","p":"3017182201","ti":"Terminal","tp":"P"},{"n":"Luis Cervantes","r":"Admin. Comercial","p":"3012982745","ti":"Terminal","tp":"C"}]},{t:"Bocagrande",c:[{"n":"Eloísa González","r":"Admin. Principal","p":"3105982961","ti":"Bocagrande","tp":"P"},{"n":"Rubén Alemán","r":"Admin. Comercial","p":"3106532728","ti":"Bocagrande","tp":"C"},{"n":"Alfredo Campo","r":"Admin. Comercial","p":"3332395741","ti":"Bocagrande","tp":"C"}]},{t:"Avenida",c:[{"n":"Jasir Ramos","r":"Admin. Principal","p":"3243166731","ti":"Avenida","tp":"P"},{"n":"Sandra Vargas","r":"Admin. Comercial","p":"3142253062","ti":"Avenida","tp":"C"}]},{t:"Campestre",c:[{"n":"Marien Villalba","r":"Admin. Principal","p":"3104174471","ti":"Campestre","tp":"P"},{"n":"Karen Fandiño","r":"Admin. Comercial","p":"3052577066","ti":"Campestre","tp":"C"}]},{t:"San Jose",c:[{"n":"Julieht Robles","r":"Admin. Principal","p":"3134728830","ti":"San Jose","tp":"P"},{"n":"Elver Suárez","r":"Admin. Comercial","p":"3011585178","ti":"San Jose","tp":"C"}]},{t:"Aeropuerto",c:[{"n":"Dairon Márquez","r":"Admin. Principal","p":"3145395304","ti":"Aeropuerto","tp":"P"},{"n":"Pedro Jiménez","r":"Admin. Comercial","p":"3215449992","ti":"Aeropuerto","tp":"C"}]}]},
- {id:"ops-mag",tab:"ops",n:"Regional Magdalena – Operaciones",e:"🏖️",ca:"ca-mag",ct:"ct-mag",ds:"Jefe de Operaciones + Tiendas",s:[{t:"Jefatura Regional",c:[{"n":"Janer Jiménez","r":"Jefe de Operaciones","p":"3046679594"}]},{t:"Mercado",c:[{"n":"Carlos Abreu","r":"Admin. Principal","p":"3205003087","ti":"Mercado","tp":"P"},{"n":"Angélica Lopez","r":"Admin. Comercial","p":"3024077878","ti":"Mercado","tp":"C"}]},{t:"Rodadero",c:[{"n":"Luis Pérez","r":"Admin. Principal","p":"3212464214","ti":"Rodadero","tp":"P"},{"n":"Denilson Beleño","r":"Admin. Comercial","p":"3028281522","ti":"Rodadero","tp":"C"}]},{t:"Bavaria",c:[{"n":"Julith Ferrer","r":"Admin. Principal","p":"3145512482","ti":"Bavaria","tp":"P"},{"n":"Alexis Triviño","r":"Admin. Comercial","p":"3136282934","ti":"Bavaria","tp":"C"}]},{t:"Ciénaga",c:[{"n":"Andrés Torres","r":"Admin. Comercial","p":"3155693581","ti":"Ciénaga","tp":"C"}]},{t:"Santa Cruz",c:[{"n":"Marlis Fernández","r":"Admin. Principal","p":"3022647530","ti":"Santa Cruz","tp":"P"},{"n":"Emir Ducca","r":"Admin. Comercial","p":"3103221031","ti":"Santa Cruz","tp":"C"}]},{t:"Transporte",c:[{"n":"Yossaina Castro","r":"Admin. Principal","p":"3215093887","ti":"Transporte","tp":"P"},{"n":"Cristhian Alvarado","r":"Admin. Comercial","p":"3157171817","ti":"Transporte","tp":"C"}]}]},
- {id:"ops-sup",tab:"ops",n:"Supermayorista",e:"🏭",ca:"ca-sup",ct:"ct-sup",ds:"Tiendas 119 y 120",s:[{t:"Tienda 119",c:[{"n":"Maricela Céspedes","r":"Admin. Principal","p":"3116570870","ti":"Tienda 119","tp":"P"}]},{t:"Tienda 120",c:[{"n":"Betty Sampayo","r":"Admin. Principal","p":"3008177222","ti":"Tienda 120","tp":"P"}]}]},
- {id:"dir",tab:"areas",n:"Dirección y Operaciones",e:"🎯",ca:"ca-dir",ct:"ct-dir",ds:"Dirección · Jefaturas Regionales · OPL",c:[{"n":"Jorge Rodríguez","r":"Director Ventas y Operaciones","p":"3108742234","m":"jerodriguez@megatiendas.co"},{"n":"Donaldo Tijera B.","r":"Jefe de Operaciones Atlántico","p":"3188402905","m":"dtijera@megatiendas.co"},{"n":"Vicenta Castelar","r":"Jefe de Operaciones Bolívar","p":"3135469250","m":"vcastellar@megatiendas.co"},{"n":"Janer Jiménez","r":"Jefe de Operaciones Magdalena","p":"3046679594","m":"jefeoperacionesmagdalena@megatiendas.co"},{"n":"Jorge Tirado","r":"Jefe Operación Logística","p":"3043966287","m":"jltirado@megatiendas.co"},{"n":"Alvida Lopez","r":"Coordinadora OPL Atlántico","p":"3017505950","m":"atuservicioopl@megatiendas.co"},{"n":"Margarita García","r":"Coordinadora OPL Magdalena","p":"3172951563","m":"supervisoropl@megatiendas.co"}]},
- {id:"com",tab:"areas",n:"Comercial & Abastecimiento",e:"📦",ca:"ca-com",ct:"ct-com",ds:"Dirección · Negociadores · Analistas PGC",s:[{t:"Dirección",c:[{"n":"Manuel A. Mendoza","r":"Director Comercial","p":"3222366647","m":"dircomercialpgc@megatiendas.co"},{"n":"Mónica Toro","r":"Subdirectora Comercial (Marca Propia)","p":"3138522375","m":"jefedeinnovacion@megatiendas.co"},{"n":"Ricardo Molano","r":"Director Abastecimiento y Logístico","p":"3175170370","m":"rmolano@megatiendas.co"},{"n":"Andrés Espinosa","r":"Jefe de Abastecimiento","p":"3108906927","m":"jefeproduccion@megatiendas.co"},{"n":"William Salas García","r":"Líder Abastecimiento Abarrotes","p":"3014372319","m":"wsalas@megatiendas.co"}]},{t:"Básicos",c:[{"n":"Diego A. Ospina Rua","r":"Negociador Básicos","p":"3104248774","m":"daospina@megatiendas.co"},{"n":"Katia Anaya Hernández","r":"Analista Comercial Básicos","p":"3007970241","m":"kcanaya@megatiendas.co"},{"n":"Rosa M. Martínez","r":"Analista Comercial Básicos","p":"3008205254","m":"abastecimientoaseo@megatiendas.co"},{"n":"Bercelis Yepes","r":"Analista Abastecimiento Básicos","p":"3007273543","m":"analistabastecimiento@megatiendas.co"}]},{t:"Aseo / Mascotas / Bricolaje",c:[{"n":"Wilmar H. Patiño Ramírez","r":"Negociador Aseo/Mascotas/Bricolaje","p":"3144369531","m":"whpatino@megatiendas.co"},{"n":"Mayra Simancas","r":"Analista Comercial Aseo/Mascotas/Bricolaje","p":"3177141846","m":"masimancas@megatiendas.co"},{"n":"Emilis Morillo","r":"Analista Abastecimiento PGC Aseo","p":"3046747028","m":"abastecimientoaseo@megatiendas.co"}]},{t:"PLS",c:[{"n":"Diana Quiroga Rodríguez","r":"Negociador PLS","p":"3219561645","m":"dsquiroga@megatiendas.co"},{"n":"Liliana Borja","r":"Analista Comercial PLS","p":"3053370776","m":"lpborja@megatiendas.co"},{"n":"Melany Florez","r":"Analista Abastecimiento PGC PLS","p":"3246085623","m":"abastecimientorancho@megatiendas.co"}]},{t:"Rancho",c:[{"n":"Eduardo Jiménez Bossio","r":"Negociador Rancho","p":"3122522768","m":"ejbossio@megatiendas.co"},{"n":"Madelegne Vergara","r":"Analista Abastecimiento PGC Rancho","p":"3206058949","m":"abastecimientobebidas@megatiendas.co"}]},{t:"Bebidas",c:[{"n":"Héctor Renteria","r":"Analista Comercial Bebidas/Cigarrillos","p":"3106411643","m":"herenteria@megatiendas.co"},{"n":"Elvira M. Balseiro Murillo","r":"Soporte Logyca / Aux. Abast. PGC Bebidas","p":"3128485879","m":"sptabastecimiento@megatiendas.co"}]}]},
- {id:"sac",tab:"areas",n:"SAC – Panadería & Cafetería",e:"🥐",ca:"ca-sac",ct:"ct-sac",ds:"Panadería · Cafeterías · Abastecimiento",c:[{"n":"Daniel Martínez","r":"Jefe Comercial SAC","p":"3219574918","m":"jefecomercialsac@megatiendas.co"},{"n":"Andrés Espinoza","r":"Jefe Abastecimiento y Producción","p":"3108906927","m":"jefeproduccion@megatiendas.co"},{"n":"Fabio Ortiz","r":"Líder Abastecimiento y Producción","p":"3011522332","m":"liderabastecimientosac@megatiendas.co"},{"n":"Victor Salinas","r":"Coordinador General Cafeterías","p":"3013092989","m":"vhsalinas@megatiendas.co"},{"n":"Fare Alvarez","r":"Jefe Panificadoras","p":"3244241257","m":"falvarez@megatiendas.co"},{"n":"Andrea Pacheco Bilbao","r":"Analista Abastecimiento SAC","p":"3245129053","m":"analistaabastecimientosac@megatiendas.co"},{"n":"Yanelis Alcazar","r":"Analista Abastecimiento SAC","p":"3013183224","m":"analistaabastecimientosac2@megatiendas.co"}]},
- {id:"car",tab:"areas",n:"Carnes",e:"🥩",ca:"ca-car",ct:"ct-car",ds:"Director · Negociadores · Coordinadores",c:[{"n":"Ciro Muñoz","r":"Director Carnes (Res y Cerdo)","p":"3126229507","m":"cimunoz@megatiendas.co"},{"n":"Jose Mercado","r":"Negociador Pollo y Pescado","p":"3102127839","m":"jmmercado@megatiendas.co"},{"n":"Michael Gutierrez","r":"Jefe Carnes y Fruver Operativo","p":"3206190926","m":"mgutierrez@megatiendas.co"},{"n":"Omar Muñoz","r":"Coordinador Regional Bolívar","p":"3043279407","m":"coordinadorregionalsegundo@megatiendas.co"},{"n":"Pedro Ruiz","r":"Coordinador Regional Atlántico","p":"3006771366","m":"coordcarnesregionalatlantico@megatiendas.co"},{"n":"Juan Carlos Tamara","r":"Coordinador Regional Magdalena","p":"3118717604","m":"coordcarnesmagdalena@megatiendas.co"},{"n":"Angel Pineda","r":"Coordinador Abastecimiento Carnes","p":"3012636652","m":"aprodriguez@megatiendas.co"},{"n":"Nazly Jiménez","r":"Líder Abastecimiento Carnes","p":"3013841798","m":"nmjimenez@megatiendas.co"},{"n":"Ingrid Vargas","r":"Analista Abastecimiento","p":"3008384558","m":"analistaabastecimientocarnesbq@megatiendas.co"},{"n":"Yina Lambis","r":"Analista Abastecimiento","p":"3017988727","m":"analistaabastecimientocarnes2@megatiendas.co"}]},
- {id:"frv",tab:"areas",n:"Fruver",e:"🥦",ca:"ca-frv",ct:"ct-frv",ds:"Directora · Compras · Operación Regional",c:[{"n":"Sandra Novoa","r":"Directora Fruver","p":"3138511362","m":"snovoa@acercate.com.co"},{"n":"Mónica Maldonado","r":"Negociador","p":"3107337060","m":"mmaldonado@megatiendas.co"},{"n":"Luis Niño","r":"Negociador","p":"3132317650","m":"compradorfruver@megatiendas.co"},{"n":"Michel Barbosa","r":"Negociador","p":"3137722556","m":"auxadministrativoacercate@megatiendas.co"},{"n":"Deimer Contreras","r":"Negociador","p":"3214568402","m":"jeferegionalfruver@megatiendas.co"},{"n":"Erwin Urbina","r":"Regional Atlántico Operación","p":"3144131678","m":"coordfruverbarranquilla@megatiendas.co"},{"n":"Jorge Anaya","r":"Regional Bolívar Operación","p":"3147481592","m":"janaya@megatiendas.co"},{"n":"Ricardo Arenas","r":"Regional Magdalena Operación","p":"3023337166","m":"coordinadorcarnessantamarta@megatiendas.co"},{"n":"Roger Montes","r":"Líder de Abastecimiento","p":"3015876279","m":"rjmontes@megatiendas.co"},{"n":"Carlos Puello","r":"Analista Abastecimiento","p":"3145809489","m":"coordabastecimientofruver@megatiendas.co"},{"n":"Ingrid Uribe","r":"Analista Abastecimiento","p":"3246499737","m":"ikuribe@megatiendas.co"},{"n":"Kevin Alvarez","r":"Analista Abastecimiento","p":"3012240280","m":"analistaabastecimientofruver@megatiendas.co"}]},
- {id:"fid",tab:"areas",n:"Fidelización & Mercadeo",e:"📣",ca:"ca-fid",ct:"ct-fid",ds:"Comunicaciones · Diseño · Mercadeo",c:[{"n":"Paula Andrea Cordoba","r":"Jefe de Fidelización y S/C","p":"3218031092","m":"pacordoba@megatiendas.co"},{"n":"Jeiner Altamiranda","r":"Jefe de Comunicaciones y Marca","p":"3014663191","m":"jaltamiranda@megatiendas.co"},{"n":"Katerine Contreras Aroca","r":"Analista Comercial","p":"3024295353","m":"analistacomercial@megatiendas.co"},{"n":"Keiner Casseres Guardo","r":"Analista de Mercadeo y Fidelización","p":"3135515160","m":"analistamercadeo@megatiendas.co"},{"n":"Kerly Hernández Herrera","r":"Aux. Regional de Comunicaciones","p":"3053176349","m":"coordmercadeo@megatiendas.co"},{"n":"Yarlett Figueroa Zarate","r":"Diseñador Grafico","p":"3023567833","m":"ypfigueroa@megatiendas.co"},{"n":"Rafael Cárdenas García","r":"Diseñador Grafico","p":"3217768233","m":"digrafico2@megatiendas.co"},{"n":"Martin Devoz Alcala","r":"Diseñador Multimedia","p":"3023067951","m":"dimultimedia@megatiendas.co"},{"n":"Estrellita Serna Fernández","r":"Auxiliar Administrativa","p":"3044547923","m":"auxadminmercadeo@megatiendas.co"},{"n":"Natalia Baena Díaz","r":"Asistente Administrativa","p":"3012581930","m":"jpmolina@megatiendas.co"}]},
- {id:"cnt",tab:"areas",n:"Contabilidad",e:"📊",ca:"ca-cnt",ct:"ct-cnt",ds:"Jefe · Coordinadores · Cartera",c:[{"n":"Alejandro Polo Torres","r":"Jefe de Contabilidad","p":"3005435283","m":"aptorres@megatiendas.co"},{"n":"Julio Pinzon Gutierrez","r":"Coordinador Contable","p":"3138439439","m":"coordinadorcontable@megatiendas.co"},{"n":"Osman Blanco Ramos","r":"Coordinador de Impuestos","p":"3024216128","m":"ccoordimpuestos@megatiendas.co"},{"n":"Grey Romero Castillo","r":"Coordinador Cartera","p":"3103633245","m":"gromero@megatiendas.co"},{"n":"Liliana Tovar González","r":"Coordinadora Junior Contable","p":"3126498665","m":"lstovar@megatiendas.co"}]},
- {id:"inv",tab:"areas",n:"Inventarios & Control",e:"📋",ca:"ca-inv",ct:"ct-inv",ds:"Jefatura · Líderes · Analistas ACI",s:[{t:"Jefatura",c:[{"n":"Karen Santana","r":"Jefe de Inventarios","p":"3134904723","m":"klsantana@megatiendas.co"},{"n":"Robinson Molina","r":"Auditor Senior","p":"3134904723","m":"rjmolina@megatiendas.co"},{"n":"Marlon Teheran","r":"Líder Inventarios Barranquilla","p":"3176543909","m":"lideracibarranquilla@megatiendas.co"},{"n":"Edly Padilla","r":"Líder Inventarios Cartagena","p":"3147999674","m":"tpadilla@megatiendas.co"},{"n":"Cristian Bilbao","r":"Líder Inventarios Cartagena","p":"3014905889","m":"lideracicartagena@megatiendas.co"},{"n":"Ivan Manjarres","r":"Líder Inventarios Santa Marta","p":"3003673199","m":"lideracisantamarta@megatiendas.co"}]},{t:"ACI Atlántico",c:[{"n":"Evelio Jose Carrillo Ojeda","r":"Analista Control Inventario (C.O 206-207)","p":"3126270492"},{"n":"Daniel Alberto Mendoza Caro","r":"Analista Control Inventario (C.O 201)","p":"3162326505"},{"n":"Gladys Luz Cárdenas Andrade","r":"Analista Control Inventario (C.O 203-205)","p":"3023947276"},{"n":"Joel Enrique Chiquillo Carrillo","r":"Analista Control Inventario (C.O 204-210)","p":"3245624845"},{"n":"Ernesto Jose Tapias Ramírez","r":"Analista Control Inventario (C.O 600)","p":"3184189536"},{"n":"Carlos Julio Jiménez","r":"Analista Control Inventario (C.O 501)","p":"3116856708"}]},{t:"ACI Bolívar",c:[{"n":"Edly Tatiana Padilla Payares","r":"Analista Control Inventario (C.O 888)","p":"3147999674"},{"n":"Willian Molina Simanca","r":"Analista Control Inventario (C.O 101)","p":"3044192088"},{"n":"Yulieth González Alcala","r":"Analista Control Inventario (C.O 105-110)","p":"3012369727"},{"n":"Angelo David Cavarcas Cuadrado","r":"Analista Control Inventario (C.O 103)","p":"3023936767"},{"n":"Sixto Baloco","r":"Analista Control Inventario (C.O 111)","p":"3017578259"},{"n":"Andrés De Jesús Simancas García","r":"Analista Control Inventario (C.O 108)","p":"3013538761"},{"n":"Luis Simarra","r":"Analista Control Inventario (C.O 106-960)","p":"3024221042"},{"n":"Josse Rafael Barrios Díaz","r":"Analista Control Inventario (C.O 119)","p":"315155301"},{"n":"Andrés Felipe Rios Molano","r":"Analista Control Inventario (C.O 800)","p":"3014330214"},{"n":"Teddy Hernández","r":"Analista Control Inventario (C.O Acumulador)","p":"3135476595"},{"n":"Jose Pión Hernández","r":"Analista de Conteo (Control Total)","p":"3053405323"},{"n":"Jonatan De Jesús Muñoz Rodrigues","r":"Analista de Conteo (Control Total)","p":"3023657805"},{"n":"Patricia Emiliani Pacheco","r":"Analista de Conteo (Control Total)","p":"3156944294"},{"n":"Jerson Cervantes Berrio","r":"Analista de Conteo (Control Total)","p":"3234658938"},{"n":"Galiz Daza Muñiz","r":"Analista de Conteo (Control Total)","p":"3225874448"}]},{t:"ACI Magdalena",c:[{"n":"Angélica González","r":"Analista de Conteo (C.O 401)","p":"3024077878"},{"n":"Marta Morellis","r":"Analista de Conteo (C.O 402)","p":"3027540637"},{"n":"Christian Alvarado","r":"Analista de Conteo (C.O 403)","p":"3157171817"},{"n":"Isaac Perlaza","r":"Analista de Conteo (C.O 404)","p":"3005493435"},{"n":"Julio Rodríguez","r":"Analista de Conteo (C.O 405)","p":"3016987217"},{"n":"Jair García","r":"Analista de Conteo (C.O 406)","p":"3013129059"}]}]},
- {id:"log",tab:"areas",n:"Logística & CDAs",e:"🚛",ca:"ca-log",ct:"ct-log",ds:"Director · Centros de Distribución",s:[{t:"Dirección Logística",c:[{"n":"Ricardo Molano","r":"Director Logístico","p":"3175170370","m":"rmolano@megatiendas.co"},{"n":"Farid Echeverria","r":"Control Logístico","p":"3186997722","m":"fecheverria@megatiendas.co"}]},{t:"CDA 390 Corabastos",c:[{"n":"Cristian Castro","r":"Coordinador CDA Fruver","p":"3214850958","m":"bodegacorabastos@megatiendas.co"},{"n":"Luis Padilla","r":"Auxiliar Líder de Recibo","p":"3138459645","m":"bodegacorabastos@megatiendas.co"}]},{t:"CDA 400 Bucaramanga",c:[{"n":"Jorge Piñares","r":"Coordinador CDA Fruver","p":"3185054000","m":"supervisorcdabucaramanga@megatiendas.co"}]},{t:"CDA 501 Galapark",c:[{"n":"Katherine Tobar","r":"Coordinador Logístico","p":"3015893861","m":"coordinadorcalifornia@megatiendas.co"}]},{t:"CDA 600 Granabastos",c:[{"n":"Gisell Pico","r":"Coordinador CDA","p":"3043941355","m":"admingranabastos@megatiendas.co"},{"n":"Pedro Florez","r":"Coordinador CDA Fruver","p":"3128734685","m":"fruvergranabastos@megatiendas.co"},{"n":"Adriana Barcasnegras","r":"Auxiliar de Costo CDA","p":"3003731663","m":"auxcostoscda@megatiendas.co"},{"n":"Alfredo Miranda","r":"Auxiliar Fruver CDA","p":"3232914668","m":"fruvergranabastos@megatiendas.co"}]},{t:"CDA 700 Metropolitano",c:[{"n":"Oscar Malaver","r":"Coordinador CDA Fruver","p":"3004893495","m":"operacionesfruverbogota@megatiendas.co"},{"n":"Sergio Cruz","r":"Auxiliar Fruver CDA","p":"3145495163","m":"operacionesfruverbogota@megatiendas.co"}]},{t:"CDA 703 Santa Marta",c:[{"n":"Alexis Manaure","r":"Coordinador CDA Fruver","p":"3155872097","m":"cdisantamarta@megatiendas.co"},{"n":"Omar Lapeira","r":"Auxiliar Líder de Recibo","p":"3016535571","m":"cdisantamarta@megatiendas.co"}]},{t:"CDA 800 Bloc Port",c:[{"n":"Alexander Morales","r":"Coord. Logística y Transporte","p":"3163294866","m":"coordlogistico@megatiendas.co"},{"n":"Luis Herrera","r":"Coordinador CDA Fruver","p":"3195713316","m":"lmherrera@megatiendas.co"},{"n":"Sergio Estupiñán","r":"Auxiliar Facturación CDA","p":"3022411904","m":"auxfacturacioncda@megatiendas.co"},{"n":"Cristian Palacio","r":"Analista de Inventario","p":"3128431616","m":"analistainventariologistica@megatiendas.co"},{"n":"Guiller Alvarado","r":"Auxiliar Fruver CDA","p":"3225263706","m":"lmherrera@megatiendas.co"},{"n":"Dilan Escobar","r":"Supervisor de Transporte","p":"3008559897","m":"transportedomicilios@megatiendas.co"},{"n":"Jairo Davila","r":"Auxiliar Fruver CDA","p":"3232880775","m":"coordlogistico@megatiendas.co"},{"n":"Dines Díaz","r":"Auxiliar Fruver CDA","p":"3206761966","m":"lmherrera@megatiendas.co"}]}]},
- {id:"mnt",tab:"areas",n:"Mantenimiento",e:"🔧",ca:"ca-mnt",ct:"ct-mnt",ds:"Bolívar · Atlántico · Santa Marta",s:[{t:"Regional Bolívar",c:[{"n":"Diego Molina","r":"Jefe de Mantenimiento","p":"3117657177"},{"n":"Fernando Fong","r":"Coordinador de Mantenimiento","p":"3217493638"},{"n":"Edwin Bossio","r":"Auxiliar Administrativo Mtto.","p":"3006311939"},{"n":"Juan Villarreal","r":"Planificador","p":"3226725340"},{"n":"Catalino Vega","r":"Líder de Obra Civil","p":"3114314227"},{"n":"Carlos Herazo","r":"Auxiliar de Obra Civil","p":"3246104640"},{"n":"Camilo Torres","r":"Auxiliar de Obra Civil","p":"3234594015"},{"n":"Marcos Beleño","r":"Auxiliar de Obra Civil","p":"3005109365"},{"n":"Carlos Morales","r":"Auxiliar de Obra Civil","p":"3023373309"},{"n":"Jorge Fernández","r":"Auxiliar de Obra Civil","p":"3236888353"},{"n":"Felipe Herrera","r":"Técnico de Refrigeración","p":"3004134769"},{"n":"Ricardo Guerrero","r":"Técnico de Refrigeración","p":"3226593599"},{"n":"Nadilso Ospino","r":"Auxiliar de Refrigeración","p":"3006524328"},{"n":"Federico Vidal","r":"Auxiliar de Refrigeración","p":"3108446773"},{"n":"Elkin Caicedo","r":"Auxiliar de Refrigeración","p":"3225091667"},{"n":"Jose Olivero","r":"Técnico Electromecánico","p":"3155097499"},{"n":"Alejandro Pérez","r":"Técnico Electromecánico","p":"3043113958"},{"n":"Jhon Payares","r":"Técnico Electricista","p":"3004349246"},{"n":"Yeison Quintana","r":"Soldador","p":"3215708283"}]},{t:"Regional Atlántico",c:[{"n":"Álvaro Arroyo","r":"Líder Locativo","p":"3145613509"},{"n":"Juan Gutierrez","r":"Electromecánico","p":"3103585603"},{"n":"Jose Camargo","r":"Soldador","p":"3116610974"},{"n":"Larcen Padilla","r":"Auxiliar Locativo","p":"3028467399"},{"n":"Willian Ariza","r":"Auxiliar Locativo","p":"3122705827"},{"n":"Gabriel Portillo","r":"Auxiliar Locativo","p":"3017904769"},{"n":"Andrés Vásquez","r":"Técnico","p":"3012232383"},{"n":"Diego Domínguez","r":"Auxiliar","p":"3023366601"},{"n":"Samuel Castro","r":"Auxiliar","p":"3052885217"},{"n":"Jose Roca","r":"Auxiliar","p":"3044928501"},{"n":"Edinson Fierro","r":"Auxiliar","p":"3003602892"}]},{t:"Regional Santa Marta",c:[{"n":"Juan Riatiga","r":"Jefe de Mantenimiento","p":"3008776224"},{"n":"Leonardo Acosta","r":"Líder de Refrigeración","p":"3006054044"},{"n":"Leonardo Mendoza","r":"Auxiliar de Refrigeración","p":"3009466447"},{"n":"Jose Gamarra","r":"Líder Electromecánico","p":"3008756335"},{"n":"Armando Mercado","r":"Obra Civil","p":"3177465485"}]}]},
- {id:"pyp",tab:"areas",n:"Protección & Prevención",e:"🛡️",ca:"ca-pyp",ct:"ct-pyp",ds:"Jefatura · Coordinadores Regionales",c:[{"n":"Carlos Vizcaíno","r":"Jefe P&P","p":"3113524774","m":"cavizcaino@megatiendas.co"},{"n":"Néstor Pachon","r":"Coordinador Bolívar Norte","p":"3102130805","m":"coordpyp@megatiendas.co"},{"n":"Dilson Urruchurto","r":"Coordinador Bolívar Sur","p":"3105403600","m":"coordinadorpyp@megatiendas.co"},{"n":"Esteban Ruiz","r":"Coordinador Magdalena","p":"3007718044","m":"edruiz@megatiendas.co"}]},
- {id:"sis",tab:"areas",n:"Sistemas & Tecnología",e:"💻",ca:"ca-sis",ct:"ct-sis",ds:"Infraestructura · Soporte · SI",c:[{"n":"Juan Cuello","r":"Jefe de Infraestructura Tecnológica","p":"3215662419","m":"jcuello@megatiendas.co"},{"n":"Jorge González","r":"Soporte Técnico","p":"3215296480","m":"soporte@megatiendas.co"},{"n":"Ana Elvira Fontalvo","r":"Sistemas de Información","p":"3007641827","m":"afontalvo@megatiendas.co"}]},
- {id:"adm",tab:"areas",n:"Administrativa & Gestión Humana",e:"👥",ca:"ca-adm",ct:"ct-adm",ds:"Calidad · GH · Tesorería · Control",s:[{t:"Calidad y Ambiental",c:[{"n":"Yina Oyola","r":"Control de Calidad Atlántico","p":"3007424891","m":"controldecalidad@megatiendas.co"},{"n":"Ana Castro","r":"Coordinadora Calidad Santa Marta","p":"3014340066","m":"coordcalidadstamarta@megatiendas.co"},{"n":"Jefferson Campo","r":"Jefe Ambiental Nacional","p":"3008372031","m":"jecampo@megatiendas.co"},{"n":"Danna","r":"Coordinadora SST","p":"3104612994","m":"coordinadorsst@megatiendas.co"},{"n":"Jean Ospino","r":"Coordinador de Servicios Generales","p":"3217528734","m":"coordaseobq@megatiendas.co"}]},{t:"Gestión Humana",c:[{"n":"Melissa Ibargüen","r":"Jefe Gestión Humana","p":"3012552761","m":"jefegestionhumana@megatiendas.co"},{"n":"Alberto Morales","r":"Nomina","p":"3185622220","m":"ammorales@megatiendas.co"},{"n":"Carlos Agamez","r":"Relaciones Laborales","p":"3016302169","m":"relacioneslaborales@megatiendas.co"}]},{t:"Financiera y Control",c:[{"n":"Mayra Altahona","r":"Tesoreria","p":"3127716597","m":"maltahona@megatiendas.co"},{"n":"Maira Lopez","r":"Control de Gestión","p":"3108371064","m":"malopez@megatiendas.co"},{"n":"Jose Ortiz","r":"Monitor Control de Gestión","p":"3150500476","m":"monitorcontrolgestion@megatiendas.co"},{"n":"Catina Pájaro","r":"Compras y Activos","p":"3234355930","m":"cpgonzalez@megatiendas.co"},{"n":"Ubaldo de Las Salas","r":"Portafolio","p":"3104161545","m":"uadelassalas@megatiendas.co"}]}]},
+/** Alta desde la app, respetando el orden real de los encabezados. */
+function addContact(p, cb) {
+  const hoja = (p.sheet === 'ops') ? 'OPS' : 'AREAS';
+  const sh = SpreadsheetApp.openById(SHEET_ID).getSheetByName(hoja);
+  if (!sh) return json({ ok: false, error: 'No existe la pestaña ' + hoja }, cb);
+  const head = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0]
+    .map(function (h) { return String(h).trim().toLowerCase(); });
+  const datos = datosDesde(p);
+  if (!datos.nombre) return json({ ok: false, error: 'Nombre vacío' }, cb);
+  sh.appendRow(head.map(function (h) {
+    return datos[h] !== undefined ? datos[h] : '';
+  }));
+  return json({ ok: true }, cb);
+}
+
+/** Edición: sobrescribe la fila exacta identificada por _row. */
+function editContact(p, cb) {
+  const hoja = (p.sheet === 'ops') ? 'OPS' : 'AREAS';
+  const sh = SpreadsheetApp.openById(SHEET_ID).getSheetByName(hoja);
+  if (!sh) return json({ ok: false, error: 'No existe la pestaña ' + hoja }, cb);
+  const fila = parseInt(p.row, 10);
+  if (!fila || fila < 2 || fila > sh.getLastRow()) {
+    return json({ ok: false, error: 'Fila inválida (' + p.row + ')' }, cb);
+  }
+  const head = sh.getRange(1, 1, 1, sh.getLastColumn()).getValues()[0]
+    .map(function (h) { return String(h).trim().toLowerCase(); });
+  const datos = datosDesde(p);
+  if (!datos.nombre) return json({ ok: false, error: 'Nombre vacío' }, cb);
+  sh.getRange(fila, 1, 1, head.length).setValues([
+    head.map(function (h) { return datos[h] !== undefined ? datos[h] : ''; })
+  ]);
+  return json({ ok: true }, cb);
+}
+
+/** Elimina la fila exacta identificada por _row. */
+function deleteContact(p, cb) {
+  const hoja = (p.sheet === 'ops') ? 'OPS' : 'AREAS';
+  const sh = SpreadsheetApp.openById(SHEET_ID).getSheetByName(hoja);
+  if (!sh) return json({ ok: false, error: 'No existe la pestaña ' + hoja }, cb);
+  const fila = parseInt(p.row, 10);
+  if (!fila || fila < 2 || fila > sh.getLastRow()) {
+    return json({ ok: false, error: 'Fila inválida (' + p.row + ')' }, cb);
+  }
+  sh.deleteRow(fila);
+  return json({ ok: true }, cb);
+}
+
+function json(obj, cb) {
+  const txt = JSON.stringify(obj);
+  if (cb) {
+    return ContentService.createTextOutput(cb + '(' + txt + ');')
+      .setMimeType(ContentService.MimeType.JAVASCRIPT);
+  }
+  return ContentService.createTextOutput(txt)
+    .setMimeType(ContentService.MimeType.JSON);
+}
+
+// ── INSTALADOR (ejecutar una sola vez) ────────────────────
+const OPS_HEAD = ["regional", "tienda", "cargo", "nombre", "telefono"];
+const OPS_DATA = [
+  ["OPERACIONES ATLANTICO", "", "Jefe de Operaciones", "Donaldo Tijera B.", "3188402905"],
+  ["OPERACIONES BOLIVAR", "", "Jefe de Operaciones", "Vicenta Castelar", "3135469250"],
+  ["OPERACIONES MAGDALENA", "", "Jefe de Operaciones", "Janer Jiménez", "3046679594"],
+  ["OPERACIONES ATLANTICO", "Villa Campestre", "Admin. Principal", "Rosa Payares", "3108423212"],
+  ["OPERACIONES ATLANTICO", "Villa Campestre", "Admin. Comercial", "Damaris Anaya", "3043341225"],
+  ["OPERACIONES ATLANTICO", "Calle 30", "Admin. Principal", "Rosny Maury", "3016428438"],
+  ["OPERACIONES ATLANTICO", "Calle 30", "Admin. Comercial", "Ronald Montaño", "3011208880"],
+  ["OPERACIONES ATLANTICO", "Único", "Admin. Principal", "Zeudy Otero", "3013503220"],
+  ["OPERACIONES ATLANTICO", "Único", "Admin. Comercial", "Manuel Cortina", "3014110857"],
+  ["OPERACIONES ATLANTICO", "Soledad", "Admin. Principal", "Dorlies Marchenas", "3016714287"],
+  ["OPERACIONES ATLANTICO", "Soledad", "Admin. Comercial", "Alexander Briceño", "3044988768"],
+  ["OPERACIONES ATLANTICO", "Boston", "Admin. Principal", "Juliana Charrys", "3046735115"],
+  ["OPERACIONES ATLANTICO", "Boston", "Admin. Comercial", "Julio César Martínez", "3103390484"],
+  ["OPERACIONES ATLANTICO", "Nuestro Atlántico", "Admin. Principal", "Mauricio Escorcia", "3015555814"],
+  ["OPERACIONES ATLANTICO", "Nuestro Atlántico", "Admin. Comercial", "Miller Orozco", "3144467131"],
+  ["OPERACIONES ATLANTICO", "Santo Tomas", "Admin. Principal", "Sandra Salgado", "3017253767"],
+  ["OPERACIONES ATLANTICO", "Santo Tomas", "Admin. Comercial", "Robin Mercado", "3023536010"],
+  ["OPERACIONES ATLANTICO", "Alkarawi", "Admin. Principal", "Leonor Rodríguez", "3014339137"],
+  ["OPERACIONES ATLANTICO", "Alkarawi", "Admin. Comercial", "Genny Hoyos", "3102889515"],
+  ["OPERACIONES ATLANTICO", "Coorpotarivo", "Admin. Comercial", "Elis Avila", "3008767051"],
+  ["OPERACIONES BOLIVAR", "Prado", "Admin. Principal", "Carlos Salcedo", "3012433090"],
+  ["OPERACIONES BOLIVAR", "Prado", "Admin. Comercial", "Stefany Fernández", "3215503353"],
+  ["OPERACIONES BOLIVAR", "Bazurto", "Admin. Principal", "Mauricio Lemus", "3127094094"],
+  ["OPERACIONES BOLIVAR", "Bazurto", "Admin. Comercial", "Liz Chavez", "3012775095"],
+  ["OPERACIONES BOLIVAR", "San Fernando", "Admin. Principal", "Marlon Quintana", "3145701321"],
+  ["OPERACIONES BOLIVAR", "San Fernando", "Admin. Comercial", "Angel Moreno", "3232930820"],
+  ["OPERACIONES BOLIVAR", "Olaya", "Admin. Principal", "Luis Banderas", "3157395692"],
+  ["OPERACIONES BOLIVAR", "Turbaco 1", "Admin. Principal", "Karolain Moscote", "3017409088"],
+  ["OPERACIONES BOLIVAR", "Turbaco 1", "Admin. Comercial", "Paola Méndez", "3175370059"],
+  ["OPERACIONES BOLIVAR", "Turbaco 2", "Admin. Principal", "Heyver Puello", "3234331248"],
+  ["OPERACIONES BOLIVAR", "Turbaco 2", "Admin. Comercial", "Adalberto Jennings", "3026031723"],
+  ["OPERACIONES BOLIVAR", "La Maria", "Admin. Principal", "Mario De Los Reyes", "3006675526"],
+  ["OPERACIONES BOLIVAR", "La Maria", "Admin. Comercial", "Daniela Guerrero", "3044146467"],
+  ["OPERACIONES BOLIVAR", "Torices", "Admin. Principal", "John Palacio", "3014506480"],
+  ["OPERACIONES BOLIVAR", "Torices", "Admin. Comercial", "Jaime Castellon", "3106156185"],
+  ["OPERACIONES BOLIVAR", "Arjona", "Admin. Principal", "Gertrudis González", "3008314891"],
+  ["OPERACIONES BOLIVAR", "Arjona", "Admin. Comercial", "Luis Castaño", "3103915763"],
+  ["OPERACIONES BOLIVAR", "Socorro", "Admin. Principal", "Sor Serpa", "3046494351"],
+  ["OPERACIONES BOLIVAR", "Socorro", "Admin. Comercial", "Luis Montaño", "3114002885"],
+  ["OPERACIONES BOLIVAR", "Cabrero", "Admin. Principal", "Pedro Hernández", "3116417393"],
+  ["OPERACIONES BOLIVAR", "Cabrero", "Admin. Comercial", "Victor Guerra", "3222181618"],
+  ["OPERACIONES BOLIVAR", "Terminal", "Admin. Principal", "Kerwin Buen Dia", "3017182201"],
+  ["OPERACIONES BOLIVAR", "Terminal", "Admin. Comercial", "Luis Cervantes", "3012982745"],
+  ["OPERACIONES BOLIVAR", "Bocagrande", "Admin. Principal", "Eloísa González", "3105982961"],
+  ["OPERACIONES BOLIVAR", "Bocagrande", "Admin. Comercial", "Rubén Alemán", "3106532728"],
+  ["OPERACIONES BOLIVAR", "Bocagrande", "Admin. Comercial", "Alfredo Campo", "3332395741"],
+  ["OPERACIONES BOLIVAR", "Avenida", "Admin. Principal", "Jasir Ramos", "3243166731"],
+  ["OPERACIONES BOLIVAR", "Avenida", "Admin. Comercial", "Sandra Vargas", "3142253062"],
+  ["OPERACIONES BOLIVAR", "Campestre", "Admin. Principal", "Marien Villalba", "3104174471"],
+  ["OPERACIONES BOLIVAR", "Campestre", "Admin. Comercial", "Karen Fandiño", "3052577066"],
+  ["OPERACIONES BOLIVAR", "San Jose", "Admin. Principal", "Julieht Robles", "3134728830"],
+  ["OPERACIONES BOLIVAR", "San Jose", "Admin. Comercial", "Elver Suárez", "3011585178"],
+  ["OPERACIONES BOLIVAR", "Aeropuerto", "Admin. Principal", "Dairon Márquez", "3145395304"],
+  ["OPERACIONES BOLIVAR", "Aeropuerto", "Admin. Comercial", "Pedro Jiménez", "3215449992"],
+  ["OPERACIONES MAGDALENA", "Mercado", "Admin. Principal", "Carlos Abreu", "3205003087"],
+  ["OPERACIONES MAGDALENA", "Mercado", "Admin. Comercial", "Angélica Lopez", "3024077878"],
+  ["OPERACIONES MAGDALENA", "Rodadero", "Admin. Principal", "Luis Pérez", "3212464214"],
+  ["OPERACIONES MAGDALENA", "Rodadero", "Admin. Comercial", "Denilson Beleño", "3028281522"],
+  ["OPERACIONES MAGDALENA", "Bavaria", "Admin. Principal", "Julith Ferrer", "3145512482"],
+  ["OPERACIONES MAGDALENA", "Bavaria", "Admin. Comercial", "Alexis Triviño", "3136282934"],
+  ["OPERACIONES MAGDALENA", "Ciénaga", "Admin. Comercial", "Andrés Torres", "3155693581"],
+  ["OPERACIONES MAGDALENA", "Santa Cruz", "Admin. Principal", "Marlis Fernández", "3022647530"],
+  ["OPERACIONES MAGDALENA", "Santa Cruz", "Admin. Comercial", "Emir Ducca", "3103221031"],
+  ["OPERACIONES MAGDALENA", "Transporte", "Admin. Principal", "Yossaina Castro", "3215093887"],
+  ["OPERACIONES MAGDALENA", "Transporte", "Admin. Comercial", "Cristhian Alvarado", "3157171817"],
+  ["SUPERMAYORISTA", "Tienda 119", "Admin. Principal", "Maricela Céspedes", "3116570870"],
+  ["SUPERMAYORISTA", "Tienda 120", "Admin. Principal", "Betty Sampayo", "3008177222"]
 ];
 
-// ── HELPERS ───────────────────────────────────────────────
-const PAL=['#1D6FA6','#6B38B0','#0D7A45','#B05A1D','#AD1457','#1B5E20','#0D47A1','#E65100','#283593','#006064','#4E342E','#880E4F','#33691E','#01579B'];
-function abg(n){let h=0;for(const c of n)h=(h*31+c.charCodeAt(0))&0xffffffff;return PAL[Math.abs(h)%PAL.length];}
-function ini(n){return n.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();}
-function fmt(p){const d=(p||'').replace(/\D/g,'');if(d.length===10)return d.replace(/(\d{3})(\d{3})(\d{4})/,'$1 $2 $3');return d;}
-function hl(s,q){if(!q||!s)return s||'';return s.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark>$1</mark>');}
-function aC(d){if(d.c)return d.c;return(d.s||[]).flatMap(x=>x.c);}
+const AREAS_HEAD = ["area", "seccion", "nombre", "cargo", "telefono", "correo"];
+const AREAS_DATA = [
+  ["COMERCIAL", "Dirección", "Manuel A. Mendoza", "Director Comercial", "3222366647", "dircomercialpgc@megatiendas.co"],
+  ["COMERCIAL", "Dirección", "Mónica Toro", "Subdirectora Comercial (Marca Propia)", "3138522375", "jefedeinnovacion@megatiendas.co"],
+  ["COMERCIAL", "Dirección", "Ricardo Molano", "Director Abastecimiento y Logístico", "3175170370", "rmolano@megatiendas.co"],
+  ["COMERCIAL", "Dirección", "Andrés Espinosa", "Jefe de Abastecimiento", "3108906927", "jefeproduccion@megatiendas.co"],
+  ["COMERCIAL", "Dirección", "William Salas García", "Líder Abastecimiento Abarrotes", "3014372319", "wsalas@megatiendas.co"],
+  ["COMERCIAL", "Básicos", "Diego A. Ospina Rua", "Negociador Básicos", "3104248774", "daospina@megatiendas.co"],
+  ["COMERCIAL", "Básicos", "Katia Anaya Hernández", "Analista Comercial Básicos", "3007970241", "kcanaya@megatiendas.co"],
+  ["COMERCIAL", "Básicos", "Rosa M. Martínez", "Analista Comercial Básicos", "3008205254", "abastecimientoaseo@megatiendas.co"],
+  ["COMERCIAL", "Básicos", "Bercelis Yepes", "Analista Abastecimiento Básicos", "3007273543", "analistabastecimiento@megatiendas.co"],
+  ["COMERCIAL", "Aseo / Mascotas / Bricolaje", "Wilmar H. Patiño Ramírez", "Negociador Aseo/Mascotas/Bricolaje", "3144369531", "whpatino@megatiendas.co"],
+  ["COMERCIAL", "Aseo / Mascotas / Bricolaje", "Mayra Simancas", "Analista Comercial Aseo/Mascotas/Bricolaje", "3177141846", "masimancas@megatiendas.co"],
+  ["COMERCIAL", "Aseo / Mascotas / Bricolaje", "Emilis Morillo", "Analista Abastecimiento PGC Aseo", "3046747028", "abastecimientoaseo@megatiendas.co"],
+  ["COMERCIAL", "PLS", "Diana Quiroga Rodríguez", "Negociador PLS", "3219561645", "dsquiroga@megatiendas.co"],
+  ["COMERCIAL", "PLS", "Liliana Borja", "Analista Comercial PLS", "3053370776", "lpborja@megatiendas.co"],
+  ["COMERCIAL", "PLS", "Melany Florez", "Analista Abastecimiento PGC PLS", "3246085623", "abastecimientorancho@megatiendas.co"],
+  ["COMERCIAL", "Rancho", "Eduardo Jiménez Bossio", "Negociador Rancho", "3122522768", "ejbossio@megatiendas.co"],
+  ["COMERCIAL", "Rancho", "Madelegne Vergara", "Analista Abastecimiento PGC Rancho", "3206058949", "abastecimientobebidas@megatiendas.co"],
+  ["COMERCIAL", "Bebidas", "Héctor Renteria", "Analista Comercial Bebidas/Cigarrillos", "3106411643", "herenteria@megatiendas.co"],
+  ["COMERCIAL", "Bebidas", "Elvira M. Balseiro Murillo", "Soporte Logyca / Aux. Abast. PGC Bebidas", "3128485879", "sptabastecimiento@megatiendas.co"],
+  ["SAC", "", "Daniel Martínez", "Jefe Comercial SAC", "3219574918", "jefecomercialsac@megatiendas.co"],
+  ["SAC", "", "Andrés Espinoza", "Jefe Abastecimiento y Producción", "3108906927", "jefeproduccion@megatiendas.co"],
+  ["SAC", "", "Fabio Ortiz", "Líder Abastecimiento y Producción", "3011522332", "liderabastecimientosac@megatiendas.co"],
+  ["SAC", "", "Victor Salinas", "Coordinador General Cafeterías", "3013092989", "vhsalinas@megatiendas.co"],
+  ["SAC", "", "Fare Alvarez", "Jefe Panificadoras", "3244241257", "falvarez@megatiendas.co"],
+  ["SAC", "", "Andrea Pacheco Bilbao", "Analista Abastecimiento SAC", "3245129053", "analistaabastecimientosac@megatiendas.co"],
+  ["SAC", "", "Yanelis Alcazar", "Analista Abastecimiento SAC", "3013183224", "analistaabastecimientosac2@megatiendas.co"],
+  ["CARNES", "", "Ciro Muñoz", "Director Carnes (Res y Cerdo)", "3126229507", "cimunoz@megatiendas.co"],
+  ["CARNES", "", "Jose Mercado", "Negociador Pollo y Pescado", "3102127839", "jmmercado@megatiendas.co"],
+  ["CARNES", "", "Michael Gutierrez", "Jefe Carnes y Fruver Operativo", "3206190926", "mgutierrez@megatiendas.co"],
+  ["CARNES", "", "Omar Muñoz", "Coordinador Regional Bolívar", "3043279407", "coordinadorregionalsegundo@megatiendas.co"],
+  ["CARNES", "", "Pedro Ruiz", "Coordinador Regional Atlántico", "3006771366", "coordcarnesregionalatlantico@megatiendas.co"],
+  ["CARNES", "", "Juan Carlos Tamara", "Coordinador Regional Magdalena", "3118717604", "coordcarnesmagdalena@megatiendas.co"],
+  ["CARNES", "", "Angel Pineda", "Coordinador Abastecimiento Carnes", "3012636652", "aprodriguez@megatiendas.co"],
+  ["CARNES", "", "Nazly Jiménez", "Líder Abastecimiento Carnes", "3013841798", "nmjimenez@megatiendas.co"],
+  ["CARNES", "", "Ingrid Vargas", "Analista Abastecimiento", "3008384558", "analistaabastecimientocarnesbq@megatiendas.co"],
+  ["CARNES", "", "Yina Lambis", "Analista Abastecimiento", "3017988727", "analistaabastecimientocarnes2@megatiendas.co"],
+  ["FRUVER", "", "Sandra Novoa", "Directora Fruver", "3138511362", "snovoa@acercate.com.co"],
+  ["FRUVER", "", "Mónica Maldonado", "Negociador", "3107337060", "mmaldonado@megatiendas.co"],
+  ["FRUVER", "", "Luis Niño", "Negociador", "3132317650", "compradorfruver@megatiendas.co"],
+  ["FRUVER", "", "Michel Barbosa", "Negociador", "3137722556", "auxadministrativoacercate@megatiendas.co"],
+  ["FRUVER", "", "Deimer Contreras", "Negociador", "3214568402", "jeferegionalfruver@megatiendas.co"],
+  ["FRUVER", "", "Erwin Urbina", "Regional Atlántico Operación", "3144131678", "coordfruverbarranquilla@megatiendas.co"],
+  ["FRUVER", "", "Jorge Anaya", "Regional Bolívar Operación", "3147481592", "janaya@megatiendas.co"],
+  ["FRUVER", "", "Ricardo Arenas", "Regional Magdalena Operación", "3023337166", "coordinadorcarnessantamarta@megatiendas.co"],
+  ["FRUVER", "", "Roger Montes", "Líder de Abastecimiento", "3015876279", "rjmontes@megatiendas.co"],
+  ["FRUVER", "", "Carlos Puello", "Analista Abastecimiento", "3145809489", "coordabastecimientofruver@megatiendas.co"],
+  ["FRUVER", "", "Ingrid Uribe", "Analista Abastecimiento", "3246499737", "ikuribe@megatiendas.co"],
+  ["FRUVER", "", "Kevin Alvarez", "Analista Abastecimiento", "3012240280", "analistaabastecimientofruver@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Paula Andrea Cordoba", "Jefe de Fidelización y S/C", "3218031092", "pacordoba@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Jeiner Altamiranda", "Jefe de Comunicaciones y Marca", "3014663191", "jaltamiranda@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Katerine Contreras Aroca", "Analista Comercial", "3024295353", "analistacomercial@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Keiner Casseres Guardo", "Analista de Mercadeo y Fidelización", "3135515160", "analistamercadeo@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Kerly Hernández Herrera", "Aux. Regional de Comunicaciones", "3053176349", "coordmercadeo@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Yarlett Figueroa Zarate", "Diseñador Grafico", "3023567833", "ypfigueroa@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Rafael Cárdenas García", "Diseñador Grafico", "3217768233", "digrafico2@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Martin Devoz Alcala", "Diseñador Multimedia", "3023067951", "dimultimedia@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Estrellita Serna Fernández", "Auxiliar Administrativa", "3044547923", "auxadminmercadeo@megatiendas.co"],
+  ["FIDELIZACION /MERCADEO", "", "Natalia Baena Díaz", "Asistente Administrativa", "3012581930", "jpmolina@megatiendas.co"],
+  ["CONTABILIDAD", "", "Alejandro Polo Torres", "Jefe de Contabilidad", "3005435283", "aptorres@megatiendas.co"],
+  ["CONTABILIDAD", "", "Julio Pinzon Gutierrez", "Coordinador Contable", "3138439439", "coordinadorcontable@megatiendas.co"],
+  ["CONTABILIDAD", "", "Osman Blanco Ramos", "Coordinador de Impuestos", "3024216128", "ccoordimpuestos@megatiendas.co"],
+  ["CONTABILIDAD", "", "Grey Romero Castillo", "Coordinador Cartera", "3103633245", "gromero@megatiendas.co"],
+  ["CONTABILIDAD", "", "Liliana Tovar González", "Coordinadora Junior Contable", "3126498665", "lstovar@megatiendas.co"],
+  ["INVENTARIOS", "Jefatura", "Karen Santana", "Jefe de Inventarios", "3134904723", "klsantana@megatiendas.co"],
+  ["INVENTARIOS", "Jefatura", "Robinson Molina", "Auditor Senior", "3134904723", "rjmolina@megatiendas.co"],
+  ["INVENTARIOS", "Jefatura", "Marlon Teheran", "Líder Inventarios Barranquilla", "3176543909", "lideracibarranquilla@megatiendas.co"],
+  ["INVENTARIOS", "Jefatura", "Edly Padilla", "Líder Inventarios Cartagena", "3147999674", "tpadilla@megatiendas.co"],
+  ["INVENTARIOS", "Jefatura", "Cristian Bilbao", "Líder Inventarios Cartagena", "3014905889", "lideracicartagena@megatiendas.co"],
+  ["INVENTARIOS", "Jefatura", "Ivan Manjarres", "Líder Inventarios Santa Marta", "3003673199", "lideracisantamarta@megatiendas.co"],
+  ["INVENTARIOS", "ACI Atlántico", "Evelio Jose Carrillo Ojeda", "Analista Control Inventario (C.O 206-207)", "3126270492", ""],
+  ["INVENTARIOS", "ACI Atlántico", "Daniel Alberto Mendoza Caro", "Analista Control Inventario (C.O 201)", "3162326505", ""],
+  ["INVENTARIOS", "ACI Atlántico", "Gladys Luz Cárdenas Andrade", "Analista Control Inventario (C.O 203-205)", "3023947276", ""],
+  ["INVENTARIOS", "ACI Atlántico", "Joel Enrique Chiquillo Carrillo", "Analista Control Inventario (C.O 204-210)", "3245624845", ""],
+  ["INVENTARIOS", "ACI Atlántico", "Ernesto Jose Tapias Ramírez", "Analista Control Inventario (C.O 600)", "3184189536", ""],
+  ["INVENTARIOS", "ACI Atlántico", "Carlos Julio Jiménez", "Analista Control Inventario (C.O 501)", "3116856708", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Edly Tatiana Padilla Payares", "Analista Control Inventario (C.O 888)", "3147999674", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Willian Molina Simanca", "Analista Control Inventario (C.O 101)", "3044192088", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Yulieth González Alcala", "Analista Control Inventario (C.O 105-110)", "3012369727", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Angelo David Cavarcas Cuadrado", "Analista Control Inventario (C.O 103)", "3023936767", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Sixto Baloco", "Analista Control Inventario (C.O 111)", "3017578259", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Andrés De Jesús Simancas García", "Analista Control Inventario (C.O 108)", "3013538761", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Luis Simarra", "Analista Control Inventario (C.O 106-960)", "3024221042", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Josse Rafael Barrios Díaz", "Analista Control Inventario (C.O 119)", "315155301", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Andrés Felipe Rios Molano", "Analista Control Inventario (C.O 800)", "3014330214", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Teddy Hernández", "Analista Control Inventario (C.O Acumulador)", "3135476595", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Jose Pión Hernández", "Analista de Conteo (Control Total)", "3053405323", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Jonatan De Jesús Muñoz Rodrigues", "Analista de Conteo (Control Total)", "3023657805", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Patricia Emiliani Pacheco", "Analista de Conteo (Control Total)", "3156944294", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Jerson Cervantes Berrio", "Analista de Conteo (Control Total)", "3234658938", ""],
+  ["INVENTARIOS", "ACI Bolívar", "Galiz Daza Muñiz", "Analista de Conteo (Control Total)", "3225874448", ""],
+  ["INVENTARIOS", "ACI Magdalena", "Angélica González", "Analista de Conteo (C.O 401)", "3024077878", ""],
+  ["INVENTARIOS", "ACI Magdalena", "Marta Morellis", "Analista de Conteo (C.O 402)", "3027540637", ""],
+  ["INVENTARIOS", "ACI Magdalena", "Christian Alvarado", "Analista de Conteo (C.O 403)", "3157171817", ""],
+  ["INVENTARIOS", "ACI Magdalena", "Isaac Perlaza", "Analista de Conteo (C.O 404)", "3005493435", ""],
+  ["INVENTARIOS", "ACI Magdalena", "Julio Rodríguez", "Analista de Conteo (C.O 405)", "3016987217", ""],
+  ["INVENTARIOS", "ACI Magdalena", "Jair García", "Analista de Conteo (C.O 406)", "3013129059", ""],
+  ["LOGISTICA", "Dirección Logística", "Ricardo Molano", "Director Logístico", "3175170370", "rmolano@megatiendas.co"],
+  ["LOGISTICA", "Dirección Logística", "Farid Echeverria", "Control Logístico", "3186997722", "fecheverria@megatiendas.co"],
+  ["LOGISTICA", "CDA 390 Corabastos", "Cristian Castro", "Coordinador CDA Fruver", "3214850958", "bodegacorabastos@megatiendas.co"],
+  ["LOGISTICA", "CDA 390 Corabastos", "Luis Padilla", "Auxiliar Líder de Recibo", "3138459645", "bodegacorabastos@megatiendas.co"],
+  ["LOGISTICA", "CDA 400 Bucaramanga", "Jorge Piñares", "Coordinador CDA Fruver", "3185054000", "supervisorcdabucaramanga@megatiendas.co"],
+  ["LOGISTICA", "CDA 501 Galapark", "Katherine Tobar", "Coordinador Logístico", "3015893861", "coordinadorcalifornia@megatiendas.co"],
+  ["LOGISTICA", "CDA 600 Granabastos", "Gisell Pico", "Coordinador CDA", "3043941355", "admingranabastos@megatiendas.co"],
+  ["LOGISTICA", "CDA 600 Granabastos", "Pedro Florez", "Coordinador CDA Fruver", "3128734685", "fruvergranabastos@megatiendas.co"],
+  ["LOGISTICA", "CDA 600 Granabastos", "Adriana Barcasnegras", "Auxiliar de Costo CDA", "3003731663", "auxcostoscda@megatiendas.co"],
+  ["LOGISTICA", "CDA 600 Granabastos", "Alfredo Miranda", "Auxiliar Fruver CDA", "3232914668", "fruvergranabastos@megatiendas.co"],
+  ["LOGISTICA", "CDA 700 Metropolitano", "Oscar Malaver", "Coordinador CDA Fruver", "3004893495", "operacionesfruverbogota@megatiendas.co"],
+  ["LOGISTICA", "CDA 700 Metropolitano", "Sergio Cruz", "Auxiliar Fruver CDA", "3145495163", "operacionesfruverbogota@megatiendas.co"],
+  ["LOGISTICA", "CDA 703 Santa Marta", "Alexis Manaure", "Coordinador CDA Fruver", "3155872097", "cdisantamarta@megatiendas.co"],
+  ["LOGISTICA", "CDA 703 Santa Marta", "Omar Lapeira", "Auxiliar Líder de Recibo", "3016535571", "cdisantamarta@megatiendas.co"],
+  ["LOGISTICA", "CDA 800 Bloc Port", "Alexander Morales", "Coord. Logística y Transporte", "3163294866", "coordlogistico@megatiendas.co"],
+  ["LOGISTICA", "CDA 800 Bloc Port", "Luis Herrera", "Coordinador CDA Fruver", "3195713316", "lmherrera@megatiendas.co"],
+  ["LOGISTICA", "CDA 800 Bloc Port", "Sergio Estupiñán", "Auxiliar Facturación CDA", "3022411904", "auxfacturacioncda@megatiendas.co"],
+  ["LOGISTICA", "CDA 800 Bloc Port", "Cristian Palacio", "Analista de Inventario", "3128431616", "analistainventariologistica@megatiendas.co"],
+  ["LOGISTICA", "CDA 800 Bloc Port", "Guiller Alvarado", "Auxiliar Fruver CDA", "3225263706", "lmherrera@megatiendas.co"],
+  ["LOGISTICA", "CDA 800 Bloc Port", "Dilan Escobar", "Supervisor de Transporte", "3008559897", "transportedomicilios@megatiendas.co"],
+  ["LOGISTICA", "CDA 800 Bloc Port", "Jairo Davila", "Auxiliar Fruver CDA", "3232880775", "coordlogistico@megatiendas.co"],
+  ["LOGISTICA", "CDA 800 Bloc Port", "Dines Díaz", "Auxiliar Fruver CDA", "3206761966", "lmherrera@megatiendas.co"],
+  ["MANTENIMIENTO", "Regional Bolívar", "Diego Molina", "Jefe de Mantenimiento", "3117657177", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Fernando Fong", "Coordinador de Mantenimiento", "3217493638", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Edwin Bossio", "Auxiliar Administrativo Mtto.", "3006311939", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Juan Villarreal", "Planificador", "3226725340", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Catalino Vega", "Líder de Obra Civil", "3114314227", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Carlos Herazo", "Auxiliar de Obra Civil", "3246104640", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Camilo Torres", "Auxiliar de Obra Civil", "3234594015", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Marcos Beleño", "Auxiliar de Obra Civil", "3005109365", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Carlos Morales", "Auxiliar de Obra Civil", "3023373309", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Jorge Fernández", "Auxiliar de Obra Civil", "3236888353", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Felipe Herrera", "Técnico de Refrigeración", "3004134769", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Ricardo Guerrero", "Técnico de Refrigeración", "3226593599", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Nadilso Ospino", "Auxiliar de Refrigeración", "3006524328", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Federico Vidal", "Auxiliar de Refrigeración", "3108446773", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Elkin Caicedo", "Auxiliar de Refrigeración", "3225091667", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Jose Olivero", "Técnico Electromecánico", "3155097499", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Alejandro Pérez", "Técnico Electromecánico", "3043113958", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Jhon Payares", "Técnico Electricista", "3004349246", ""],
+  ["MANTENIMIENTO", "Regional Bolívar", "Yeison Quintana", "Soldador", "3215708283", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Álvaro Arroyo", "Líder Locativo", "3145613509", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Juan Gutierrez", "Electromecánico", "3103585603", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Jose Camargo", "Soldador", "3116610974", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Larcen Padilla", "Auxiliar Locativo", "3028467399", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Willian Ariza", "Auxiliar Locativo", "3122705827", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Gabriel Portillo", "Auxiliar Locativo", "3017904769", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Andrés Vásquez", "Técnico", "3012232383", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Diego Domínguez", "Auxiliar", "3023366601", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Samuel Castro", "Auxiliar", "3052885217", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Jose Roca", "Auxiliar", "3044928501", ""],
+  ["MANTENIMIENTO", "Regional Atlántico", "Edinson Fierro", "Auxiliar", "3003602892", ""],
+  ["MANTENIMIENTO", "Regional Santa Marta", "Juan Riatiga", "Jefe de Mantenimiento", "3008776224", ""],
+  ["MANTENIMIENTO", "Regional Santa Marta", "Leonardo Acosta", "Líder de Refrigeración", "3006054044", ""],
+  ["MANTENIMIENTO", "Regional Santa Marta", "Leonardo Mendoza", "Auxiliar de Refrigeración", "3009466447", ""],
+  ["MANTENIMIENTO", "Regional Santa Marta", "Jose Gamarra", "Líder Electromecánico", "3008756335", ""],
+  ["MANTENIMIENTO", "Regional Santa Marta", "Armando Mercado", "Obra Civil", "3177465485", ""],
+  ["DIRECCION Y OPERACIONES", "", "Jorge Rodríguez", "Director Ventas y Operaciones", "3108742234", "jerodriguez@megatiendas.co"],
+  ["DIRECCION Y OPERACIONES", "", "Donaldo Tijera B.", "Jefe de Operaciones Atlántico", "3188402905", "dtijera@megatiendas.co"],
+  ["DIRECCION Y OPERACIONES", "", "Vicenta Castelar", "Jefe de Operaciones Bolívar", "3135469250", "vcastellar@megatiendas.co"],
+  ["DIRECCION Y OPERACIONES", "", "Janer Jiménez", "Jefe de Operaciones Magdalena", "3046679594", "jefeoperacionesmagdalena@megatiendas.co"],
+  ["DIRECCION Y OPERACIONES", "", "Jorge Tirado", "Jefe Operación Logística", "3043966287", "jltirado@megatiendas.co"],
+  ["DIRECCION Y OPERACIONES", "", "Alvida Lopez", "Coordinadora OPL Atlántico", "3017505950", "atuservicioopl@megatiendas.co"],
+  ["DIRECCION Y OPERACIONES", "", "Margarita García", "Coordinadora OPL Magdalena", "3172951563", "supervisoropl@megatiendas.co"],
+  ["PROTECCION Y PREVENCION", "", "Carlos Vizcaíno", "Jefe P&P", "3113524774", "cavizcaino@megatiendas.co"],
+  ["PROTECCION Y PREVENCION", "", "Néstor Pachon", "Coordinador Bolívar Norte", "3102130805", "coordpyp@megatiendas.co"],
+  ["PROTECCION Y PREVENCION", "", "Dilson Urruchurto", "Coordinador Bolívar Sur", "3105403600", "coordinadorpyp@megatiendas.co"],
+  ["PROTECCION Y PREVENCION", "", "Esteban Ruiz", "Coordinador Magdalena", "3007718044", "edruiz@megatiendas.co"],
+  ["SISTEMAS", "", "Juan Cuello", "Jefe de Infraestructura Tecnológica", "3215662419", "jcuello@megatiendas.co"],
+  ["SISTEMAS", "", "Jorge González", "Soporte Técnico", "3215296480", "soporte@megatiendas.co"],
+  ["SISTEMAS", "", "Ana Elvira Fontalvo", "Sistemas de Información", "3007641827", "afontalvo@megatiendas.co"],
+  ["ADMINISTRATIVA", "Calidad y Ambiental", "Yina Oyola", "Control de Calidad Atlántico", "3007424891", "controldecalidad@megatiendas.co"],
+  ["ADMINISTRATIVA", "Calidad y Ambiental", "Ana Castro", "Coordinadora Calidad Santa Marta", "3014340066", "coordcalidadstamarta@megatiendas.co"],
+  ["ADMINISTRATIVA", "Calidad y Ambiental", "Jefferson Campo", "Jefe Ambiental Nacional", "3008372031", "jecampo@megatiendas.co"],
+  ["ADMINISTRATIVA", "Calidad y Ambiental", "Danna", "Coordinadora SST", "3104612994", "coordinadorsst@megatiendas.co"],
+  ["ADMINISTRATIVA", "Gestión Humana", "Melissa Ibargüen", "Jefe Gestión Humana", "3012552761", "jefegestionhumana@megatiendas.co"],
+  ["ADMINISTRATIVA", "Gestión Humana", "Alberto Morales", "Nomina", "3185622220", "ammorales@megatiendas.co"],
+  ["ADMINISTRATIVA", "Gestión Humana", "Carlos Agamez", "Relaciones Laborales", "3016302169", "relacioneslaborales@megatiendas.co"],
+  ["ADMINISTRATIVA", "Financiera y Control", "Mayra Altahona", "Tesoreria", "3127716597", "maltahona@megatiendas.co"],
+  ["ADMINISTRATIVA", "Financiera y Control", "Maira Lopez", "Control de Gestión", "3108371064", "malopez@megatiendas.co"],
+  ["ADMINISTRATIVA", "Financiera y Control", "Jose Ortiz", "Monitor Control de Gestión", "3150500476", "monitorcontrolgestion@megatiendas.co"],
+  ["ADMINISTRATIVA", "Financiera y Control", "Catina Pájaro", "Compras y Activos", "3234355930", "cpgonzalez@megatiendas.co"],
+  ["ADMINISTRATIVA", "Financiera y Control", "Ubaldo de Las Salas", "Portafolio", "3104161545", "uadelassalas@megatiendas.co"],
+  ["ADMINISTRATIVA & GESTIÓN HUMANA", "Calidad y Ambiental", "Jean Ospino", "Cordinador de Serviciones Generales", "321752873", "coordaseobq@megatiendas.co"]
+];
 
-// ── STATE ─────────────────────────────────────────────────
-let DEPTS=[],q='',tmr=null,ed=null;
-
-function load(applyEdits=true){
-  DEPTS=JSON.parse(JSON.stringify(D));
-  if(applyEdits){
-    const edits=JSON.parse(localStorage.getItem('mgEd')||'{}');
-    Object.entries(edits).forEach(([id,e])=>{
-      if(e.meta){
-        if(!DEPTS.find(x=>x.id===id)){
-          DEPTS.push({id,tab:'areas',n:e.meta.n,e:e.meta.e,
-            ca:e.meta.ca,ct:e.meta.ct,ds:'Departamento personalizado',
-            c:e.c||[],s:null});
-        }
-        return;
-      }
-      const d=DEPTS.find(x=>x.id===id);if(!d)return;
-      if(e.c)d.c=e.c;if(e.s)d.s=e.s;
-    });
-  }
-  updCount();
-  render();
-}
-function saveEd(id){
-  const d=DEPTS.find(x=>x.id===id);if(!d)return;
-  const e=JSON.parse(localStorage.getItem('mgEd')||'{}');
-  e[id]={c:d.c||null,s:d.s||null};
-  localStorage.setItem('mgEd',JSON.stringify(e));
-}
-
-// ── ICONS ─────────────────────────────────────────────────
-const IPH=`<svg width="17" height="17" fill="currentColor" viewBox="0 0 24 24"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>`;
-const IWA=`<svg width="18" height="18" viewBox="0 0 32 32" fill="currentColor"><path d="M16 3C9 3 3 9 3 16c0 2.3.6 4.5 1.8 6.4L3 29l6.8-1.8A13 13 0 0016 29c7 0 13-6 13-13S23 3 16 3zm0 23.8c-2 0-4-.6-5.7-1.6l-.4-.2-4 1 1-3.9-.3-.4A10.8 10.8 0 0116 5.2c5.9 0 10.8 4.8 10.8 10.8S21.9 26.8 16 26.8zm5.9-8.1c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2s-.8 1-1 1.2c-.2.2-.4.2-.7.1-1.8-.9-3-1.6-4.2-3.6-.3-.5.3-.5.9-1.7.1-.2 0-.4-.1-.5l-1-2.2c-.3-.7-.5-.6-.7-.6h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.6 0 1.6 1.2 3.1 1.3 3.3.2.2 2.4 3.6 5.7 5 .8.4 1.4.6 1.9.7.8.2 1.5.2 2.1.1.6-.1 1.8-.7 2.1-1.4.3-.7.3-1.3.2-1.4-.1-.2-.3-.3-.6-.4z"/></svg>`;
-const IML=`<svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>`;
-const IED=`<svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>`;
-const IPL=`<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>`;
-
-// ── RENDER ────────────────────────────────────────────────
-function match(x,dept,Q){
-  if(!Q)return true;
-  return (x.n||'').toLowerCase().includes(Q)||(x.r||'').toLowerCase().includes(Q)
-    ||(x.ti||'').toLowerCase().includes(Q)||(x.m||'').toLowerCase().includes(Q)
-    ||dept.n.toLowerCase().includes(Q);
-}
-
-function render(){
-  const main=document.getElementById('main');
-  const emp=document.getElementById('emp');
-  main.innerHTML='';
-  const Q=q.toLowerCase();
-  let tot=0;
-
-  DEPTS.forEach((dept,di)=>{
-    if(dept.c)dept.c.forEach((x,i)=>{x._si='';x._ci=i;});
-    else(dept.s||[]).forEach((s,si)=>s.c.forEach((x,ci)=>{x._si=si;x._ci=ci;}));
-
-    const all=aC(dept);
-    const vis=all.filter(x=>match(x,dept,Q));
-    if(!vis.length)return;
-    tot+=vis.length;
-
-    const card=document.createElement('div');
-    card.className='dept';card.dataset.id=dept.id;card.dataset.di=di;
-
-    const isOps=dept.tab==='ops';
-    let body='';
-
-    if(dept.s){
-      dept.s.forEach((sec,si)=>{
-        const sc=sec.c.filter(x=>match(x,dept,Q));
-        if(!sc.length)return;
-        const isJef=/jefatura|jefe de op/i.test(sec.t);
-        if(isOps&&!isJef){
-          const sid=dept.id+'-s'+si;
-          body+=`<div class="sti" id="${sid}">
-            <button class="sth" data-sto="${sid}" type="button">
-              <div class="sd"></div><div class="sn">${sec.t}</div>
-              <span class="sc">${sc.length}</span>
-              <svg class="sv" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-            </button>
-            <div class="sb">${sc.map(x=>row(x,dept,Q)).join('')}
-              <button class="badd" type="button" data-adi="${di}" data-asi="${si}">${IPL} Agregar</button>
-            </div>
-          </div>`;
-        }else{
-          body+=`<div class="sh"><span class="br"></span>${sec.t}</div>`;
-          body+=sc.map(x=>row(x,dept,Q)).join('');
-          body+=`<button class="badd" type="button" data-adi="${di}" data-asi="${si}">${IPL} Agregar</button>`;
-        }
-      });
-      if(Q&&isOps)setTimeout(()=>card.querySelectorAll('.sti').forEach(e=>e.classList.add('op')),0);
-    }else{
-      body=vis.map(x=>row(x,dept,Q)).join('');
-      body+=`<button class="badd" type="button" data-adi="${di}" data-asi="">${IPL} Agregar</button>`;
-    }
-
-    card.innerHTML=`
-      <button class="dh" data-tog="${dept.id}" type="button">
-        <div class="di ${dept.ca}">${dept.e}</div>
-        <div class="dn"><div class="dnm">${dept.n}</div><div class="dsb">${dept.ds||''}</div></div>
-        <div class="dr">
-          <span class="dc ${dept.ca} ${dept.ct}">${Q?vis.length:all.length}</span>
-          <svg class="chv" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
-        </div>
-      </button>
-      <div class="db"><div class="dbi">${body}</div></div>`;
-
-    main.appendChild(card);
-    if(Q)card.classList.add('op');
-  });
-
-  emp.className='emp'+(tot===0?' on':'');
-  document.getElementById('sn').textContent=tot+' contacto'+(tot!==1?'s':'');
-}
-
-function row(x,dept,Q){
-  const tel=(x.p||'').replace(/\D/g,'');
-  const mail=(x.m||'').trim();
-  const bg=abg(x.n||'?');
-  const telTxt=fmt(x.p);
-  let bdg='';
-  if(x.ti)bdg+=`<span class="bdg bst">${hl(x.ti,Q)}</span>`;
-  if(x.tp==='P')bdg+=`<span class="bdg bp">Principal</span>`;
-  if(x.tp==='C')bdg+=`<span class="bdg bc2">Comercial</span>`;
-  const telRow=telTxt
-    ?`<div class="ctel"><svg width="10" height="10" fill="currentColor" viewBox="0 0 24 24" style="opacity:.5"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>${telTxt}</div>`
-    :`<div class="ctel" style="color:#CBD5E0;font-size:10px">Sin número</div>`;
-  const mailRow=mail
-    ?`<div class="cml">✉️ ${hl(mail,Q)}</div>`:'';
-  const ph=tel
-    ?`<a class="bph" href="tel:+57${tel}" title="Llamar">${IPH}</a>`
-    :`<span class="bph bno">${IPH}</span>`;
-  const wa=tel
-    ?`<a class="bwa" href="whatsapp://send?phone=57${tel}" title="WhatsApp">${IWA}</a>`
-    :`<span class="bwa bno">${IWA}</span>`;
-  const ml=mail
-    ?`<a class="bml" href="mailto:${mail}" title="Correo">${IML}</a>`
-    :`<span class="bml bno">${IML}</span>`;
-  const be=`<button class="bed" type="button" data-eid="${dept.id}" data-esi="${x._si}" data-eci="${x._ci}">${IED}</button>`;
-  return`<div class="ct">
-    <div class="av" style="background:${bg}">${ini(x.n||'?')}</div>
-    <div class="ci">
-      <div class="cnm">${hl(x.n||'',Q)}</div>
-      <div class="crl">${hl(x.r||'',Q)}</div>
-      ${telRow}${mailRow}${bdg?`<div class="cbdg">${bdg}</div>`:''}
-    </div>
-    <div class="ca">${be}${ml}${wa}${ph}</div>
-  </div>`;
-}
-
-// ── EVENTS ────────────────────────────────────────────────
-document.addEventListener('click',e=>{
-  const tog=e.target.closest('[data-tog]');if(tog){document.querySelector('.dept[data-id="'+tog.dataset.tog+'"]')?.classList.toggle('op');return;}
-  const sto=e.target.closest('[data-sto]');if(sto){document.getElementById(sto.dataset.sto)?.classList.toggle('op');return;}
-  const eid=e.target.closest('[data-eid]');if(eid){oEd(eid.dataset.eid,eid.dataset.esi,eid.dataset.eci);return;}
-  const adi=e.target.closest('[data-adi]');if(adi){oAdd(parseInt(adi.dataset.adi),adi.dataset.asi);return;}
-});
-
-document.getElementById('q').addEventListener('input',function(){
-  document.getElementById('bClr').classList.toggle('on',!!this.value);
-  clearTimeout(tmr);tmr=setTimeout(()=>{q=this.value;render();},160);
-});
-document.getElementById('bClr').addEventListener('click',()=>{
-  document.getElementById('q').value='';
-  document.getElementById('bClr').classList.remove('on');q='';render();
-});
-document.getElementById('bEdit').addEventListener('click',function(){
-  document.body.classList.toggle('em');this.classList.toggle('on');
-});
-
-// ── APPS SCRIPT API ──────────────────────────────────────
-const API = 'https://script.google.com/macros/s/AKfycbyJm-KTwlPi36-mQhKwvGWRFzQwx2GbvaIKhOPHZ1Xxnh1wM1vcMdMDCcAvx5gq2GLn4A/exec';
-
-// Mapeo area (Sheet) → id de dept local
-const AREA_MAP={
-  'SAC':'sac','CARNES':'car','FRUVER':'frv',
-  'COMERCIAL':'com','FIDELIZACION /MERCADEO':'fid','FIDELIZACION/MERCADEO':'fid',
-  'CONTABILIDAD':'cnt','INVENTARIOS':'inv',
-  'LOGISTICA':'log','MANTENIMIENTO':'mnt',
-  'DIRECCION Y OPERACIONES':'dir','PROTECCION Y PREVENCION':'pyp',
-  'SISTEMAS':'sis','ADMINISTRATIVA':'adm',
-};
-function areaToId(area){
-  const a=(area||'').trim().toUpperCase();
-  if(AREA_MAP[a])return AREA_MAP[a];
-  const d=DEPTS.find(x=>x.n.toUpperCase().includes(a)||a.includes(x.n.toUpperCase()));
-  return d?d.id:null;
+function instalar() {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  crearHoja(ss, 'OPS',   OPS_HEAD,   OPS_DATA);
+  crearHoja(ss, 'AREAS', AREAS_HEAD, AREAS_DATA);
+  SpreadsheetApp.flush();
+  Logger.log('Listo. OPS: %s filas · AREAS: %s filas',
+             OPS_DATA.length, AREAS_DATA.length);
 }
 
-const COLORS =['ca-inv','ca-com','ca-fid','ca-log','ca-sac','ca-car','ca-cnt','ca-mnt'];
-const COLORST=['ct-inv','ct-com','ct-fid','ct-log','ct-sac','ct-car','ct-cnt','ct-mnt'];
-const EMOJIS =['📋','📦','📣','🚛','🥐','🔧','📊','👥','🏪','⭐','🎯','🗂️'];
-
-function getOrCreateDept(areaNm, tab){
-  let did=areaToId(areaNm);
-  let dept=did?DEPTS.find(x=>x.id===did):null;
-  if(!dept){
-    const newId=(tab==='ops'?'ops-api-':'api-')+areaNm.trim().toLowerCase().replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
-    dept=DEPTS.find(x=>x.id===newId);
-    if(!dept){
-      const ci=DEPTS.length%COLORS.length;
-      dept={id:newId,tab:tab||'areas',
-        n:areaNm.trim().charAt(0).toUpperCase()+areaNm.trim().slice(1).toLowerCase(),
-        e:EMOJIS[DEPTS.length%EMOJIS.length],
-        ca:COLORS[ci],ct:COLORST[ci],
-        ds:'Desde Google Sheets',c:[],s:null};
-      DEPTS.push(dept);
-    }
-  }
-  return dept;
-}
-
-// AREAS: el Sheet es la fuente de verdad. Respeta la columna "seccion".
-function mergeAreas(areas){
-  if(!areas||!areas.length) return;
-
-  const byArea={};
-  areas.forEach(r=>{
-    const area=(r.area||'').trim(), nombre=(r.nombre||'').trim();
-    if(!nombre||!area) return;
-    const k=area.toUpperCase();
-    if(!byArea[k]) byArea[k]=[];
-    byArea[k].push({
-      n:nombre,
-      r:(r.cargo||'').trim(),
-      p:String(r.telefono||'').replace(/\D/g,''),
-      m:(r.correo||'').trim(),
-      _sec:(r.seccion||'').trim(),
-      _row:r._row,       // fila real en el Sheet: necesaria para editar/borrar
-      _area:area         // valor original (con mayúscula/tilde propia del Sheet)
-    });
-  });
-
-  Object.entries(byArea).forEach(([areaKey, contacts])=>{
-    const dept=getOrCreateDept(areaKey,'areas');
-    if(!dept) return;
-
-    const conSeccion=contacts.some(c=>c._sec);
-    if(conSeccion){
-      const porSec={};
-      contacts.forEach(c=>{
-        const k=c._sec||'General';
-        (porSec[k]=porSec[k]||[]).push({n:c.n,r:c.r,p:c.p,m:c.m,_row:c._row,_area:c._area,_sec:c._sec});
-      });
-      dept.c=null;
-      dept.s=Object.entries(porSec).map(([t,c])=>({t,c}));
-    }else{
-      dept.s=null;
-      dept.c=contacts.map(c=>({n:c.n,r:c.r,p:c.p,m:c.m,_row:c._row,_area:c._area,_sec:c._sec}));
-    }
-  });
-}
-
-// OPS: el Sheet es la fuente de verdad. Reemplaza secciones por tienda.
-function mergeOps(ops){
-  if(!ops||!ops.length) return;
-
-  const byReg={};
-  ops.forEach(r=>{
-    const nombre=(r.nombre||'').trim();
-    if(!nombre) return;
-    const rk=(r.regional||'').trim().toUpperCase();
-    const tienda=(r.tienda||'').trim();
-    const tk=tienda.toUpperCase()||'__JEF__';
-    const cargo=(r.cargo||'').trim();
-    if(!byReg[rk]) byReg[rk]={};
-    if(!byReg[rk][tk]) byReg[rk][tk]=[];
-    byReg[rk][tk].push({
-      n:nombre, r:cargo,
-      p:String(r.telefono||'').replace(/\D/g,''),
-      m:(r.correo||'').trim(),
-      ti:tienda,
-      tp:cargo.toUpperCase().includes('PRINCIPAL')?'P':cargo.toUpperCase().includes('COMERCIAL')?'C':'',
-      _row:r._row,
-      _area:(r.regional||'').trim()
-    });
-  });
-
-  const regMap={
-    'OPERACIONES ATLANTICO':'ops-atl',
-    'OPERACIONES BOLIVAR':'ops-bol',
-    'OPERACIONES MAGDALENA':'ops-mag',
-    'SUPERMAYORISTA':'ops-sup'
-  };
-
-  Object.entries(byReg).forEach(([rk, tiendas])=>{
-    let deptId=regMap[rk];
-    if(!deptId){
-      const mk=Object.keys(regMap).find(k=>rk.includes(k.replace('OPERACIONES ','')));
-      deptId=mk?regMap[mk]:null;
-    }
-    let dept=deptId?DEPTS.find(x=>x.id===deptId):null;
-    if(!dept) dept=getOrCreateDept(rk,'ops');
-    if(!dept) return;
-
-    // Jefatura siempre primero
-    const claves=Object.keys(tiendas).sort((a,b)=>
-      a==='__JEF__'?-1:b==='__JEF__'?1:0);
-
-    dept.c=null;
-    dept.s=claves.map(tk=>({
-      t: tk==='__JEF__'?'Jefatura Regional':(tiendas[tk][0]?.ti||tk),
-      c: tiendas[tk]
-    }));
-  });
-}
-
-function aplicar(json){
-  if(json.areas) mergeAreas(json.areas);
-  else if(json.data) mergeAreas(json.data);
-  if(json.ops) mergeOps(json.ops);
-}
-
-// Carga por JSONP: el navegador la trata como <script>, así que NO aplica
-// CORS. Es lo que permite sincronizar con el HTML abierto desde el disco.
-function jsonp(params, timeoutMs){
-  return new Promise(function(resolve,reject){
-    const cb='mgcb'+Date.now()+Math.floor(Math.random()*1000);
-    const s=document.createElement('script');
-    let listo=false;
-    function limpiar(){ try{delete window[cb];}catch(e){window[cb]=undefined;}
-                        if(s.parentNode)s.parentNode.removeChild(s); }
-    const t=setTimeout(function(){
-      if(!listo){listo=true;limpiar();reject(new Error('timeout'));}
-    }, timeoutMs||15000);
-    window[cb]=function(data){
-      if(listo)return; listo=true; clearTimeout(t); limpiar(); resolve(data);
-    };
-    s.onerror=function(){
-      if(!listo){listo=true;clearTimeout(t);limpiar();reject(new Error('network'));}
-    };
-    const qs=Object.keys(params||{}).map(function(k){
-      return encodeURIComponent(k)+'='+encodeURIComponent(params[k]);
-    });
-    qs.push('callback='+cb,'_='+Date.now());
-    s.src=API+'?'+qs.join('&');
-    document.body.appendChild(s);
-  });
-}
-
-async function lS(){
-  const btn=document.getElementById('bRef');
-  const upd=document.getElementById('ui');
-  btn.classList.add('ld');
-  upd.textContent='Sincronizando…';
-  try{
-    const json=await jsonp({});
-    if(json && json.ok){
-      // El Sheet manda: limpia edits locales de áreas (conserva depts custom)
-      const edits=JSON.parse(localStorage.getItem('mgEd')||'{}');
-      Object.keys(edits).forEach(function(id){ if(!edits[id].meta) delete edits[id]; });
-      localStorage.setItem('mgEd',JSON.stringify(edits));
-
-      load(true);
-      aplicar(json);
-      const now=new Date();
-      upd.textContent='✓ '+now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-      localStorage.setItem('mgTs',now.toISOString());
-      localStorage.setItem('mgRemote',JSON.stringify(json));
-      render();
-      updCount();
-    } else {
-      upd.textContent=(json&&json.error)?'⚠ Error en el Sheet':'Sin datos';
-      if(json&&json.error)console.error('Apps Script:',json.error);
-    }
-  }catch(e){
-    upd.textContent=e.message==='timeout'?'⏱ Timeout':'📵 Sin conexión';
-  }finally{btn.classList.remove('ld');}
-}
-
-function postToSheet(area,nombre,cargo,telefono,correo,seccion,sheet){
-  jsonp({action:'add', sheet:sheet||'areas', area:area||'', seccion:seccion||'',
-         nombre:nombre||'', cargo:cargo||'', tel:telefono||'', correo:correo||''})
-    .then(function(){ lS(); })   // refresca para traer el _row del registro nuevo
-    .catch(function(){});
-}
-
-async function postEditToSheet(sheet,row,area,seccion,nombre,cargo,telefono,correo){
-  try{
-    await jsonp({action:'edit', sheet:sheet||'areas', row:row, area:area||'', seccion:seccion||'',
-                 nombre:nombre||'', cargo:cargo||'', tel:telefono||'', correo:correo||''});
-  }catch(e){ console.error('No se pudo sincronizar la edición con el Sheet:', e); }
-  lS();  // refresca: si otro usuario editó filas de por medio, aquí se realinean los _row
-}
-
-async function postDeleteToSheet(sheet,row){
-  try{
-    await jsonp({action:'delete', sheet:sheet||'areas', row:row});
-  }catch(e){ console.error('No se pudo sincronizar la eliminación con el Sheet:', e); }
-  lS();
-}
-
-// ── MODAL ─────────────────────────────────────────────────
-function fillDeptSelect(selectedId){
-  const sel=document.getElementById('fDept');
-  sel.innerHTML='';
-  DEPTS.forEach(d=>{
-    const opt=document.createElement('option');
-    opt.value=d.id; opt.textContent=d.e+' '+d.n;
-    if(d.id===selectedId) opt.selected=true;
-    sel.appendChild(opt);
-  });
-  const newOpt=document.createElement('option');
-  newOpt.value='__new__'; newOpt.textContent='➕ Crear nuevo departamento…';
-  sel.appendChild(newOpt);
-}
-
-function onDeptChange(){
-  const isNew=document.getElementById('fDept').value==='__new__';
-  document.getElementById('fNewDeptWrap').style.display=isNew?'block':'none';
-}
-
-function limpiar(){
-  ['fNm','fCg','fTl','fMl'].forEach(id=>document.getElementById(id).value='');
-}
-
-function oNew(){
-  ed={did:null,si:'',ci:-1,isNew:true};
-  document.getElementById('mTl').textContent='Agregar contacto';
-  limpiar();
-  document.getElementById('fDeptWrap').style.display='block';
-  document.getElementById('fNewDeptWrap').style.display='none';
-  fillDeptSelect(DEPTS[0]?.id);
-  document.getElementById('bDl').style.display='none';
-  document.getElementById('ov').classList.add('on');
-  setTimeout(()=>document.getElementById('fNm').focus(),350);
-}
-
-function oEd(did,siR,ciR){
-  const d=DEPTS.find(x=>x.id===did);if(!d)return;
-  const si=siR===''||siR===undefined?'':parseInt(siR);
-  const ci=parseInt(ciR);
-  const c=si===''?d.c[ci]:d.s[si].c[ci];if(!c)return;
-  ed={did,si,ci,isNew:false};
-  document.getElementById('mTl').textContent='Editar contacto';
-  document.getElementById('fNm').value=c.n||'';
-  document.getElementById('fCg').value=c.r||'';
-  document.getElementById('fTl').value=(c.p||'').replace(/\D/g,'');
-  document.getElementById('fMl').value=c.m||'';
-  document.getElementById('fDeptWrap').style.display='none';
-  document.getElementById('fNewDeptWrap').style.display='none';
-  document.getElementById('bDl').style.display='block';
-  document.getElementById('ov').classList.add('on');
-  setTimeout(()=>document.getElementById('fNm').focus(),350);
-}
-
-function oAdd(di,siR){
-  const si=siR===''||siR===undefined?'':parseInt(siR);
-  ed={did:DEPTS[di].id,si,ci:-1,isNew:true};
-  document.getElementById('mTl').textContent='Agregar contacto';
-  limpiar();
-  document.getElementById('fDeptWrap').style.display='none';
-  document.getElementById('fNewDeptWrap').style.display='none';
-  document.getElementById('bDl').style.display='none';
-  document.getElementById('ov').classList.add('on');
-  setTimeout(()=>document.getElementById('fNm').focus(),350);
-}
-
-function cM(){document.getElementById('ov').classList.remove('on');}
-document.getElementById('ov').addEventListener('click',e=>{if(e.target===e.currentTarget)cM();});
-
-async function sC(){
-  const nm=document.getElementById('fNm').value.trim();
-  const rg=document.getElementById('fCg').value.trim();
-  const tl=document.getElementById('fTl').value.replace(/\D/g,'');
-  const ml=document.getElementById('fMl').value.trim();
-  if(!nm){alert('El nombre es obligatorio.');return;}
-
-  let areaNombre='', seccion='', hoja='areas';
-
-  if(ed.isNew && ed.did===null){
-    const selVal=document.getElementById('fDept').value;
-
-    if(selVal==='__new__'){
-      const dNm=document.getElementById('fNewDeptNm').value.trim();
-      const dEm=document.getElementById('fNewDeptEm').value.trim()||'📋';
-      if(!dNm){alert('Escribe el nombre del nuevo departamento.');return;}
-      areaNombre=dNm.toUpperCase();
-      const newId='custom-'+Date.now();
-      const ci=DEPTS.length%COLORS.length;
-      const nc={n:nm,r:rg,p:tl,m:ml};
-      DEPTS.push({id:newId,tab:'areas',n:dNm,e:dEm,
-        ca:COLORS[ci],ct:COLORST[ci],ds:'Departamento personalizado',
-        c:[nc],s:null});
-      const edits=JSON.parse(localStorage.getItem('mgEd')||'{}');
-      edits[newId]={c:[nc],s:null,meta:{n:dNm,e:dEm,ca:COLORS[ci],ct:COLORST[ci]}};
-      localStorage.setItem('mgEd',JSON.stringify(edits));
-    } else {
-      const d=DEPTS.find(x=>x.id===selVal);if(!d)return;
-      areaNombre=d.n.toUpperCase();
-      hoja=d.tab==='ops'?'ops':'areas';
-      const nc={n:nm,r:rg,p:tl,m:ml};
-      if(d.c){ d.c.push(nc); }
-      else { if(!d.s)d.s=[]; const last=d.s[d.s.length-1];
-             if(last){last.c.push(nc);seccion=last.t;} else d.s.push({t:'General',c:[nc]}); }
-      saveEd(selVal);
-    }
-  } else if(ed.isNew){
-    const d=DEPTS.find(x=>x.id===ed.did);if(!d)return;
-    areaNombre=d.n.toUpperCase();
-    hoja=d.tab==='ops'?'ops':'areas';
-    const esOps=d.tab==='ops';
-    const secNm=(ed.si!==''&&d.s?.[ed.si]?.t)||'';
-    seccion=secNm;
-    const nc={n:nm,r:rg,p:tl,m:ml,
-      ...(esOps?{ti:secNm==='Jefatura Regional'?'':secNm,
-        tp:rg.toUpperCase().includes('PRINCIPAL')?'P':rg.toUpperCase().includes('COMERCIAL')?'C':''}:{})};
-    if(ed.si===''){ if(!d.c)d.c=[];d.c.push(nc); }
-    else d.s[ed.si].c.push(nc);
-    saveEd(ed.did);
+function crearHoja(ss, nombre, head, data) {
+  let sh = ss.getSheetByName(nombre);
+  if (sh) {
+    // clear() NO elimina el filtro: hay que quitarlo a mano o createFilter falla.
+    const f = sh.getFilter();
+    if (f) f.remove();
+    sh.clear();
   } else {
-    const d=DEPTS.find(x=>x.id===ed.did);if(!d)return;
-    const old = ed.si==='' ? d.c[ed.ci] : d.s[ed.si].c[ed.ci];
-    const nc={n:nm,r:rg,p:tl,m:ml};
-    if(ed.si==='')d.c[ed.ci]={...d.c[ed.ci],...nc};
-    else d.s[ed.si].c[ed.ci]={...d.s[ed.si].c[ed.ci],...nc};
-    saveEd(ed.did);
-    updCount();cM();render();
-
-    // Si el contacto viene del Sheet (tiene _row), la edición se sincroniza allá.
-    // Si es un contacto solo-local (agregado antes de la primera sincronización,
-    // o de un departamento personalizado), queda como edición local, igual que antes.
-    if(old && old._row){
-      const sheet=d.tab==='ops'?'ops':'areas';
-      const area=old._area||d.n.toUpperCase();
-      const seccionSync=d.tab==='ops'?(old.ti||''):(old._sec||'');
-      postEditToSheet(sheet, old._row, area, seccionSync, nm, rg, tl, ml);
-    }
-    return;
+    sh = ss.insertSheet(nombre, 0);
   }
 
-  updCount();cM();render();
-  if(areaNombre && ed.isNew) postToSheet(areaNombre,nm,rg,tl,ml,seccion,hoja);
-}
+  sh.getRange(1, 1, 1, head.length).setValues([head]);
+  sh.getRange(2, 1, data.length, head.length).setValues(data);
 
-function dC(){
-  if(!confirm('¿Eliminar este contacto?'))return;
-  const d=DEPTS.find(x=>x.id===ed.did);if(!d)return;
-  const old = ed.si==='' ? d.c[ed.ci] : d.s[ed.si].c[ed.ci];
-  if(ed.si==='')d.c.splice(ed.ci,1);
-  else d.s[ed.si].c.splice(ed.ci,1);
-  saveEd(ed.did);updCount();cM();render();
+  // El teléfono se guarda como texto para no perder el cero inicial
+  // ni convertirse en notación científica.
+  const colTel = head.indexOf('telefono') + 1;
+  if (colTel > 0) {
+    sh.getRange(2, colTel, data.length, 1).setNumberFormat('@');
+  }
 
-  if(old && old._row){
-    const sheet=d.tab==='ops'?'ops':'areas';
-    postDeleteToSheet(sheet, old._row);
+  const enc = sh.getRange(1, 1, 1, head.length);
+  enc.setFontWeight('bold')
+     .setBackground('#1A3A6B')
+     .setFontColor('#FFFFFF')
+     .setVerticalAlignment('middle');
+  sh.setRowHeight(1, 30);
+  sh.setFrozenRows(1);
+  sh.getRange(1, 1, sh.getMaxRows(), head.length).setFontFamily('Arial');
+  for (let i = 1; i <= head.length; i++) sh.autoResizeColumn(i);
+  // El filtro es cosmético: si falla, no debe abortar la carga de datos.
+  try { sh.getDataRange().createFilter(); } catch (e) {
+    Logger.log('Aviso: no se pudo crear el filtro en %s (%s)', nombre, e.message);
   }
 }
 
-function updCount(){
-  const t=DEPTS.reduce((a,d)=>a+aC(d).length,0);
-  document.getElementById('sn').textContent=t+' contacto'+(t!==1?'s':'');
+function probar() {
+  const ss = SpreadsheetApp.openById(SHEET_ID);
+  const ops = leer(ss, 'OPS'), areas = leer(ss, 'AREAS');
+  Logger.log('OPS: %s filas', ops.length);
+  Logger.log('AREAS: %s filas', areas.length);
+  Logger.log('Ejemplo OPS: %s', JSON.stringify(ops[0]));
+  Logger.log('Ejemplo AREAS: %s', JSON.stringify(areas[0]));
 }
-
-// ── FAB: se esconde al bajar, vuelve al subir ─────────────
-(function(){
-  let lastY=0;
-  const fab=document.querySelector('.fab');
-  window.addEventListener('scroll',function(){
-    const y=window.scrollY||document.documentElement.scrollTop;
-    if(y>lastY+10&&y>140)fab.classList.add('hid');
-    else if(y<lastY-10)fab.classList.remove('hid');
-    lastY=y;
-  },{passive:true});
-})();
-
-// ── INIT ──────────────────────────────────────────────────
-load();
-setTimeout(()=>{
-  const remote=localStorage.getItem('mgRemote');
-  if(remote){
-    try{ aplicar(JSON.parse(remote)); render(); updCount();
-         const ts=localStorage.getItem('mgTs');
-         if(ts)document.getElementById('ui').textContent='Caché · '+new Date(ts).toLocaleDateString('es-CO');
-    }catch(e){}
-  }
-  lS();
-},800);
-</script></body></html>
